@@ -9,7 +9,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>stockergraph</module>
 		<module>telegram-service</module>
     </modules>
 
