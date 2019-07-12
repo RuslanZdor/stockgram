@@ -6,14 +6,23 @@ import com.stocker.telegram.command.ShowCompanyCommand;
 import com.stocker.telegram.exception.UnexpectedCommandException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
+@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class StockTelegramBot extends TelegramLongPollingBot {
 
     @Autowired
@@ -25,7 +34,7 @@ public class StockTelegramBot extends TelegramLongPollingBot {
     private Map<String, ICommandProcessor> commandMap = new HashMap<>();
 
     @PostConstruct
-    public void init() {
+    public void init() throws TelegramApiRequestException {
         commandMap.put(OverSellCommand.COMMAND, overSellCommand);
         commandMap.put(ShowCompanyCommand.COMMAND, showCommand);
     }
@@ -34,9 +43,11 @@ public class StockTelegramBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         try {
             ICommandProcessor processor = findCommand(update.getMessage());
-            processor.process(this, update.getMessage(), update.getMessage().getText());
+            execute(processor.process(update.getMessage()));
         } catch (UnexpectedCommandException ex) {
             System.out.println(ex.getMessage());
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
         }
     }
 
@@ -49,7 +60,7 @@ public class StockTelegramBot extends TelegramLongPollingBot {
         if (StringUtils.isBlank(data)) {
             throw new UnexpectedCommandException(data);
         }
-        data = data.replaceAll("^\\s+", "");
+        data = data.replaceAll("^\\s*\\/*", "");
         return data.split("\\s+")[0];
     }
 
@@ -60,8 +71,9 @@ public class StockTelegramBot extends TelegramLongPollingBot {
      * @throws UnexpectedCommandException in case when command is not found
      */
     protected ICommandProcessor findCommand(Message message) throws UnexpectedCommandException {
-        if (commandMap.containsKey(getCommandName(message.getText()))) {
-            return commandMap.get(commandMap);
+        String command = getCommandName(message.getText());
+        if (commandMap.containsKey(command)) {
+            return commandMap.get(command);
         } else {
             throw new UnexpectedCommandException(message.getText());
         }

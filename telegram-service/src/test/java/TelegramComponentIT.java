@@ -1,4 +1,3 @@
-import com.stocker.telegram.StockTelegramComponent;
 import com.stocker.telegram.StockTelegramConfiguration;
 import org.junit.Ignore;
 import org.junit.Test;

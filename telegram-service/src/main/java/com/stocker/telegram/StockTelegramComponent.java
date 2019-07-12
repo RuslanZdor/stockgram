@@ -14,10 +14,6 @@ public class StockTelegramComponent {
     @Autowired
     StockTelegramBot telegramBot;
 
-    public StockTelegramComponent() {
-        ApiContextInitializer.init();
-    }
-
     @PostConstruct
     public void startBot() throws TelegramApiRequestException {
         TelegramBotsApi botsApi = new TelegramBotsApi();
@@ -26,7 +22,6 @@ public class StockTelegramComponent {
 
     @PreDestroy
     public void stopBot() {
-        TelegramBotsApi botsApi = new TelegramBotsApi();
         telegramBot.onClosing();
     }
 }

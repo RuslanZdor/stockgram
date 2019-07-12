@@ -1,17 +1,31 @@
 package com.stocker.telegram.command;
 
 import com.stocker.telegram.exception.NoSymbolException;
+import com.stocker.telegram.exception.UnexpectedCommandException;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 @Component
 public class ShowCompanyCommand implements ICommandProcessor {
 
-    public static final String COMMAND = "/show";
+    public static final String COMMAND = "show";
 
     @Override
-    public void process(TelegramLongPollingBot bot, Message message, String data) {
+    public SendMessage process(Message message) throws UnexpectedCommandException {
+        try {
+            String symbol = getSymbol(message.getText());
+
+            SendMessage sendMessage = new SendMessage();
+            sendMessage.enableMarkdown(true);
+            sendMessage.setChatId(message.getChat().getId());
+            sendMessage.setText(String.format("search for %s", symbol));
+
+            return sendMessage;
+        } catch (NoSymbolException e) {
+            throw new UnexpectedCommandException(String.format("Bot wasn't found symbol in message: %s", message.getText()));
+        }
     }
 
     /**
