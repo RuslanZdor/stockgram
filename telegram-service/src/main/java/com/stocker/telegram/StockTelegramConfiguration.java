@@ -1,9 +1,7 @@
 package com.stocker.telegram;
 
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import com.stocker.telegram.spring.StockTelegramComponent;
 import org.springframework.context.annotation.*;
-import org.telegram.telegrambots.ApiContextInitializer;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
 @Configuration
 @ComponentScan(basePackages = "com.stocker")

@@ -1,6 +1,8 @@
-package com.stocker.telegram;
+package com.stocker.telegram.spring;
 
+import com.stocker.telegram.StockTelegramConfigurationForTest;
 import com.stocker.telegram.exception.UnexpectedCommandException;
+import com.stocker.telegram.spring.StockTelegramBot;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;

@@ -1,8 +1,8 @@
-package com.stocker.telegram;
+package com.stocker.telegram.spring;
 
-import com.stocker.telegram.command.ICommandProcessor;
-import com.stocker.telegram.command.OverSellCommand;
-import com.stocker.telegram.command.ShowCompanyCommand;
+import com.stocker.telegram.spring.command.ICommandProcessor;
+import com.stocker.telegram.spring.command.OverSellCommand;
+import com.stocker.telegram.spring.command.ShowCompanyCommand;
 import com.stocker.telegram.exception.UnexpectedCommandException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +10,12 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import java.util.HashMap;
 import java.util.Map;
 
