@@ -1,4 +1,4 @@
-package com.stocker.controller;
+package com.stocker.data.controller;
 
 import com.stocker.runner.FindVolataileStocks;
 import org.springframework.beans.factory.annotation.Autowired;

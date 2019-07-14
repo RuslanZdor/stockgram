@@ -1,4 +1,4 @@
-package com.stocker.controller.company;
+package com.stocker.data.controller.company;
 
 import static com.stocker.ChartjsUtils.*;
 

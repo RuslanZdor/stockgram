@@ -1,4 +1,4 @@
-package com.stocker.controller.manager;
+package com.stocker.data.controller.manager;
 
 import com.stocker.exception.NoCompanyException;
 import com.stocker.exception.NoDayException;

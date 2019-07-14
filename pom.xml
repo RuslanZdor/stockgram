@@ -11,6 +11,7 @@
     <modules>
         <module>stockergraph</module>
 		<module>telegram-service</module>
+        <module>stockerdata</module>
     </modules>
 
 </project>
