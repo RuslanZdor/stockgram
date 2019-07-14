@@ -1,8 +1,6 @@
-package com.stocker.telegram;
+package com.stocker.telegram.spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
@@ -14,10 +12,6 @@ public class StockTelegramComponent {
     @Autowired
     StockTelegramBot telegramBot;
 
-    public StockTelegramComponent() {
-        ApiContextInitializer.init();
-    }
-
     @PostConstruct
     public void startBot() throws TelegramApiRequestException {
         TelegramBotsApi botsApi = new TelegramBotsApi();
@@ -26,7 +20,6 @@ public class StockTelegramComponent {
 
     @PreDestroy
     public void stopBot() {
-        TelegramBotsApi botsApi = new TelegramBotsApi();
         telegramBot.onClosing();
     }
 }

@@ -1,4 +1,4 @@
-package com.stocker.telegram.command;
+package com.stocker.telegram.spring.command;
 
 import com.stocker.telegram.exception.NoSymbolException;
 import org.junit.Test;
