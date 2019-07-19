@@ -1,24 +1,24 @@
 package com.stocker.telegram.spring;
 
-import com.stocker.telegram.spring.command.ICommandProcessor;
-import com.stocker.telegram.spring.command.OverSellCommand;
-import com.stocker.telegram.spring.command.ShowCompanyCommand;
+import com.stocker.telegram.spring.command.*;
 import com.stocker.telegram.exception.UnexpectedCommandException;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
+@Log4j2
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class StockTelegramBot extends TelegramLongPollingBot {
@@ -29,23 +29,43 @@ public class StockTelegramBot extends TelegramLongPollingBot {
     @Autowired
     private ShowCompanyCommand showCommand;
 
+    @Autowired
+    private UnexpectedCommand unexpectedCommand;
+
+    @Autowired
+    private WatchListCommand watchListCommand;
+
+    @Autowired
+    private AddToWatchListCompanyCommand addToWatchListCompanyCommand;
+
     private Map<String, ICommandProcessor> commandMap = new HashMap<>();
 
+    private SendMessage processorCallback(SendMessage message) {
+        try {
+            this.execute(message);
+        } catch (TelegramApiException e) {
+            log.error(e);
+        }
+        return message;
+    }
+
     @PostConstruct
-    public void init() throws TelegramApiRequestException {
+    public void init() {
         commandMap.put(OverSellCommand.COMMAND, overSellCommand);
         commandMap.put(ShowCompanyCommand.COMMAND, showCommand);
+        commandMap.put(WatchListCommand.COMMAND, watchListCommand);
+        commandMap.put(AddToWatchListCompanyCommand.COMMAND, addToWatchListCompanyCommand);
     }
 
     @Override
     public void onUpdateReceived(Update update) {
+        Message message = update.hasCallbackQuery() ? update.getCallbackQuery().getMessage() : update.getMessage();
         try {
-            ICommandProcessor processor = findCommand(update.getMessage());
-            execute(processor.process(update.getMessage()));
+            ICommandProcessor processor = findCommand(update);
+            processor.process(update, m -> processorCallback(m));
         } catch (UnexpectedCommandException ex) {
-            System.out.println(ex.getMessage());
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
+            log.error(ex);
+            unexpectedCommand.process(update, m -> processorCallback(m));
         }
     }
 
@@ -58,22 +78,28 @@ public class StockTelegramBot extends TelegramLongPollingBot {
         if (StringUtils.isBlank(data)) {
             throw new UnexpectedCommandException(data);
         }
-        data = data.replaceAll("^\\s*\\/*", "");
-        return data.split("\\s+")[0];
+        return splitMessage(data)[0];
+    }
+
+    public static String[] splitMessage(String message) {
+        String data = message.replaceAll("^\\s*\\/*", "");
+        return data.split("(\\s+|_|-)");
     }
 
     /**
      * Try to find command based on numan Message
-     * @param message human from telegram
+     * @param update human from telegram
      * @return fount command for message
      * @throws UnexpectedCommandException in case when command is not found
      */
-    protected ICommandProcessor findCommand(Message message) throws UnexpectedCommandException {
-        String command = getCommandName(message.getText());
+    protected ICommandProcessor findCommand(Update update) throws UnexpectedCommandException {
+        String messageCommand = ICommandProcessor.getText(update);
+        log.info(String.format("Processing %s", messageCommand));
+        String command = getCommandName(messageCommand);
         if (commandMap.containsKey(command)) {
             return commandMap.get(command);
         } else {
-            throw new UnexpectedCommandException(message.getText());
+            throw new UnexpectedCommandException(messageCommand);
         }
     }
 

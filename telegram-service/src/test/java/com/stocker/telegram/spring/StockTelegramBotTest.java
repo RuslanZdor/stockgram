@@ -7,14 +7,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.api.objects.Update;
 
 import static org.junit.Assert.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {StockTelegramConfigurationForTest.class})
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class StockTelegramBotTest {
 
     @Autowired
@@ -50,11 +54,13 @@ public class StockTelegramBotTest {
 
     @Test
     public void findCommand() throws UnexpectedCommandException {
+        Update update = Mockito.mock(Update.class);
         Message message = Mockito.mock(Message.class);
+        Mockito.when(update.getMessage()).thenReturn(message);
         Mockito.when(message.getText()).thenReturn("show");
-        assertNotNull(stockTelegramBot.findCommand(message));
+        assertNotNull(stockTelegramBot.findCommand(update));
 
         Mockito.when(message.getText()).thenReturn("over_sell");
-        assertNotNull(stockTelegramBot.findCommand(message));
+        assertNotNull(stockTelegramBot.findCommand(update));
     }
 }

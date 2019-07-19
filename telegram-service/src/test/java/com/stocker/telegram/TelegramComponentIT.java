@@ -1,3 +1,5 @@
+package com.stocker.telegram;
+
 import com.stocker.telegram.StockTelegramConfiguration;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -10,10 +12,5 @@ public class TelegramComponentIT {
     public void connectionTest() {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(StockTelegramConfiguration.class);
-
-//        StockTelegramComponent stockTelegramComponent = context.getBean("telegramComponent", StockTelegramComponent.class);
-
-//        System.out.print(stockTelegramComponent);
-
     }
 }
