@@ -1,8 +1,0 @@
-C:\Users\Ruslan_Zdor\IdeaProjects\stockergraph\telegram-service\src\main\java\com\stocker\telegram\StockTelegramConfiguration.java
-C:\Users\Ruslan_Zdor\IdeaProjects\stockergraph\telegram-service\src\main\java\com\stocker\telegram\command\ICommandProcessor.java
-C:\Users\Ruslan_Zdor\IdeaProjects\stockergraph\telegram-service\src\main\java\com\stocker\telegram\exception\UnexpectedCommandException.java
-C:\Users\Ruslan_Zdor\IdeaProjects\stockergraph\telegram-service\src\main\java\com\stocker\telegram\command\OverSellCommand.java
-C:\Users\Ruslan_Zdor\IdeaProjects\stockergraph\telegram-service\src\main\java\com\stocker\telegram\StockTelegramComponent.java
-C:\Users\Ruslan_Zdor\IdeaProjects\stockergraph\telegram-service\src\main\java\com\stocker\telegram\StockTelegramBot.java
-C:\Users\Ruslan_Zdor\IdeaProjects\stockergraph\telegram-service\src\main\java\com\stocker\telegram\command\ShowCompanyCommand.java
-C:\Users\Ruslan_Zdor\IdeaProjects\stockergraph\telegram-service\src\main\java\com\stocker\telegram\exception\NoSymbolException.java
