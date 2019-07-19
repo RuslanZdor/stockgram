@@ -30,7 +30,7 @@ class CalculationsUtil {
      * @param length of EMA
      * @return SMA
      */
-    protected static double calculateEMA(Day day, double prevDayValue, int length) {
+    static double calculateEMA(Day day, double prevDayValue, int length) {
         if (prevDayValue < 0) {
             return day.getPrice();
         }

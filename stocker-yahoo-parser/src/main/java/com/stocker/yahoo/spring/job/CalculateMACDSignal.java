@@ -9,7 +9,7 @@ import java.util.SortedSet;
 @Component
 public class CalculateMACDSignal implements ICalculateJob {
 
-    private static int MACD_COF = 9;
+    private final static int MACD_COF = 9;
 
     public void calculate(Company company) {
         company.getDays().forEach(day -> {

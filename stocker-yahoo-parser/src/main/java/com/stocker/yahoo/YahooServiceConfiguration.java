@@ -15,7 +15,6 @@ import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.SimpleReactiveMongoDatabaseFactory;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 
-import java.net.UnknownHostException;
 import java.util.Arrays;
 
 @Configuration
@@ -45,15 +44,15 @@ public class YahooServiceConfiguration {
     }
 
     @Bean
-    public MongoClient mongoClient() throws UnknownHostException {
+    private MongoClient mongoClient() {
         return MongoClients.create("mongodb://localhost");
     }
-    public ReactiveMongoDatabaseFactory mongoDbFactory() throws UnknownHostException {
+    private ReactiveMongoDatabaseFactory mongoDbFactory() {
         return new SimpleReactiveMongoDatabaseFactory(mongoClient(),
                 "stocker");
     }
     @Bean
-    public ReactiveMongoTemplate reactiveMongoTemplate() throws UnknownHostException {
+    public ReactiveMongoTemplate reactiveMongoTemplate() {
         return new ReactiveMongoTemplate(mongoDbFactory());
     }
 }

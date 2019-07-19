@@ -11,12 +11,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.ReactiveMongoDatabaseFactory;
-import org.springframework.data.mongodb.config.AbstractReactiveMongoConfiguration;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.SimpleReactiveMongoDatabaseFactory;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 
-import java.net.UnknownHostException;
 import java.util.Arrays;
 
 @Configuration
@@ -46,15 +44,16 @@ public class StockDataConfiguration {
     }
 
     @Bean
-    public MongoClient mongoClient() throws UnknownHostException {
+    public MongoClient mongoClient() {
         return MongoClients.create("mongodb://localhost");
     }
-    public ReactiveMongoDatabaseFactory mongoDbFactory() throws UnknownHostException {
+
+    private ReactiveMongoDatabaseFactory mongoDbFactory() {
         return new SimpleReactiveMongoDatabaseFactory(mongoClient(),
                 "stocker");
     }
     @Bean
-    public ReactiveMongoTemplate reactiveMongoTemplate() throws UnknownHostException {
+    public ReactiveMongoTemplate reactiveMongoTemplate() {
         return new ReactiveMongoTemplate(mongoDbFactory());
     }
 }

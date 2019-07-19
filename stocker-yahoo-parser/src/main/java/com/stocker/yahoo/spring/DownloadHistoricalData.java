@@ -18,11 +18,11 @@ import java.util.List;
 @Component
 public class DownloadHistoricalData {
 
-    public Company download(Company company) throws NoDayException {
+    public void download(Company company) throws NoDayException {
         try {
             Stock companyData = YahooFinance.get(company.getSymbol(), Interval.DAILY);
             List<HistoricalQuote> histQuotes = companyData.getHistory();
-            if (histQuotes.stream().filter(data -> data.getDate() == null && data.getClose() == null).count() > 0) {
+            if (histQuotes.stream().anyMatch(data -> data.getDate() == null && data.getClose() == null)) {
                 throw new NoDayException(String.format("Stock %s has bad data", company.getSymbol()));
             }
             company.getDays().clear();
@@ -42,6 +42,5 @@ public class DownloadHistoricalData {
         } catch (IOException ex) {
             throw new NoDayException(String.format("Stock %s has bad data", company.getSymbol()), ex);
         }
-        return company;
     }
 }

@@ -15,14 +15,14 @@ public class CalculationsUtilTest {
 
     @Test
     public void calculateSMA() {
-        SortedSet<Day> days = new TreeSet();
+        SortedSet<Day> days = new TreeSet<>();
         for (int i = 0; i < 5; i++) {
             Day day = new Day(LocalDate.now().plus(i, ChronoUnit.DAYS));
             day.setPrice(i);
             days.add(day);
         }
 
-        assertEquals(2, CalculationsUtil.calculateSMA(days.stream().map(day -> day.getPrice()).collect(Collectors.toSet())), 0.1);
+        assertEquals(2, CalculationsUtil.calculateSMA(days.stream().map(Day::getPrice).collect(Collectors.toSet())), 0.1);
     }
 
 

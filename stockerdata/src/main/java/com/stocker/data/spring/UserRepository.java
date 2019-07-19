@@ -1,6 +1,5 @@
 package com.stocker.data.spring;
 
-import com.stocker.data.Company;
 import com.stocker.data.User;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;

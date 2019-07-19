@@ -20,32 +20,32 @@ public class CalculateSMA implements ICalculateJob {
             searchDay.setDate(searchDay.getDate().minus(5, ChronoUnit.DAYS));
             day.setFiveSMA(CalculationsUtil.calculateSMA(
                     company.getDays().subSet(searchDay, nextDay)
-                            .stream().map(day1 -> new Double(day1.getPrice())).collect(Collectors.toSet())
+                            .stream().map(Day::getPrice).collect(Collectors.toSet())
             ));
             searchDay.setDate(day.getDate().minus(10, ChronoUnit.DAYS));
             day.setTenSMA(CalculationsUtil.calculateSMA(
                     company.getDays().subSet(searchDay, nextDay)
-                            .stream().map(day1 -> new Double(day1.getPrice())).collect(Collectors.toSet())
+                            .stream().map(Day::getPrice).collect(Collectors.toSet())
             ));
             searchDay.setDate(day.getDate().minus(15, ChronoUnit.DAYS));
             day.setFifteenSMA(CalculationsUtil.calculateSMA(
                     company.getDays().subSet(searchDay, nextDay)
-                            .stream().map(day1 -> new Double(day1.getPrice())).collect(Collectors.toSet())
+                            .stream().map(Day::getPrice).collect(Collectors.toSet())
             ));
             searchDay.setDate(day.getDate().minus(20, ChronoUnit.DAYS));
             day.setTwentySMA(CalculationsUtil.calculateSMA(
                     company.getDays().subSet(searchDay, nextDay)
-                            .stream().map(day1 -> new Double(day1.getPrice())).collect(Collectors.toSet())
+                            .stream().map(Day::getPrice).collect(Collectors.toSet())
             ));
             searchDay.setDate(day.getDate().minus(25, ChronoUnit.DAYS));
             day.setTwentyFiveSMA(CalculationsUtil.calculateSMA(
                     company.getDays().subSet(searchDay, nextDay)
-                            .stream().map(day1 -> new Double(day1.getPrice())).collect(Collectors.toSet())
+                            .stream().map(Day::getPrice).collect(Collectors.toSet())
             ));
             searchDay.setDate(day.getDate().minus(30, ChronoUnit.DAYS));
             day.setThirtySMA(CalculationsUtil.calculateSMA(
                     company.getDays().subSet(searchDay, nextDay)
-                            .stream().map(day1 -> new Double(day1.getPrice())).collect(Collectors.toSet())
+                            .stream().map(Day::getPrice).collect(Collectors.toSet())
             ));
         }
     }

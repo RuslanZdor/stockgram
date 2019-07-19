@@ -14,7 +14,7 @@ import java.util.TreeSet;
 
 @Log4j2
 @RestController
-public class YahooParserController {
+class YahooParserController {
 
     @Autowired
     private CompanyRepository companyRepository;
