@@ -30,6 +30,6 @@ public class CalculationsUtilTest {
     public void calculateEMA() {
         Day day = new Day(LocalDate.now());
         day.setPrice(100);
-        assertEquals(55, CalculationsUtil.calculateEMA(day, 50, 10), 0.1);
+        assertEquals(55, CalculationsUtil.calculateEMA(day.getPrice(), 50, 10), 0.1);
     }
 }

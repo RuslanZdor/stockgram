@@ -25,16 +25,16 @@ class CalculationsUtil {
 
     /**
      * Calculate Exp. Movement Average for List of Days
-     * @param day day for calculation
+     * @param value day for calculation
      * @param prevDayValue previous day value
      * @param length of EMA
      * @return SMA
      */
-    static double calculateEMA(Day day, double prevDayValue, int length) {
+    static double calculateEMA(double value, double prevDayValue, int length) {
         if (prevDayValue < 0) {
-            return day.getPrice();
+            return value;
         }
-        return day.getPrice() * 1 / length + prevDayValue * (length - 1) / length;
+        return value * 1 / length + prevDayValue * (length - 1) / length;
     }
 
 }

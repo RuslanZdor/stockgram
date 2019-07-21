@@ -1,9 +1,11 @@
 package com.stocker.telegram.spring.command;
 
+import com.stocker.telegram.data.Company;
 import com.stocker.telegram.exception.NoSymbolException;
 import com.stocker.telegram.spring.CallbackDataClient;
 import com.stocker.telegram.spring.CompanyDataClient;
 import com.stocker.telegram.spring.StockTelegramBot;
+import com.stocker.telegram.spring.callback.AbstractCallback;
 import com.stocker.telegram.spring.callback.AddToWatchListCallback;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,19 +53,12 @@ public class ShowCompanyCommand extends ICommandProcessor {
                     company -> {
                         sendMessage.setText(String.format("found for %s", company.getName()));
 
-                        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
-                        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
-                        List<InlineKeyboardButton> rowInline = new ArrayList<>();
-                        rowsInline.add(rowInline);
-
                         AddToWatchListCallback toWatchListCallback = new AddToWatchListCallback();
                         toWatchListCallback.setSymbol(company.getSymbol());
                         toWatchListCallback.setTelegramId(getMessage(update).getFrom().getId().toString());
                         toWatchListCallback.setId(UUID.randomUUID().toString());
                         callbackDataClient.addCallback(toWatchListCallback).subscribe(abstractCallback -> {
-                            rowInline.add(new InlineKeyboardButton().setText("Add to Watch List").setCallbackData(String.format("%s %s", AddToWatchListCompanyCommand.COMMAND, abstractCallback.getId())));
-                            markupInline.setKeyboard(rowsInline);
-                            sendMessage.setReplyMarkup(markupInline);
+                            setCompanyInformation(sendMessage, company, abstractCallback);
                             callback.apply(sendMessage);
                         });
                     },
@@ -92,5 +87,30 @@ public class ShowCompanyCommand extends ICommandProcessor {
             throw new NoSymbolException(String.format("command %s has no company symbol", text));
         }
         return words[1].toUpperCase();
+    }
+
+    private void setCompanyInformation(SendMessage sendMessage, Company company, AbstractCallback abstractCallback) {
+        if (company.getDays().isEmpty()) {
+            sendMessage.setText(String.format("No daily information about this company %s", company.getSymbol()));
+        } else {
+            StringBuilder sb = new StringBuilder();
+            sb.append(String.format("Current Price: %s \n", company.getDays().last().getPrice()));
+            sb.append("Short period parameters\n");
+            sb.append(String.format("5 days EMA: %s\n", company.getDays().last().getFiveEMA()));
+            sb.append(String.format("5 days RSI: %s\n", company.getDays().last().getFiveRSI()));
+            sb.append("Long period parameters\n");
+            sb.append(String.format("30 days EMA: %s\n", company.getDays().last().getThirtyEMA()));
+            sb.append(String.format("30 days RSI: %s\n", company.getDays().last().getThirtyRSI()));
+            sendMessage.setText(sb.toString());
+        }
+
+        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+        List<InlineKeyboardButton> rowInline = new ArrayList<>();
+        rowsInline.add(rowInline);
+
+        rowInline.add(new InlineKeyboardButton().setText("Add to Watch List").setCallbackData(String.format("%s %s", AddToWatchListCompanyCommand.COMMAND, abstractCallback.getId())));
+        markupInline.setKeyboard(rowsInline);
+        sendMessage.setReplyMarkup(markupInline);
     }
 }

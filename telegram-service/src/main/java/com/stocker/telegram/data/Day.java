@@ -1,9 +1,7 @@
-package com.stocker.yahoo.data;
+package com.stocker.telegram.data;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
@@ -13,10 +11,8 @@ import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
-@Document
 public class Day implements Comparable<Day>{
 
-    @Id
     private int id;
 
     private LocalDate date;
@@ -44,20 +40,6 @@ public class Day implements Comparable<Day>{
     private double twentyRSI;
     private double twentyFiveRSI;
     private double thirtyRSI;
-
-    private double fiveRSIGain;
-    private double tenRSIGain;
-    private double fifteenRSIGain;
-    private double twentyRSIGain;
-    private double twentyFiveRSIGain;
-    private double thirtyRSIGain;
-
-    private double fiveRSILoss;
-    private double tenRSILoss;
-    private double fifteenRSILoss;
-    private double twentyRSILoss;
-    private double twentyFiveRSILoss;
-    private double thirtyRSILoss;
 
     private double fiveAverageVolume;
     private double tenAverageVolume;

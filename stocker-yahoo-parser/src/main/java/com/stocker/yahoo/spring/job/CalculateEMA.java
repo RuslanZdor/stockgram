@@ -14,12 +14,12 @@ public class CalculateEMA implements ICalculateJob {
     public void calculate(Company company) {
         company.getDays().forEach(day -> {
             SortedSet<Day> prevDays = company.getDays().headSet(day);
-            day.setFiveEMA(CalculationsUtil.calculateEMA(day, prevDays.isEmpty() ? day.getPrice() : prevDays.last().getFiveEMA(), 5));
-            day.setTenEMA(CalculationsUtil.calculateEMA(day, prevDays.isEmpty() ? day.getPrice() : prevDays.last().getTenEMA(), 10));
-            day.setFifteenEMA(CalculationsUtil.calculateEMA(day, prevDays.isEmpty() ? day.getPrice() : prevDays.last().getFifteenEMA(), 15));
-            day.setTwentyEMA(CalculationsUtil.calculateEMA(day, prevDays.isEmpty() ? day.getPrice() : prevDays.last().getTwentyEMA(), 20));
-            day.setTwentyFiveEMA(CalculationsUtil.calculateEMA(day, prevDays.isEmpty() ? day.getPrice() : prevDays.last().getTwentyFiveEMA(), 25));
-            day.setThirtyEMA(CalculationsUtil.calculateEMA(day, prevDays.isEmpty() ? day.getPrice() : prevDays.last().getThirtyEMA(), 30));
+            day.setFiveEMA(CalculationsUtil.calculateEMA(day.getPrice(), prevDays.isEmpty() ? day.getPrice() : prevDays.last().getFiveEMA(), 5));
+            day.setTenEMA(CalculationsUtil.calculateEMA(day.getPrice(), prevDays.isEmpty() ? day.getPrice() : prevDays.last().getTenEMA(), 10));
+            day.setFifteenEMA(CalculationsUtil.calculateEMA(day.getPrice(), prevDays.isEmpty() ? day.getPrice() : prevDays.last().getFifteenEMA(), 15));
+            day.setTwentyEMA(CalculationsUtil.calculateEMA(day.getPrice(), prevDays.isEmpty() ? day.getPrice() : prevDays.last().getTwentyEMA(), 20));
+            day.setTwentyFiveEMA(CalculationsUtil.calculateEMA(day.getPrice(), prevDays.isEmpty() ? day.getPrice() : prevDays.last().getTwentyFiveEMA(), 25));
+            day.setThirtyEMA(CalculationsUtil.calculateEMA(day.getPrice(), prevDays.isEmpty() ? day.getPrice() : prevDays.last().getThirtyEMA(), 30));
         });
     }
 }

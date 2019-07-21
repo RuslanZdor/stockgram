@@ -1,4 +1,4 @@
-package com.stocker.yahoo.data;
+package com.stocker.data;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,20 +44,6 @@ public class Day implements Comparable<Day>{
     private double twentyRSI;
     private double twentyFiveRSI;
     private double thirtyRSI;
-
-    private double fiveRSIGain;
-    private double tenRSIGain;
-    private double fifteenRSIGain;
-    private double twentyRSIGain;
-    private double twentyFiveRSIGain;
-    private double thirtyRSIGain;
-
-    private double fiveRSILoss;
-    private double tenRSILoss;
-    private double fifteenRSILoss;
-    private double twentyRSILoss;
-    private double twentyFiveRSILoss;
-    private double thirtyRSILoss;
 
     private double fiveAverageVolume;
     private double tenAverageVolume;

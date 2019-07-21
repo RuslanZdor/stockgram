@@ -33,7 +33,10 @@ public class ShowCompanyCommandTest {
 
     @Before
     public void init() {
-        Mockito.when(companyDataClient.getCompany("AAPL")).thenReturn(Mono.just(new Company("Apple Inc", "aapl")));
+        Company company = new Company();
+        company.setName("Apple Inc");
+        company.setSymbol("aapl");
+        Mockito.when(companyDataClient.getCompany("AAPL")).thenReturn(Mono.just(company));
     }
 
     @Test

@@ -44,7 +44,7 @@ public class YahooServiceConfiguration {
     }
 
     @Bean
-    private MongoClient mongoClient() {
+    public MongoClient mongoClient() {
         return MongoClients.create("mongodb://localhost");
     }
     private ReactiveMongoDatabaseFactory mongoDbFactory() {
