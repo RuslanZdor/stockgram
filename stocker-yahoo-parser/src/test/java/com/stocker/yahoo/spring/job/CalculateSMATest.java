@@ -31,11 +31,11 @@ public class CalculateSMATest {
 
         calculateSMA.calculate(company);
 
-        assertEquals(27.5, company.getDays().last().getFiveSMA(), 0.1);
-        assertEquals(25, company.getDays().last().getTenSMA(), 0.1);
-        assertEquals(22.5, company.getDays().last().getFifteenSMA(), 0.1);
-        assertEquals(20, company.getDays().last().getTwentySMA(), 0.1);
-        assertEquals(17.5, company.getDays().last().getTwentyFiveSMA(), 0.1);
+        assertEquals(28, company.getDays().last().getFiveSMA(), 0.1);
+        assertEquals(25.5, company.getDays().last().getTenSMA(), 0.1);
+        assertEquals(23, company.getDays().last().getFifteenSMA(), 0.1);
+        assertEquals(20.5, company.getDays().last().getTwentySMA(), 0.1);
+        assertEquals(18, company.getDays().last().getTwentyFiveSMA(), 0.1);
         assertEquals(15.5, company.getDays().last().getThirtySMA(), 0.1);
     }
 

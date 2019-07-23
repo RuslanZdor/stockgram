@@ -6,18 +6,6 @@
     <groupId>com.stocker</groupId>
     <artifactId>stocker</artifactId>
     <version>1.0</version>
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
-            <version>5.1.5.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>5.1.5.RELEASE</version>
-        </dependency>
-    </dependencies>
     <packaging>pom</packaging>
 
     <modules>
@@ -25,6 +13,7 @@
         <module>stockerdata</module>
         <module>eureka-server</module>
         <module>stocker-yahoo-parser</module>
+        <module>chart</module>
     </modules>
 
 </project>

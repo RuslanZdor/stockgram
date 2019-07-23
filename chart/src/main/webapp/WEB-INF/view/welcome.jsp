@@ -4,7 +4,7 @@
 
 	<body>
 	<div>
-	    <a href="reload">Reload</a>
+	    <a href="reload">Reload1</a>
 	</div>
 	<div style="height:675px; width:1800px;">
 	    <canvas id="myChart" width="400" height="150"></canvas>

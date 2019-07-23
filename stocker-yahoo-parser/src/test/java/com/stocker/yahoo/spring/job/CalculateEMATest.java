@@ -19,6 +19,9 @@ import static org.junit.Assert.*;
 public class CalculateEMATest {
 
     @Autowired
+    private CalculateSMA sma;
+
+    @Autowired
     private CalculateEMA ema;
 
     private Company company;
@@ -35,13 +38,14 @@ public class CalculateEMATest {
 
     @Test
     public void calculate() {
+        sma.calculate(company);
         ema.calculate(company);
-        assertEquals(4.9, company.getDays().last().getFiveEMA(), 0.1);
-        assertEquals(9.6, company.getDays().last().getTenEMA(), 0.1);
-        assertEquals(13.2, company.getDays().last().getFifteenEMA(), 0.1);
-        assertEquals(15.9, company.getDays().last().getTwentyEMA(), 0.1);
-        assertEquals(17.9, company.getDays().last().getTwentyFiveEMA(), 0.1);
-        assertEquals(19.5, company.getDays().last().getThirtyEMA(), 0.1);
+        assertEquals(3.0, company.getDays().last().getFiveEMA(), 0.1);
+        assertEquals(5.5, company.getDays().last().getTenEMA(), 0.1);
+        assertEquals(7.8, company.getDays().last().getFifteenEMA(), 0.1);
+        assertEquals(10.0, company.getDays().last().getTwentyEMA(), 0.1);
+        assertEquals(11.9, company.getDays().last().getTwentyFiveEMA(), 0.1);
+        assertEquals(13.5, company.getDays().last().getThirtyEMA(), 0.1);
     }
 
 }

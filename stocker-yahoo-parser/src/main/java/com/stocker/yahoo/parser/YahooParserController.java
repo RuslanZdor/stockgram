@@ -4,10 +4,7 @@ import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.exception.NoDayException;
 import com.stocker.yahoo.spring.CompanyRepository;
 import com.stocker.yahoo.spring.DownloadHistoricalData;
-import com.stocker.yahoo.spring.job.CalculateAverageVolume;
-import com.stocker.yahoo.spring.job.CalculateEMA;
-import com.stocker.yahoo.spring.job.CalculateRSI;
-import com.stocker.yahoo.spring.job.CalculateSMA;
+import com.stocker.yahoo.spring.job.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,6 +35,12 @@ class YahooParserController {
 
     @Autowired
     private CalculateRSI calculateRSI;
+
+    @Autowired
+    private CalculateMACDLine calculateMACDLine;
+
+    @Autowired
+    private CalculateMACDSignal calculateMACDSignal;
 
 
     @GetMapping("/manager/reloadStocks")
@@ -82,5 +85,7 @@ class YahooParserController {
         calculateEMA.calculate(company);
         calculateAverageVolume.calculate(company);
         calculateRSI.calculate(company);
+        calculateMACDLine.calculate(company);
+        calculateMACDSignal.calculate(company);
     }
 }

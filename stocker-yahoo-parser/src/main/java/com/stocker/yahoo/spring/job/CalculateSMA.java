@@ -5,7 +5,11 @@ import com.stocker.yahoo.data.Day;
 import org.springframework.stereotype.Component;
 
 import java.time.temporal.ChronoUnit;
+import java.util.Collections;
+import java.util.NavigableSet;
+import java.util.SortedSet;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Calculate simple moving average for company/market/industry
@@ -14,39 +18,13 @@ import java.util.stream.Collectors;
 public class CalculateSMA implements ICalculateJob {
     public void calculate(Company company) {
         for (Day day : company.getDays()) {
-
-            Day nextDay = new Day(day.getDate().plus(1, ChronoUnit.DAYS));
-            Day searchDay = new Day(day.getDate());
-            searchDay.setDate(searchDay.getDate().minus(5, ChronoUnit.DAYS));
-            day.setFiveSMA(CalculationsUtil.calculateSMA(
-                    company.getDays().subSet(searchDay, nextDay)
-                            .stream().map(Day::getPrice).collect(Collectors.toSet())
-            ));
-            searchDay.setDate(day.getDate().minus(10, ChronoUnit.DAYS));
-            day.setTenSMA(CalculationsUtil.calculateSMA(
-                    company.getDays().subSet(searchDay, nextDay)
-                            .stream().map(Day::getPrice).collect(Collectors.toSet())
-            ));
-            searchDay.setDate(day.getDate().minus(15, ChronoUnit.DAYS));
-            day.setFifteenSMA(CalculationsUtil.calculateSMA(
-                    company.getDays().subSet(searchDay, nextDay)
-                            .stream().map(Day::getPrice).collect(Collectors.toSet())
-            ));
-            searchDay.setDate(day.getDate().minus(20, ChronoUnit.DAYS));
-            day.setTwentySMA(CalculationsUtil.calculateSMA(
-                    company.getDays().subSet(searchDay, nextDay)
-                            .stream().map(Day::getPrice).collect(Collectors.toSet())
-            ));
-            searchDay.setDate(day.getDate().minus(25, ChronoUnit.DAYS));
-            day.setTwentyFiveSMA(CalculationsUtil.calculateSMA(
-                    company.getDays().subSet(searchDay, nextDay)
-                            .stream().map(Day::getPrice).collect(Collectors.toSet())
-            ));
-            searchDay.setDate(day.getDate().minus(30, ChronoUnit.DAYS));
-            day.setThirtySMA(CalculationsUtil.calculateSMA(
-                    company.getDays().subSet(searchDay, nextDay)
-                            .stream().map(Day::getPrice).collect(Collectors.toSet())
-            ));
+            NavigableSet<Day> sortedSet = company.getDays().headSet(day, true);
+            day.setFiveSMA(CalculationsUtil.calculateSMA(sortedSet.stream().sorted(Collections.reverseOrder()).limit(5).map(Day::getPrice).collect(Collectors.toSet())));
+            day.setTenSMA(CalculationsUtil.calculateSMA(sortedSet.stream().sorted(Collections.reverseOrder()).limit(10).map(Day::getPrice).collect(Collectors.toSet())));
+            day.setFifteenSMA(CalculationsUtil.calculateSMA(sortedSet.stream().sorted(Collections.reverseOrder()).limit(15).map(Day::getPrice).collect(Collectors.toSet())));
+            day.setTwentySMA(CalculationsUtil.calculateSMA(sortedSet.stream().sorted(Collections.reverseOrder()).limit(20).map(Day::getPrice).collect(Collectors.toSet())));
+            day.setTwentyFiveSMA(CalculationsUtil.calculateSMA(sortedSet.stream().sorted(Collections.reverseOrder()).limit(25).map(Day::getPrice).collect(Collectors.toSet())));
+            day.setThirtySMA(CalculationsUtil.calculateSMA(sortedSet.stream().sorted(Collections.reverseOrder()).limit(30).map(Day::getPrice).collect(Collectors.toSet())));
         }
     }
 }

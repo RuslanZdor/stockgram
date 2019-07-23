@@ -1,9 +1,11 @@
 package com.stocker.yahoo.spring.job;
 
 import com.stocker.yahoo.data.Day;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.Set;
 
+@Log4j2
 class CalculationsUtil {
 
     private CalculationsUtil() {
@@ -34,7 +36,8 @@ class CalculationsUtil {
         if (prevDayValue < 0) {
             return value;
         }
-        return value * 1 / length + prevDayValue * (length - 1) / length;
+        double k = 2.0d / (length + 1);
+        return (value - prevDayValue) * k + prevDayValue;
     }
 
 }

@@ -1,20 +1,20 @@
-package com.stocker.data.controller.company;
+package com.stocker.controller.company;
 
 import static com.stocker.ChartjsUtils.*;
 
 import com.stocker.Graphnterval;
-import com.stocker.exception.NoDayException;
-import com.stocker.facade.CompanyCacheService;
-import com.stocker.job.company.DownloadHistoricalData;
-import com.stocker.runner.CalculateDailyStats;
-import com.stocker.symbol.Company;
-import com.stocker.symbol.Day;
+import com.stocker.spring.CompanyDataClient;
+import com.stocker.data.Company;
+import com.stocker.data.Day;
+import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONArray;
+import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.DayOfWeek;
@@ -22,45 +22,32 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Log4j2
 @Controller
 public class CompanyController {
 
     @Autowired
-    private CompanyCacheService cacheFacade;
+    private CompanyDataClient companyDataClient;
 
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static final double volumeMultiplicator = 4.0d;
 
     private static final int GRAPH_SIZE = 200;
 
-    @Autowired
-    private DownloadHistoricalData downloadHistoricalData;
-    @Autowired
-    private CompanyCacheService companyService;
-    @Autowired
-    private CalculateDailyStats calculateDailyStats;
-
     @RequestMapping("/company/{symbol}/")
-    public ModelAndView helloWorld(@PathVariable("symbol") String symbol, @RequestParam(value = "interval", defaultValue = "daily") String interval) {
-        Company company;
+    public ModelAndView helloWorld(@PathVariable("symbol") String symbol) {
+        log.info("loading " + symbol);
         ModelAndView model = new ModelAndView("welcome");
-        company = cacheFacade.read(symbol.toUpperCase());
-        model.addObject("title", "\"company name\"");
+        Company company = companyDataClient.getCompany(symbol).block();
 
-        Set<Day> filtred = filterDays(company, Graphnterval.of(interval));
+        log.info("found company");
+        Set<Day> filtred = filterDays(company, Graphnterval.DAILY);
+        model.addObject("title", String.format("'%s'", company.getName()));
         model.addAllObjects(prepareSMAData(filtred));
         model.addAllObjects(prepareMACDData(filtred));
         model.addAllObjects(prepareCompanyData(filtred, company));
+        log.info("retur model");
         return model;
-    }
-
-    @RequestMapping("/company/{symbol}/reload")
-    public ModelAndView helloWorld(@PathVariable("symbol") String symbol, @RequestParam(value = "year", required = false, defaultValue = "0") int year) throws NoDayException {
-        Company company = cacheFacade.read(symbol.toUpperCase());
-        downloadHistoricalData.download(company, year);
-        calculateDailyStats.calculate(company);
-        companyService.save(company);
-        return new ModelAndView("redirect:/company/" + company.getSymbol() + "/");
     }
 
     private Set<Day> filterDays(Company company, Graphnterval inGraphnterval) {
@@ -129,7 +116,7 @@ public class CompanyController {
         map.put("maxPrice", hide(createLineChartData(MAX_PRICE_LABEL, PRICE_Y_AXIS,
                 days.stream().map(Day::getMaxPrice).collect(Collectors.toList()))));
         map.put("volume", addColor(createBarChartData(VOLUME_LABEL, VOLUME_Y_AXIS,
-                                    days.stream().map(Day::getVolume).collect(Collectors.toList())),
+                days.stream().map(Day::getVolume).collect(Collectors.toList())),
                 days.stream().map(day -> day.isRising() ? "green" : "red").collect(Collectors.toList())));
         map.put("resistance", createDashChartData(RESISTANCE_LABEL, PRICE_Y_AXIS,
                 days.stream().map(day -> day.getResistance() > 0 ? day.getResistance() : null).collect(Collectors.toList())));

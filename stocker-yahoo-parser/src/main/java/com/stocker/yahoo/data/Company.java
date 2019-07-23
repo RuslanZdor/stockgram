@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.NavigableSet;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -22,7 +23,7 @@ public class Company {
     private String symbol;
     private String industry;
 
-    private SortedSet<Day> days = new TreeSet<>();
+    private NavigableSet<Day> days = new TreeSet<>();
 
     /**
      * return day with the same date as in parameter
