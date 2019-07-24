@@ -2,7 +2,7 @@ package com.stocker.telegram.spring.command;
 
 import com.stocker.telegram.data.Company;
 import com.stocker.telegram.exception.NoSymbolException;
-import com.stocker.telegram.spring.CompanyDataClient;
+import com.stocker.telegram.spring.client.CompanyDataClient;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -29,7 +30,7 @@ public class ShowCompanyCommandTest {
     private CompanyDataClient companyDataClient;
 
     @Mock
-    private Function<SendMessage, SendMessage> callback;
+    private Function<PartialBotApiMethod<Message>, PartialBotApiMethod<Message>> callback;
 
     @Before
     public void init() {

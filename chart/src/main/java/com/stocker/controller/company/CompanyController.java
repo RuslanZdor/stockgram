@@ -46,6 +46,7 @@ public class CompanyController {
         model.addAllObjects(prepareSMAData(filtred));
         model.addAllObjects(prepareMACDData(filtred));
         model.addAllObjects(prepareCompanyData(filtred, company));
+        model.addAllObjects(prepareRSI(filtred));
         log.info("retur model");
         return model;
     }
@@ -131,6 +132,15 @@ public class CompanyController {
                 days.stream().map(Day::getMACDLine).collect(Collectors.toList())), 0), "blue"));
         map.put("MACDSignal", addColor(pointRadius(createLineChartData(MACD_SIGNAL, OSCILLATOR_Y_AXIS,
                 days.stream().map(Day::getMACDSignal).collect(Collectors.toList())), 0), "orange"));
+        return map;
+    }
+
+    private Map<String, Object> prepareRSI(Set<Day> days) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("RSI30", addColor(pointRadius(createLineChartData(RSI30_LINE, OSCILLATOR_Y_AXIS,
+                days.stream().map(Day::getThirtyRSI).collect(Collectors.toList())), 0), "orange"));
+        map.put("RSI5", addColor(pointRadius(createLineChartData(RSI5_LINE, OSCILLATOR_Y_AXIS,
+                days.stream().map(Day::getFiveRSI).collect(Collectors.toList())), 0), "blue"));
         return map;
     }
 

@@ -67,7 +67,7 @@ class YahooParserController {
     }
 
     @GetMapping("/manager/refresh/{symbol}/")
-    public void refreshStock(@PathVariable(name="symbol") String symbol) {
+    public Mono<Company> refreshStock(@PathVariable(name="symbol") String symbol) {
         log.info(String.format("Update all data for company %s", symbol));
         companyRepository.findFirstBySymbol(Mono.just(symbol.toUpperCase())).subscribe(company -> {
             try {
@@ -76,11 +76,16 @@ class YahooParserController {
                 log.error(e);
             }
             allUpdates(company);
-            companyRepository.save(company).subscribe();
+            companyRepository.save(company).subscribe(company1 -> {
+                log.info(String.format("id %s", company1.getId()));
+                log.info(String.format("Saved new value %s", company1.getDays().size()));
+            });
         });
+        return Mono.just(new Company());
     }
 
     private void allUpdates(Company company) {
+        log.info(String.format("Calculate new values for %s", company.getName()));
         calculateSMA.calculate(company);
         calculateEMA.calculate(company);
         calculateAverageVolume.calculate(company);

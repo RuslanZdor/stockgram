@@ -1,13 +1,15 @@
 package com.stocker.telegram.spring.command;
 
 import com.stocker.telegram.exception.NoSymbolException;
-import com.stocker.telegram.spring.CallbackDataClient;
+import com.stocker.telegram.spring.client.CallbackDataClient;
 import com.stocker.telegram.spring.StockTelegramBot;
-import com.stocker.telegram.spring.UserDataClient;
+import com.stocker.telegram.spring.client.UserDataClient;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.function.Function;
@@ -32,7 +34,7 @@ public class AddToWatchListCompanyCommand extends ICommandProcessor {
      * @param callback process message callback
      */
     @Override
-    public void process(Update update, Function<SendMessage, SendMessage> callback) {
+    public void process(Update update, Function<PartialBotApiMethod<Message>, PartialBotApiMethod<Message>> callback) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(getMessage(update).getChatId());

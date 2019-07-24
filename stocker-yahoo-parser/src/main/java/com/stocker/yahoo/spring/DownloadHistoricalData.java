@@ -12,6 +12,7 @@ import yahoofinance.histquotes.Interval;
 
 import java.io.IOException;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.List;
 
 @Log4j2
@@ -21,7 +22,12 @@ public class DownloadHistoricalData {
     public void download(Company company) throws NoDayException {
         try {
             Stock companyData = YahooFinance.get(company.getSymbol(), Interval.DAILY);
-            List<HistoricalQuote> histQuotes = companyData.getHistory();
+            Calendar tomorrow = Calendar.getInstance();
+            tomorrow.add(Calendar.DATE, 1);
+
+            Calendar yearAgo =  Calendar.getInstance();
+            yearAgo.add(Calendar.YEAR, -1);
+            List<HistoricalQuote> histQuotes = companyData.getHistory(yearAgo, tomorrow, Interval.DAILY);
             if (histQuotes.stream().anyMatch(data -> data.getDate() == null && data.getClose() == null)) {
                 throw new NoDayException(String.format("Stock %s has bad data", company.getSymbol()));
             }

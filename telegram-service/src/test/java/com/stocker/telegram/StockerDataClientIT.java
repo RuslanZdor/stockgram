@@ -1,7 +1,7 @@
 package com.stocker.telegram;
 
 import com.stocker.telegram.data.Company;
-import com.stocker.telegram.spring.CompanyDataClient;
+import com.stocker.telegram.spring.client.CompanyDataClient;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Test;
 import org.junit.runner.RunWith;

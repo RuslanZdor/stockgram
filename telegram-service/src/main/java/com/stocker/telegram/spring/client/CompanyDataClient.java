@@ -1,4 +1,4 @@
-package com.stocker.telegram.spring;
+package com.stocker.telegram.spring.client;
 
 import com.stocker.telegram.data.Company;
 import lombok.extern.log4j.Log4j2;
