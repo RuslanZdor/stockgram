@@ -3,41 +3,24 @@ package com.stocker.telegram.spring.command;
 import com.stocker.telegram.data.Company;
 import com.stocker.telegram.exception.NoSymbolException;
 import com.stocker.telegram.spring.client.CompanyDataClient;
+import com.stocker.telegram.spring.client.YahooDataClient;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
-import org.telegram.telegrambots.meta.api.objects.Update;
-import reactor.core.publisher.Mono;
-
-import java.util.function.Function;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.Assert.*;
 
+@SpringBootTest
 @RunWith(MockitoJUnitRunner.class)
 public class ShowCompanyCommandTest {
-
-    @InjectMocks
-    private ShowCompanyCommand showCompanyCommand;
-
-    @Mock
-    private CompanyDataClient companyDataClient;
-
-    @Mock
-    private Function<PartialBotApiMethod<Message>, PartialBotApiMethod<Message>> callback;
 
     @Before
     public void init() {
         Company company = new Company();
         company.setName("Apple Inc");
         company.setSymbol("aapl");
-        Mockito.when(companyDataClient.getCompany("AAPL")).thenReturn(Mono.just(company));
     }
 
     @Test
@@ -59,16 +42,6 @@ public class ShowCompanyCommandTest {
     @Test(expected = NoSymbolException.class)
     public void notSymbol() throws NoSymbolException {
         ShowCompanyCommand.getSymbol("show");
-    }
-
-    @Test
-    public void processSuccessFound() {
-        Update update = Mockito.mock(Update.class);
-        Message message = Mockito.mock(Message.class);
-        Mockito.when(update.getMessage()).thenReturn(message);
-        Mockito.when(message.getText()).thenReturn("show aapl");
-        showCompanyCommand.process(update, callback);
-//        Mockito.verify(callback);
     }
 
 }

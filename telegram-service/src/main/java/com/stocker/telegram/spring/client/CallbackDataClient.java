@@ -1,7 +1,5 @@
 package com.stocker.telegram.spring.client;
 
-import com.stocker.telegram.data.Company;
-import com.stocker.telegram.data.User;
 import com.stocker.telegram.spring.callback.AbstractCallback;
 import com.stocker.telegram.spring.callback.AddToWatchListCallback;
 import lombok.extern.log4j.Log4j2;
@@ -13,7 +11,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class CallbackDataClient {
 
-    private WebClient client;
+    private final WebClient client;
 
     public CallbackDataClient() {
         this.client = WebClient.builder().baseUrl("http://localhost:8081/").build();

@@ -2,19 +2,16 @@ package com.stocker.controller.company;
 
 import static com.stocker.ChartjsUtils.*;
 
-import com.stocker.Graphnterval;
+import com.stocker.GraphInterval;
 import com.stocker.spring.CompanyDataClient;
 import com.stocker.data.Company;
 import com.stocker.data.Day;
 import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONArray;
-import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.DayOfWeek;
@@ -40,18 +37,18 @@ public class CompanyController {
         ModelAndView model = new ModelAndView("welcome");
         Company company = companyDataClient.getCompany(symbol).block();
 
-        log.info("found company");
-        Set<Day> filtred = filterDays(company, Graphnterval.DAILY);
-        model.addObject("title", String.format("'%s'", company.getName()));
-        model.addAllObjects(prepareSMAData(filtred));
-        model.addAllObjects(prepareMACDData(filtred));
-        model.addAllObjects(prepareCompanyData(filtred, company));
-        model.addAllObjects(prepareRSI(filtred));
-        log.info("retur model");
+        if (!Objects.isNull(company)) {
+            Set<Day> filtered = filterDays(company, GraphInterval.DAILY);
+            model.addObject("title", String.format("'%s'", company.getName()));
+            model.addAllObjects(prepareSMAData(filtered));
+            model.addAllObjects(prepareMACDData(filtered));
+            model.addAllObjects(prepareCompanyData(filtered));
+            model.addAllObjects(prepareRSI(filtered));
+        }
         return model;
     }
 
-    private Set<Day> filterDays(Company company, Graphnterval inGraphnterval) {
+    private Set<Day> filterDays(Company company, GraphInterval inGraphnterval) {
         Set<Day> filtered = new TreeSet<>();
         switch (inGraphnterval) {
             case DAILY:
@@ -104,18 +101,15 @@ public class CompanyController {
         return map;
     }
 
-    private Map<String, Object> prepareCompanyData(Set<Day> days, Company company) {
+    private Map<String, Object> prepareCompanyData(Set<Day> days) {
         Map<String, Object> map = new HashMap<>();
         JSONArray array = new JSONArray();
         array.addAll(days.stream().map(day -> DATE_FORMAT.format(day.getDate())).collect(Collectors.toList()));
         map.put("labels", array);
-        map.put("volumeMax", getMaxDayVolume(days) * volumeMultiplicator);
-        map.put("price", createLineChartData(PRICE_LABEL, PRICE_Y_AXIS,
-                days.stream().map(Day::getPrice).collect(Collectors.toList())));
-        map.put("minPrice", hide(createLineChartData(MIN_PRICE_LABEL, PRICE_Y_AXIS,
-                days.stream().map(Day::getMinPrice).collect(Collectors.toList()))));
-        map.put("maxPrice", hide(createLineChartData(MAX_PRICE_LABEL, PRICE_Y_AXIS,
-                days.stream().map(Day::getMaxPrice).collect(Collectors.toList()))));
+        map.put("volumeMax", getMaxDayVolume(days));
+        map.put("maxPrice", getMaxPrice(days));
+        map.put("minPrice", getMinPrice(days));
+        map.put("price", createCandleStickChartData(PRICE_LABEL, PRICE_Y_AXIS, days.stream().collect(Collectors.toList())));
         map.put("volume", addColor(createBarChartData(VOLUME_LABEL, VOLUME_Y_AXIS,
                 days.stream().map(Day::getVolume).collect(Collectors.toList())),
                 days.stream().map(day -> day.isRising() ? "green" : "red").collect(Collectors.toList())));
@@ -144,14 +138,15 @@ public class CompanyController {
         return map;
     }
 
-    private long getMaxDayVolume(Set<Day> days) {
-        long maxVolume = 0L;
-        for (Day day : days) {
-            if (maxVolume < day.getVolume()) {
-                maxVolume = day.getVolume();
-            }
-        }
+    private double getMaxDayVolume(Set<Day> days) {
+        return days.stream().map(Day::getVolume).max(Long::compareTo).orElse(0L) * volumeMultiplicator;
+    }
 
-        return maxVolume;
+    private double getMaxPrice(Set<Day> days) {
+        return days.stream().map(Day::getMaxPrice).max(Double::compareTo).orElse(100.0) * 1.05;
+    }
+
+    private double getMinPrice(Set<Day> days) {
+        return days.stream().map(Day::getMinPrice).min(Double::compareTo).orElse(0.0) * 0.8;
     }
 }

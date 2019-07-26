@@ -2,14 +2,12 @@ package com.stocker.telegram.spring;
 
 import com.stocker.telegram.StockTelegramConfigurationForTest;
 import com.stocker.telegram.exception.UnexpectedCommandException;
-import com.stocker.telegram.spring.StockTelegramBot;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -23,10 +21,6 @@ public class StockTelegramBotTest {
 
     @Autowired
     private StockTelegramBot stockTelegramBot;
-
-    @Test
-    public void onUpdateReceived() {
-    }
 
     @Test
     public void getCommandName() throws UnexpectedCommandException {
@@ -60,7 +54,7 @@ public class StockTelegramBotTest {
         Mockito.when(message.getText()).thenReturn("show");
         assertNotNull(stockTelegramBot.findCommand(update));
 
-        Mockito.when(message.getText()).thenReturn("over_sell");
+        Mockito.when(message.getText()).thenReturn("oversell");
         assertNotNull(stockTelegramBot.findCommand(update));
     }
 }

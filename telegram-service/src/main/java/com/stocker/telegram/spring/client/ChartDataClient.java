@@ -17,7 +17,7 @@ import java.io.IOException;
 public class ChartDataClient {
 
     public File getCompany(String symbol) {
-        log.info(String.format("getting chyrt for company with symbol %s", symbol));
+        log.info(String.format("getting chart for company with symbol %s", symbol));
 
         WebDriver driver = null;
 

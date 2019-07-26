@@ -4,12 +4,9 @@ import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.data.Day;
 import org.springframework.stereotype.Component;
 
-import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.NavigableSet;
-import java.util.SortedSet;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Calculate simple moving average for company/market/industry

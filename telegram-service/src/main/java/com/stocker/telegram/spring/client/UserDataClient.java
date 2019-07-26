@@ -1,6 +1,5 @@
 package com.stocker.telegram.spring.client;
 
-import com.stocker.telegram.data.Company;
 import com.stocker.telegram.data.User;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
@@ -11,14 +10,14 @@ import reactor.core.publisher.Mono;
 @Component
 public class UserDataClient {
 
-    private WebClient client;
+    private final WebClient client;
 
     public UserDataClient() {
         this.client = WebClient.builder().baseUrl("http://localhost:8081/").build();
     }
 
     public Mono<User> getUser(String telegramId) {
-        log.info(String.format("getting user with telegramid %s", telegramId));
+        log.info(String.format("getting user with telegramId %s", telegramId));
         return this.client
                 .get()
                 .uri(String.format("user/%s/", telegramId))
@@ -27,7 +26,7 @@ public class UserDataClient {
     }
 
     public Mono<User> addUser(User user) {
-        log.info(String.format("add new user with telegramid %s", user.getTelegramId()));
+        log.info(String.format("add new user with telegramId %s", user.getTelegramId()));
         return this.client
                 .post()
                 .uri("/addUser/")

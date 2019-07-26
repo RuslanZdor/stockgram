@@ -1,6 +1,5 @@
 package com.stocker.yahoo.spring.job;
 
-import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.spring.CompanyRepository;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Test;

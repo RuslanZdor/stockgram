@@ -20,6 +20,7 @@ public class Day implements Comparable<Day>{
     private double price;
     private double minPrice;
     private double maxPrice;
+    private double openPrice;
     private double fiveEMA;
     private double tenEMA;
     private double fifteenEMA;

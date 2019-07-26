@@ -48,7 +48,7 @@ public class WatchListCommand extends ICommandProcessor {
                     user.setFirstName(getMessage(update).getFrom().getFirstName());
                     user.setLastName(getMessage(update).getFrom().getLastName());
                     userDataClient.addUser(user).subscribe();
-                    sendMessage.setText(String.format("Empty watch list"));
+                    sendMessage.setText("Empty watch list");
                     callback.apply(sendMessage);
                 },
                 () -> log.info(sendMessage.getText())
@@ -56,9 +56,9 @@ public class WatchListCommand extends ICommandProcessor {
     }
 
     /**
-     * Generate message with watch list conpanies
-     * @param user
-     * @return
+     * Generate message with watch list companies
+     * @param user for search watchlist
+     * @return text of watchlist message
      */
     protected String buildWatchList(User user) {
         StringBuilder sb = new StringBuilder();

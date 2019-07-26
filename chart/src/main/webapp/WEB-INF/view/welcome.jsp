@@ -1,6 +1,8 @@
 <html>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/luxon@1.15.0"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@0.1.1"></script>
+		<script src="/js/chartjs-chart-financial.js" type="text/javascript"></script>
 
 	<body>
 	<div style="height:690px; width:1800px;">
@@ -14,29 +16,12 @@
     </div>
 	<script>
 		var ctx = document.getElementById("myChart").getContext('2d');
-		var myChart = new Chart(ctx, {
-			type: 'bar',
+		var priceChart = new Chart(ctx, {
+			type: 'candlestick',
 			data: {
                 labels: ${labels},
                 datasets: [
-                    ${volume},
-                    ${price},
-                  	${minPrice},
-                  	${maxPrice},
-                  	${fiveSMA},
-                  	${tenSMA},
-                  	${fifteenSMA},
-                  	${twentySMA},
-                  	${twentyFiveSMA},
-                  	${thirtySMA},
-                  	${fiveEMA},
-                  	${tenEMA},
-                  	${fifteenEMA},
-                  	${twentyEMA},
-                  	${twentyFiveEMA},
-                  	${thirtyEMA},
-                  	${resistance},
-                  	${support}
+                    ${price}
                 ]
             },
 
@@ -67,6 +52,10 @@
 						type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
 						position: 'right',
 						id: 'price',
+						ticks: {
+                            min: ${maxPrice},
+                            max: ${minPrice}
+                        }
 					}, {
 						type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
 						display: false,
@@ -86,13 +75,11 @@
                 }
 			}
 		});
-
-		document.getElementById('js-legend-1').innerHTML = myChart.generateLegend();
 		</script>
 
 		<script>
         		var ctx = document.getElementById("oscillograph").getContext('2d');
-        		var myChart = new Chart(ctx, {
+        		var oscChart = new Chart(ctx, {
         			type: 'bar',
         			data: {
                         labels: ${labels},
@@ -135,13 +122,11 @@
                          }
         			}
         		});
-
-        		document.getElementById('js-legend-2').innerHTML = myChart.generateLegend();
         </script>
 
       	<script>
        		var ctx = document.getElementById("rsi").getContext('2d');
-            var myChart = new Chart(ctx, {
+            var rsiChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: ${labels},
@@ -181,8 +166,6 @@
                     }
                 }
             });
-
-            document.getElementById('js-legend-3').innerHTML = myChart.generateLegend();
         </script>
 	</body>
 </html>

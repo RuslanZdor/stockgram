@@ -17,12 +17,12 @@ public class DownloadHistoricalDataIT {
     @Test
     public void allDays() throws IOException {
         Stock companyData = YahooFinance.get("T", Interval.DAILY);
-        Calendar tommorow = Calendar.getInstance();
-        tommorow.add(Calendar.DATE, 1);
+        Calendar tomorrow = Calendar.getInstance();
+        tomorrow.add(Calendar.DATE, 1);
 
         Calendar yearAgo =  Calendar.getInstance();
         yearAgo.add(Calendar.YEAR, -1);
-        List<HistoricalQuote> histQuotes = companyData.getHistory(yearAgo, tommorow, Interval.DAILY);
+        List<HistoricalQuote> histQuotes = companyData.getHistory(yearAgo, tomorrow, Interval.DAILY);
         assertFalse(histQuotes.isEmpty());
     }
 }

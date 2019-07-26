@@ -69,7 +69,7 @@ public class AddToWatchListCompanyCommand extends ICommandProcessor {
      * @return company Symbol
      * @throws NoSymbolException in case when there are no extraction
      */
-    protected static String getSymbol(String text) throws NoSymbolException {
+    private static String getSymbol(String text) throws NoSymbolException {
         String[] words = StockTelegramBot.splitMessage(text);
         if (words.length < 2 || words[1].length() == 0) {
             throw new NoSymbolException(String.format("command %s has no company symbol", text));

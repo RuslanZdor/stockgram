@@ -48,7 +48,8 @@ public class ShowCompanyCommand extends ICommandProcessor {
      * Do Search request to stocker-data service to find company by symbol
      * In case of positive search - company information will be present
      * In other case - search error message
-     * @param update initial message from user
+     *
+     * @param update   initial message from user
      * @param callback process message callback
      */
     @Override
@@ -60,33 +61,32 @@ public class ShowCompanyCommand extends ICommandProcessor {
         try {
             String symbol = getSymbol(getText(update));
 
-            yahooDataClient.updateCompany(symbol).subscribe(updatedCompany -> {
-                companyDataClient.getCompany(symbol).single().subscribe(
-                        company -> {
-                            sendMessage.setText(String.format("found for %s", company.getName()));
+            yahooDataClient.updateCompany(symbol).subscribe(updatedCompany ->
+                    companyDataClient.getCompany(symbol).single().subscribe(
+                            company -> {
+                                sendMessage.setText(String.format("found for %s", company.getName()));
 
-                            AddToWatchListCallback toWatchListCallback = new AddToWatchListCallback();
-                            toWatchListCallback.setSymbol(company.getSymbol());
-                            toWatchListCallback.setTelegramId(getMessage(update).getFrom().getId().toString());
-                            toWatchListCallback.setId(UUID.randomUUID().toString());
-                            callbackDataClient.addCallback(toWatchListCallback).subscribe(abstractCallback -> {
-                                setCompanyInformation(sendMessage, company, abstractCallback);
+                                AddToWatchListCallback toWatchListCallback = new AddToWatchListCallback();
+                                toWatchListCallback.setSymbol(company.getSymbol());
+                                toWatchListCallback.setTelegramId(getMessage(update).getFrom().getId().toString());
+                                toWatchListCallback.setId(UUID.randomUUID().toString());
+                                callbackDataClient.addCallback(toWatchListCallback).subscribe(abstractCallback -> {
+                                    setCompanyInformation(sendMessage, company, abstractCallback);
+                                    callback.apply(sendMessage);
+                                });
+
+                                SendPhoto sendPhoto = new SendPhoto();
+                                sendPhoto.setChatId(getMessage(update).getChatId());
+                                sendPhoto.setPhoto(chartDataClient.getCompany(symbol));
+
+                                callback.apply(sendPhoto);
+                            },
+                            error -> {
+                                sendMessage.setText(String.format("nothing was found for symbol %s", symbol));
                                 callback.apply(sendMessage);
-                            });
-
-                            SendPhoto sendPhoto = new SendPhoto();
-                            sendPhoto.setChatId(getMessage(update).getChatId());
-                            sendPhoto.setPhoto(chartDataClient.getCompany(symbol));
-
-                            callback.apply(sendPhoto);
-                        },
-                        error -> {
-                            sendMessage.setText(String.format("nothing was found for symbol %s", symbol));
-                            callback.apply(sendMessage);
-                        },
-                        () -> log.info(sendMessage.getText())
-                );
-            });
+                            },
+                            () -> log.info(sendMessage.getText())
+                    ));
         } catch (NoSymbolException e) {
             sendMessage.setText(String.format("Bot wasn't found symbol in message: %s", getText(update)));
             callback.apply(sendMessage);
@@ -112,15 +112,14 @@ public class ShowCompanyCommand extends ICommandProcessor {
         if (company.getDays().isEmpty()) {
             sendMessage.setText(String.format("No daily information about this company %s", company.getSymbol()));
         } else {
-            StringBuilder sb = new StringBuilder();
-            sb.append(String.format("Current Price: %s \n", company.getDays().last().getPrice()));
-            sb.append("Short period parameters\n");
-            sb.append(String.format("5 days EMA: %s\n", company.getDays().last().getFiveEMA()));
-            sb.append(String.format("5 days RSI: %s\n", company.getDays().last().getFiveRSI()));
-            sb.append("Long period parameters\n");
-            sb.append(String.format("30 days EMA: %s\n", company.getDays().last().getThirtyEMA()));
-            sb.append(String.format("30 days RSI: %s\n", company.getDays().last().getThirtyRSI()));
-            sendMessage.setText(sb.toString());
+            String sb = String.format("Current Price: %s \n", company.getDays().last().getPrice()) +
+                    "Short period parameters\n" +
+                    String.format("5 days EMA: %s\n", company.getDays().last().getFiveEMA()) +
+                    String.format("5 days RSI: %s\n", company.getDays().last().getFiveRSI()) +
+                    "Long period parameters\n" +
+                    String.format("30 days EMA: %s\n", company.getDays().last().getThirtyEMA()) +
+                    String.format("30 days RSI: %s\n", company.getDays().last().getThirtyRSI());
+            sendMessage.setText(sb);
         }
 
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();

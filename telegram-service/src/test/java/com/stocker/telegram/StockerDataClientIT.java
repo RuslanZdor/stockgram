@@ -25,9 +25,7 @@ public class StockerDataClientIT {
         Mono<Company> testCompany = companyDataClient.getCompany("aapl");
 
         StepVerifier.create(testCompany)
-                .expectNextMatches(company -> {
-                  return company.getSymbol().equalsIgnoreCase("aapl");
-                })
+                .expectNextMatches(company -> company.getSymbol().equalsIgnoreCase("aapl"))
                 .verifyComplete();
     }
 }

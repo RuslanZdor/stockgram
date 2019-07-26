@@ -14,11 +14,11 @@ public class CalculateMACDSignal implements ICalculateJob {
     public void calculate(Company company) {
         company.getDays().forEach(day -> {
             SortedSet<Day> prevDays = company.getDays().headSet(day);
-            day.setMACDSignal(calculateAverage(day, prevDays.isEmpty() ? 0 : prevDays.last().getMACDSignal(), MACD_COF));
+            day.setMACDSignal(calculateAverage(day, prevDays.isEmpty() ? 0 : prevDays.last().getMACDSignal()));
         });
     }
 
-    private double calculateAverage(Day day, double prevDayValue, int length) {
-        return day.getMACDLine() * 1.0d / length + prevDayValue * (length - 1) / length;
+    private double calculateAverage(Day day, double prevDayValue) {
+        return day.getMACDLine() * 1.0d / CalculateMACDSignal.MACD_COF + prevDayValue * (CalculateMACDSignal.MACD_COF - 1) / CalculateMACDSignal.MACD_COF;
     }
 }

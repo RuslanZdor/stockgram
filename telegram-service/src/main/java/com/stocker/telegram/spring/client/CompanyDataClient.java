@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class CompanyDataClient {
 
-    private WebClient client;
+    private final WebClient client;
 
     public CompanyDataClient() {
         this.client = WebClient.builder().baseUrl("http://localhost:8081/").build();

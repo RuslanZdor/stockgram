@@ -1,6 +1,5 @@
 package com.stocker.yahoo.spring.job;
 
-import com.stocker.yahoo.data.Day;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.Set;
