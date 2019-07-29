@@ -1,6 +1,6 @@
 package com.stocker.data.spring;
 
-import com.stocker.data.Company;
+import com.stocker.yahoo.data.Company;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;

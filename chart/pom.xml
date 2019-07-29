@@ -118,6 +118,16 @@
             <artifactId>tomcat-embed-jasper</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.stocker</groupId>
+            <artifactId>beans</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.stocker</groupId>
+            <artifactId>beans</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
