@@ -22,6 +22,8 @@ public class Company {
     private String symbol;
     private String industry;
 
+    private CompanyStats companyStats;
+
     private NavigableSet<Day> days = new TreeSet<>();
 
     /**
