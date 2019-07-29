@@ -12,7 +12,7 @@ import java.util.SortedSet;
 @Component
 public class CalculateEMA implements ICalculateJob {
     public void calculate(Company company) {
-        company.getDays().forEach(day -> {
+        company.getDays().stream().filter(day -> day.getThirtyEMA() == 0.0d).forEach(day -> {
             SortedSet<Day> prevDays = company.getDays().headSet(day);
             day.setFiveEMA(CalculationsUtil.calculateEMA(day.getPrice(), prevDays.isEmpty() ? day.getPrice() : prevDays.last().getFiveEMA(), 5));
             day.setTenEMA(CalculationsUtil.calculateEMA(day.getPrice(), prevDays.isEmpty() ? day.getPrice() : prevDays.last().getTenEMA(), 10));

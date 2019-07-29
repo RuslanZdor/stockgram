@@ -15,7 +15,7 @@ public class CalculateRSI implements ICalculateJob {
         Objects.requireNonNull(company, "Company cannot be null");
 
         calculateGainAndLoss(company);
-        company.getDays().forEach(day -> {
+        company.getDays().stream().filter(day -> day.getThirtyRSI() == 0.0).forEach(day -> {
             List<Day> tail = new ArrayList<>(company.getDays().headSet(day));
             tail.add(day);
             Collections.reverse(tail);

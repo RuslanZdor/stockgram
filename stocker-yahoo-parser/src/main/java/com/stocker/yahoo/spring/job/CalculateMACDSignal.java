@@ -12,7 +12,7 @@ public class CalculateMACDSignal implements ICalculateJob {
     private final static int MACD_COF = 9;
 
     public void calculate(Company company) {
-        company.getDays().forEach(day -> {
+        company.getDays().stream().filter(day -> day.getMACDSignal() == 0.0d).forEach(day -> {
             SortedSet<Day> prevDays = company.getDays().headSet(day);
             day.setMACDSignal(calculateAverage(day, prevDays.isEmpty() ? 0 : prevDays.last().getMACDSignal()));
         });

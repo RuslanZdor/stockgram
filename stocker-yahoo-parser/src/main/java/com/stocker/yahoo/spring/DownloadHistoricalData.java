@@ -12,6 +12,7 @@ import yahoofinance.histquotes.Interval;
 
 import java.io.IOException;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.List;
 
@@ -26,12 +27,16 @@ public class DownloadHistoricalData {
             tomorrow.add(Calendar.DATE, 1);
 
             Calendar yearAgo =  Calendar.getInstance();
-            yearAgo.add(Calendar.YEAR, -1);
+            if (company.getDays().isEmpty()) {
+                yearAgo.add(Calendar.YEAR, -1);
+            } else {
+                yearAgo.setTimeInMillis(company.getDays().last().getDate().atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli());
+            }
+
             List<HistoricalQuote> histQuotes = companyData.getHistory(yearAgo, tomorrow, Interval.DAILY);
             if (histQuotes.stream().anyMatch(data -> data.getDate() == null && data.getClose() == null)) {
                 throw new NoDayException(String.format("Stock %s has bad data", company.getSymbol()));
             }
-            company.getDays().clear();
             histQuotes.stream()
                     .filter(data -> data.getDate() != null)
                     .filter(data -> data.getClose() != null)

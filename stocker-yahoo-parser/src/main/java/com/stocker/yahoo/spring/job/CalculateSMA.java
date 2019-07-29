@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Component
 public class CalculateSMA implements ICalculateJob {
     public void calculate(Company company) {
-        for (Day day : company.getDays()) {
+        company.getDays().stream().filter(day -> day.getThirtySMA() == 0.0).forEach(day -> {
             NavigableSet<Day> sortedSet = company.getDays().headSet(day, true);
             day.setFiveSMA(CalculationsUtil.calculateSMA(sortedSet.stream().sorted(Collections.reverseOrder()).limit(5).map(Day::getPrice).collect(Collectors.toSet())));
             day.setTenSMA(CalculationsUtil.calculateSMA(sortedSet.stream().sorted(Collections.reverseOrder()).limit(10).map(Day::getPrice).collect(Collectors.toSet())));
@@ -22,6 +22,6 @@ public class CalculateSMA implements ICalculateJob {
             day.setTwentySMA(CalculationsUtil.calculateSMA(sortedSet.stream().sorted(Collections.reverseOrder()).limit(20).map(Day::getPrice).collect(Collectors.toSet())));
             day.setTwentyFiveSMA(CalculationsUtil.calculateSMA(sortedSet.stream().sorted(Collections.reverseOrder()).limit(25).map(Day::getPrice).collect(Collectors.toSet())));
             day.setThirtySMA(CalculationsUtil.calculateSMA(sortedSet.stream().sorted(Collections.reverseOrder()).limit(30).map(Day::getPrice).collect(Collectors.toSet())));
-        }
+        });
     }
 }
