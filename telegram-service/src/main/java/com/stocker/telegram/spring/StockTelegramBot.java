@@ -9,7 +9,9 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -40,9 +42,14 @@ public class StockTelegramBot extends TelegramLongPollingBot {
 
     private Map<String, ICommandProcessor> commandMap = new HashMap<>();
 
-    private SendMessage processorCallback(SendMessage message) {
+    private PartialBotApiMethod<Message> processorCallback(PartialBotApiMethod<Message> message) {
         try {
-            this.execute(message);
+            if (message instanceof SendPhoto) {
+                this.execute((SendPhoto) message);
+            }
+            if (message instanceof SendMessage) {
+                this.execute((SendMessage) message);
+            }
         } catch (TelegramApiException e) {
             log.error(e);
         }
@@ -62,10 +69,10 @@ public class StockTelegramBot extends TelegramLongPollingBot {
         Message message = update.hasCallbackQuery() ? update.getCallbackQuery().getMessage() : update.getMessage();
         try {
             ICommandProcessor processor = findCommand(update);
-            processor.process(update, m -> processorCallback(m));
+            processor.process(update, this::processorCallback);
         } catch (UnexpectedCommandException ex) {
             log.error(ex);
-            unexpectedCommand.process(update, m -> processorCallback(m));
+            unexpectedCommand.process(update, this::processorCallback);
         }
     }
 
@@ -82,12 +89,12 @@ public class StockTelegramBot extends TelegramLongPollingBot {
     }
 
     public static String[] splitMessage(String message) {
-        String data = message.replaceAll("^\\s*\\/*", "");
+        String data = message.replaceAll("^\\s*/*", "");
         return data.split("(\\s+|_|-)");
     }
 
     /**
-     * Try to find command based on numan Message
+     * Try to find command based on human Message
      * @param update human from telegram
      * @return fount command for message
      * @throws UnexpectedCommandException in case when command is not found
@@ -105,11 +112,11 @@ public class StockTelegramBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return "stockTensorFlowBot";
+        return "";
     }
 
     @Override
     public String getBotToken() {
-        return "675780010:AAFVsRd6l3t0Ixr8cjeMpapD28sUvJGnPSg";
+        return "";
     }
 }
