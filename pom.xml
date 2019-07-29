@@ -9,8 +9,12 @@
     <packaging>pom</packaging>
 
     <modules>
-		<module>telegram-service</module>
+	<module>telegram-service</module>
         <module>stockerdata</module>
+        <module>eureka-server</module>
+        <module>stocker-yahoo-parser</module>
+        <module>chart</module>
+        <module>beans</module>
     </modules>
 
 </project>

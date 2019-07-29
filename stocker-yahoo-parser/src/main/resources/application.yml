@@ -1,0 +1,17 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: yahoo-service
+eureka:
+  client:
+    register-with-eureka: true
+logging:
+  level:
+    org.springframework: ERROR
+    com.stocker: DEBUG
+    yahoofinance.histquotes2: ERROR
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+    file: "%d %p %c{1.} [%t] %m%n"
+  file: app.log

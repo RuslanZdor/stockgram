@@ -1,0 +1,17 @@
+server:
+  port: 8083
+spring:
+  mvc:
+    view:
+      previx: /WEB-INF/view/
+      suffix: .jsp
+  application:
+    name: chart
+eureka:
+  client:
+    register-with-eureka: true
+logging:
+  level:
+    org:
+      springframework: INFO
+    com: INFO
