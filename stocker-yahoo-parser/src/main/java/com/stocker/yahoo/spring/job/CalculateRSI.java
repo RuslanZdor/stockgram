@@ -19,12 +19,11 @@ public class CalculateRSI implements ICalculateJob {
             List<Day> tail = new ArrayList<>(company.getDays().headSet(day));
             tail.add(day);
             Collections.reverse(tail);
-            day.setFiveRSI(tail.isEmpty() ? 50 : calculateRSI(day.getFiveRSIGain(), day.getFiveRSILoss()));
-            day.setTenRSI(tail.isEmpty() ? 50 : calculateRSI(day.getTenRSIGain(), day.getTenRSILoss()));
-            day.setFifteenRSI(tail.isEmpty() ? 50 : calculateRSI(day.getFifteenRSIGain(), day.getFifteenRSILoss()));
-            day.setTwentyRSI(tail.isEmpty() ? 50 : calculateRSI(day.getTwentyRSIGain(), day.getTwentyRSILoss()));
-            day.setTwentyFiveRSI(tail.isEmpty() ? 50 : calculateRSI(day.getTwentyFiveRSIGain(), day.getTwentyFiveRSILoss()));
-            day.setThirtyRSI(tail.isEmpty() ? 50 : calculateRSI(day.getThirtyRSIGain(), day.getThirtyRSILoss()));
+            day.setRSI5(tail.isEmpty() ? 50 : calculateRSI(day.getRSIGain5(), day.getRSILoss5()));
+            day.setRSI10(tail.isEmpty() ? 50 : calculateRSI(day.getRSIGain10(), day.getRSILoss10()));
+            day.setRSI20(tail.isEmpty() ? 50 : calculateRSI(day.getRSIGain20(), day.getRSILoss20()));
+            day.setRSI50(tail.isEmpty() ? 50 : calculateRSI(day.getRSIGain50(), day.getRSILoss50()));
+            day.setRSI200(tail.isEmpty() ? 50 : calculateRSI(day.getRSIGain200(), day.getRSILoss200()));
         });
     }
 
@@ -34,18 +33,16 @@ public class CalculateRSI implements ICalculateJob {
             if (!prevDays.isEmpty()) {
                 double lossValue = Math.max(prevDays.last().getPrice() - day.getPrice(), 0);
                 double gainValue = Math.max(day.getPrice() - prevDays.last().getPrice(), 0);
-                day.setFiveRSIGain(CalculationsUtil.calculateEMA(gainValue, prevDays.last().getFiveRSIGain(), 5));
-                day.setFiveRSILoss(CalculationsUtil.calculateEMA(lossValue, prevDays.last().getFiveRSILoss(), 5));
-                day.setTenRSIGain(CalculationsUtil.calculateEMA(gainValue, prevDays.last().getTenRSIGain(), 10));
-                day.setTenRSILoss(CalculationsUtil.calculateEMA(lossValue, prevDays.last().getTenRSILoss(), 10));
-                day.setFifteenRSIGain(CalculationsUtil.calculateEMA(gainValue, prevDays.last().getFifteenRSIGain(), 15));
-                day.setFifteenRSILoss(CalculationsUtil.calculateEMA(lossValue, prevDays.last().getFifteenRSILoss(), 15));
-                day.setTwentyFiveRSIGain(CalculationsUtil.calculateEMA(gainValue, prevDays.last().getTwentyFiveRSIGain(), 20));
-                day.setTwentyFiveRSILoss(CalculationsUtil.calculateEMA(lossValue, prevDays.last().getTwentyFiveRSILoss(), 20));
-                day.setTwentyFiveRSIGain(CalculationsUtil.calculateEMA(gainValue, prevDays.last().getTwentyFiveRSIGain(), 25));
-                day.setTwentyFiveRSILoss(CalculationsUtil.calculateEMA(lossValue, prevDays.last().getTwentyFiveRSILoss(), 25));
-                day.setThirtyRSIGain(CalculationsUtil.calculateEMA(gainValue, prevDays.last().getThirtyRSIGain(), 30));
-                day.setThirtyRSILoss(CalculationsUtil.calculateEMA(lossValue, prevDays.last().getThirtyRSILoss(), 30));
+                day.setRSIGain5(CalculationsUtil.calculateEMA(gainValue, prevDays.last().getRSIGain5(), 5));
+                day.setRSILoss5(CalculationsUtil.calculateEMA(lossValue, prevDays.last().getRSILoss5(), 5));
+                day.setRSIGain10(CalculationsUtil.calculateEMA(gainValue, prevDays.last().getRSIGain10(), 10));
+                day.setRSILoss10(CalculationsUtil.calculateEMA(lossValue, prevDays.last().getRSILoss10(), 10));
+                day.setRSIGain20(CalculationsUtil.calculateEMA(gainValue, prevDays.last().getRSIGain20(), 20));
+                day.setRSILoss20(CalculationsUtil.calculateEMA(lossValue, prevDays.last().getRSILoss20(), 20));
+                day.setRSIGain50(CalculationsUtil.calculateEMA(gainValue, prevDays.last().getRSIGain50(), 50));
+                day.setRSILoss50(CalculationsUtil.calculateEMA(lossValue, prevDays.last().getRSILoss50(), 50));
+                day.setRSIGain200(CalculationsUtil.calculateEMA(gainValue, prevDays.last().getRSIGain200(), 200));
+                day.setRSILoss200(CalculationsUtil.calculateEMA(lossValue, prevDays.last().getRSILoss200(), 200));
             }
         }
     }

@@ -1,7 +1,7 @@
 package com.stocker.data.controller;
 
-import com.stocker.data.Company;
 import com.stocker.data.spring.CompanyRepository;
+import com.stocker.yahoo.data.Company;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

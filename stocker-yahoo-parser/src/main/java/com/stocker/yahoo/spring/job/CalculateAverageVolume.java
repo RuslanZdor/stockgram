@@ -18,37 +18,31 @@ public class CalculateAverageVolume implements ICalculateJob {
 
             Day nextDay = new Day(day.getDate().plus(1, ChronoUnit.DAYS));
             searchDay.setDate(day.getDate().minus(5, ChronoUnit.DAYS));
-            day.setFiveAverageVolume(CalculationsUtil.calculateSMA(
+            day.setAverageVolume5(CalculationsUtil.calculateSMA(
                     company.getDays().subSet(searchDay, nextDay)
                             .stream().map(day1 -> (double) day1.getVolume()).collect(Collectors.toSet())
             ));
 
             searchDay.setDate(day.getDate().minus(10, ChronoUnit.DAYS));
-            day.setTenAverageVolume(CalculationsUtil.calculateSMA(
-                    company.getDays().subSet(searchDay, nextDay)
-                            .stream().map(day1 -> (double) day1.getVolume()).collect(Collectors.toSet())
-            ));
-
-            searchDay.setDate(day.getDate().minus(15, ChronoUnit.DAYS));
-            day.setFifteenAverageVolume(CalculationsUtil.calculateSMA(
+            day.setAverageVolume10(CalculationsUtil.calculateSMA(
                     company.getDays().subSet(searchDay, nextDay)
                             .stream().map(day1 -> (double) day1.getVolume()).collect(Collectors.toSet())
             ));
 
             searchDay.setDate(day.getDate().minus(20, ChronoUnit.DAYS));
-            day.setTwentyAverageVolume(CalculationsUtil.calculateSMA(
+            day.setAverageVolume20(CalculationsUtil.calculateSMA(
                     company.getDays().subSet(searchDay, nextDay)
                             .stream().map(day1 -> (double) day1.getVolume()).collect(Collectors.toSet())
             ));
 
-            searchDay.setDate(day.getDate().minus(25, ChronoUnit.DAYS));
-            day.setTwentyFiveAverageVolume(CalculationsUtil.calculateSMA(
+            searchDay.setDate(day.getDate().minus(50, ChronoUnit.DAYS));
+            day.setAverageVolume50(CalculationsUtil.calculateSMA(
                     company.getDays().subSet(searchDay, nextDay)
                             .stream().map(day1 -> (double) day1.getVolume()).collect(Collectors.toSet())
             ));
 
-            searchDay.setDate(day.getDate().minus(30, ChronoUnit.DAYS));
-            day.setThirtyAverageVolume(CalculationsUtil.calculateSMA(
+            searchDay.setDate(day.getDate().minus(200, ChronoUnit.DAYS));
+            day.setAverageVolume200(CalculationsUtil.calculateSMA(
                     company.getDays().subSet(searchDay, nextDay)
                             .stream().map(day1 -> (double) day1.getVolume()).collect(Collectors.toSet())
             ));

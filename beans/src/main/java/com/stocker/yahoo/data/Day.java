@@ -1,4 +1,4 @@
-package com.stocker.data;
+package com.stocker.yahoo.data;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,53 +20,63 @@ public class Day implements Comparable<Day>{
     private int id;
 
     private LocalDate date;
+
     private long volume;
+
     private double price;
     private double minPrice;
     private double maxPrice;
     private double openPrice;
-    private double fiveEMA;
-    private double tenEMA;
-    private double fifteenEMA;
-    private double twentyEMA;
-    private double twentyFiveEMA;
-    private double thirtyEMA;
 
-    private double fiveSMA;
-    private double tenSMA;
-    private double fifteenSMA;
-    private double twentySMA;
-    private double twentyFiveSMA;
-    private double thirtySMA;
+    private double EMA5;
+    private double EMA10;
+    private double EMA20;
+    private double EMA50;
+    private double EMA200;
 
-    private double fiveRSI;
-    private double tenRSI;
-    private double fifteenRSI;
-    private double twentyRSI;
-    private double twentyFiveRSI;
-    private double thirtyRSI;
+    private double SMA5;
+    private double SMA10;
+    private double SMA20;
+    private double SMA50;
+    private double SMA200;
 
-    private double fiveAverageVolume;
-    private double tenAverageVolume;
-    private double fifteenAverageVolume;
-    private double twentyAverageVolume;
-    private double twentyFiveAverageVolume;
-    private double thirtyAverageVolume;
+    private double RSI5;
+    private double RSI10;
+    private double RSI20;
+    private double RSI50;
+    private double RSI200;
 
-    private double fiveVOL;
-    private double tenVOL;
-    private double fifteenVOL;
-    private double twentyVOL;
-    private double twentyFiveVOL;
-    private double thirtyVOL;
+    private double RSIGain5;
+    private double RSIGain10;
+    private double RSIGain20;
+    private double RSIGain50;
+    private double RSIGain200;
+
+    private double RSILoss5;
+    private double RSILoss10;
+    private double RSILoss20;
+    private double RSILoss50;
+    private double RSILoss200;
+
+    private double averageVolume5;
+    private double averageVolume10;
+    private double averageVolume20;
+    private double averageVolume50;
+    private double averageVolume200;
+
+    private double VOL5;
+    private double VOL10;
+    private double VOL20;
+    private double VOL50;
+    private double VOL200;
 
     private double moneyVolume;
-    private double fiveMVSMA;
-    private double tenMVSMA;
-    private double fifteenMVSMA;
-    private double twentyMVSMA;
-    private double twentyFiveMVSMA;
-    private double thirtyMVSMA;
+
+    private double MVSMA5;
+    private double MVSMA10;
+    private double MVSMA20;
+    private double MVSMA50;
+    private double MVSMA200;
 
     private int thrustDirection;
     private double thrustFiveEMA;
@@ -77,11 +87,6 @@ public class Day implements Comparable<Day>{
 
     private double resistance;
     private double support;
-
-    /**
-     * calculated only for market
-     */
-    private double VIX;
 
     private boolean isRising = false;
 

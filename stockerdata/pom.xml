@@ -81,6 +81,16 @@
             <artifactId>de.flapdoodle.embed.mongo</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.stocker</groupId>
+            <artifactId>beans</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.stocker</groupId>
+            <artifactId>beans</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>

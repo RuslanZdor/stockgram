@@ -85,6 +85,11 @@
             <version>2.1.6.RELEASE</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.stocker</groupId>
+            <artifactId>beans</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>

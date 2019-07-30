@@ -1,0 +1,4 @@
+.idea/*
+stockergraph/target/*
+telegram-service/target/*
+*.iml

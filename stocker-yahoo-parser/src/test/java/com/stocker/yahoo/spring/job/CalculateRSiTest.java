@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class CalculateRSiTest {
+public class CalculateRSITest {
 
     @Autowired
     private CalculateRSI ema;
@@ -35,7 +35,7 @@ public class CalculateRSiTest {
         company.getDays().add(day);
 
         ema.calculate(company);
-        assertTrue(company.getDays().last().getThirtyRSI() > 0.5);
+        assertTrue(company.getDays().last().getRSI200() > 0.5);
     }
 
     @Test
@@ -48,6 +48,6 @@ public class CalculateRSiTest {
         }
 
         ema.calculate(company);
-        assertTrue(company.getDays().last().getThirtyRSI() < 0.5);
+        assertTrue(company.getDays().last().getRSI200() < 0.5);
     }
 }

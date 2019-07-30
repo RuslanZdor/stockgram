@@ -27,7 +27,7 @@ public class CalculateRSIIT {
         companyRepository.findFirstBySymbol(Mono.just("AAPL")).subscribe(company -> {
             log.info(company.getSymbol());
             calculateRSI.calculate(company);
-            assertTrue(company.getDays().last().getThirtyRSI() != 0.0);
+            assertTrue(company.getDays().last().getRSI200() != 0.0);
         });
     }
 }

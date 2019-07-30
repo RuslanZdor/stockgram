@@ -1,6 +1,5 @@
 package com.stocker.telegram.spring.command;
 
-import com.stocker.telegram.data.Company;
 import com.stocker.telegram.exception.NoSymbolException;
 import com.stocker.telegram.spring.client.CallbackDataClient;
 import com.stocker.telegram.spring.client.ChartDataClient;
@@ -9,6 +8,7 @@ import com.stocker.telegram.spring.StockTelegramBot;
 import com.stocker.telegram.spring.callback.AbstractCallback;
 import com.stocker.telegram.spring.callback.AddToWatchListCallback;
 import com.stocker.telegram.spring.client.YahooDataClient;
+import com.stocker.yahoo.data.Company;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -114,11 +114,11 @@ public class ShowCompanyCommand extends ICommandProcessor {
         } else {
             String sb = String.format("Current Price: %s \n", company.getDays().last().getPrice()) +
                     "Short period parameters\n" +
-                    String.format("5 days EMA: %s\n", company.getDays().last().getFiveEMA()) +
-                    String.format("5 days RSI: %s\n", company.getDays().last().getFiveRSI()) +
+                    String.format("5 days EMA: %s\n", company.getDays().last().getEMA5()) +
+                    String.format("5 days RSI: %s\n", company.getDays().last().getRSI5()) +
                     "Long period parameters\n" +
-                    String.format("30 days EMA: %s\n", company.getDays().last().getThirtyEMA()) +
-                    String.format("30 days RSI: %s\n", company.getDays().last().getThirtyRSI());
+                    String.format("30 days EMA: %s\n", company.getDays().last().getEMA50()) +
+                    String.format("30 days RSI: %s\n", company.getDays().last().getRSI50());
             sendMessage.setText(sb);
         }
 
