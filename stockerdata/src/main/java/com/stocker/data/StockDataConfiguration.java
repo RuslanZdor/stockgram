@@ -22,7 +22,7 @@ import java.util.Arrays;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableReactiveMongoRepositories("com.stocker")
-public class StockDataConfiguration {
+class StockDataConfiguration {
 
     public static void main(String[] args) {
         SpringApplication.run(StockDataConfiguration.class, args);

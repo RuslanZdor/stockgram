@@ -10,7 +10,7 @@ import org.reactivestreams.Publisher;
 import reactor.core.publisher.Mono;
 
 @RestController
-public class CompanyController {
+class CompanyController {
 
     @Autowired
     private CompanyRepository repository;

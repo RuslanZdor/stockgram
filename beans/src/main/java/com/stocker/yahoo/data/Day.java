@@ -103,10 +103,7 @@ public class Day implements Comparable<Day>{
     public boolean equals(Object obj) {
         if (obj instanceof Day) {
             Day compareDay = (Day) obj;
-            if (date == null || compareDay.getDate() == null) {
-                return false;
-            }
-            return date.equals(compareDay.getDate());
+            return date != null && compareDay.getDate() != null && date.equals(compareDay.getDate());
         }
         throw new ClassCastException("Object to compare can be only Day type");
     }

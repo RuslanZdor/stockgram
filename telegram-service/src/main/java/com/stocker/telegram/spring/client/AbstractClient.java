@@ -1,14 +1,11 @@
 package com.stocker.telegram.spring.client;
 
 import com.netflix.discovery.DiscoveryClient;
-import com.stocker.telegram.spring.callback.AbstractCallback;
-import com.stocker.telegram.spring.callback.AddToWatchListCallback;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 @Log4j2
 @Component
