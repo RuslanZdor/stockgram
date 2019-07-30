@@ -1,0 +1,10 @@
+server.port: 8080
+spring.application.name: telegram-service
+spring.main.web-application-type: none
+eureka:
+  instance:
+    appname: telegram-service
+  client:
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka

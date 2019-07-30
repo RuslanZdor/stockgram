@@ -4,7 +4,7 @@ import com.stocker.telegram.spring.StockTelegramComponent;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.*;
 import org.telegram.telegrambots.ApiContextInitializer;
@@ -14,7 +14,7 @@ import java.util.Arrays;
 @Configuration
 @ComponentScan(basePackages = "com.stocker")
 @SpringBootApplication
-@EnableDiscoveryClient
+@EnableEurekaClient
 public class StockTelegramConfiguration {
 
     public static void main(String[] args) {

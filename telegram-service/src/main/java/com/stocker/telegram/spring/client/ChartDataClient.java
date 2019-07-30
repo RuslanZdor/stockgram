@@ -1,5 +1,6 @@
 package com.stocker.telegram.spring.client;
 
+import com.netflix.discovery.DiscoveryClient;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -7,6 +8,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -14,7 +16,9 @@ import java.io.IOException;
 
 @Log4j2
 @Component
-public class ChartDataClient {
+public class ChartDataClient extends AbstractClient {
+
+    private static final String SERVICE = "stocker-chart";
 
     public File getCompany(String symbol) {
         log.info(String.format("getting chart for company with symbol %s", symbol));
@@ -27,7 +31,7 @@ public class ChartDataClient {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1024","--ignore-certificate-errors");
             driver = new ChromeDriver(options);
-            driver.get(String.format("http://localhost:8083/company/%s/", symbol));
+            driver.get(String.format("%s/company/%s/", getWebClient(SERVICE), symbol));
             File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(screenshot, new File("screenshot.png"));
         } catch (IOException e) {

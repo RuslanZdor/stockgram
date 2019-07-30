@@ -8,17 +8,13 @@ import reactor.core.publisher.Mono;
 
 @Log4j2
 @Component
-public class CompanyDataClient {
+public class CompanyDataClient extends AbstractClient {
 
-    private final WebClient client;
-
-    public CompanyDataClient() {
-        this.client = WebClient.builder().baseUrl("http://localhost:8081/").build();
-    }
+    private static final String SERVICE = "stocker-data";
 
     public Mono<Company> getCompany(String symbol) {
         log.info(String.format("getting company with symbol %s", symbol));
-        return this.client
+        return this.getWebClient(SERVICE)
                 .get()
                 .uri(String.format("company/%s/", symbol))
                 .retrieve()

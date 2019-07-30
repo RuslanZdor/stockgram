@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @Document
 public class CompanyStats {
 
-    //
     private double marketCap;
     private long sharesFloat;
     private long sharesOutstanding;

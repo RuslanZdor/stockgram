@@ -112,11 +112,11 @@ public class StockTelegramBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return "";
+        return "stockTensorFlowBot";
     }
 
     @Override
     public String getBotToken() {
-        return "";
+        return "675780010:AAF_PDdmbF1oexPs5VqdUvKbSwA5SRNo7aM";
     }
 }

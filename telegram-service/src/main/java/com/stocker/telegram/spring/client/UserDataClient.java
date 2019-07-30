@@ -8,17 +8,13 @@ import reactor.core.publisher.Mono;
 
 @Log4j2
 @Component
-public class UserDataClient {
+public class UserDataClient extends AbstractClient {
 
-    private final WebClient client;
-
-    public UserDataClient() {
-        this.client = WebClient.builder().baseUrl("http://localhost:8081/").build();
-    }
+    private static final String SERVICE = "stocker-data";
 
     public Mono<User> getUser(String telegramId) {
         log.info(String.format("getting user with telegramId %s", telegramId));
-        return this.client
+        return this.getWebClient(SERVICE)
                 .get()
                 .uri(String.format("user/%s/", telegramId))
                 .retrieve()
@@ -27,7 +23,7 @@ public class UserDataClient {
 
     public Mono<User> addUser(User user) {
         log.info(String.format("add new user with telegramId %s", user.getTelegramId()));
-        return this.client
+        return this.getWebClient(SERVICE)
                 .post()
                 .uri("/addUser/")
                 .syncBody(user).retrieve().bodyToMono(User.class);

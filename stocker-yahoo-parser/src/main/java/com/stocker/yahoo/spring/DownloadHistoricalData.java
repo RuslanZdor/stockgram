@@ -13,6 +13,7 @@ import yahoofinance.histquotes.Interval;
 import java.io.IOException;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.List;
 
@@ -30,7 +31,8 @@ public class DownloadHistoricalData {
             if (company.getDays().isEmpty()) {
                 yearAgo.add(Calendar.YEAR, -1);
             } else {
-                yearAgo.setTimeInMillis(company.getDays().last().getDate().atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli());
+                yearAgo.setTimeInMillis(company.getDays().last().getDate()
+                        .minus(1, ChronoUnit.DAYS).atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli());
             }
 
             List<HistoricalQuote> histQuotes = companyData.getHistory(yearAgo, tomorrow, Interval.DAILY);
