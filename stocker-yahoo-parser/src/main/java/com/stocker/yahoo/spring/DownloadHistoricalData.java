@@ -1,7 +1,6 @@
 package com.stocker.yahoo.spring;
 
 import com.stocker.yahoo.data.Company;
-import com.stocker.yahoo.data.CompanyStats;
 import com.stocker.yahoo.data.Day;
 import com.stocker.yahoo.exception.NoDayException;
 import lombok.extern.log4j.Log4j2;
@@ -10,12 +9,10 @@ import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.histquotes.Interval;
-import yahoofinance.quotes.stock.StockStats;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.List;
 
@@ -30,16 +27,16 @@ public class DownloadHistoricalData {
             tomorrow.add(Calendar.DATE, 1);
 
             Calendar yearAgo =  Calendar.getInstance();
-            yearAgo.add(Calendar.YEAR, -1);
+            if (company.getDays().isEmpty()) {
+                yearAgo.add(Calendar.YEAR, -1);
+            } else {
+                yearAgo.setTimeInMillis(company.getDays().last().getDate().atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli());
+            }
+
             List<HistoricalQuote> histQuotes = companyData.getHistory(yearAgo, tomorrow, Interval.DAILY);
             if (histQuotes.stream().anyMatch(data -> data.getDate() == null && data.getClose() == null)) {
                 throw new NoDayException(String.format("Stock %s has bad data", company.getSymbol()));
             }
-
-            company.setName(companyData.getName());
-            company.setCompanyStats(createCompanyStats(companyData.getStats()));
-
-            company.getDays().clear();
             histQuotes.stream()
                     .filter(data -> data.getDate() != null)
                     .filter(data -> data.getClose() != null)
@@ -57,28 +54,5 @@ public class DownloadHistoricalData {
         } catch (IOException ex) {
             throw new NoDayException(String.format("Stock %s has bad data", company.getSymbol()), ex);
         }
-    }
-
-    private CompanyStats createCompanyStats(StockStats stockStats) {
-        CompanyStats companyStats = new CompanyStats();
-        companyStats.setMarketCap(stockStats.getMarketCap().doubleValue());
-        companyStats.setSharesFloat(stockStats.getSharesFloat());
-        companyStats.setSharesOutstanding(stockStats.getSharesOutstanding());
-        companyStats.setSharesOwned(stockStats.getSharesOwned());
-        companyStats.setEps(stockStats.getEps().doubleValue());
-        companyStats.setPe(stockStats.getPe().doubleValue());
-        companyStats.setPeg(stockStats.getPeg().doubleValue());
-        companyStats.setEpsEstimateCurrentYear(stockStats.getEpsEstimateCurrentYear().doubleValue());
-        companyStats.setEpsEstimateNextQuarter(stockStats.getEpsEstimateNextQuarter().doubleValue());
-        companyStats.setEpsEstimateNextYear(stockStats.getEpsEstimateNextYear().doubleValue());
-        companyStats.setPriceBook(stockStats.getPriceBook().doubleValue());
-        companyStats.setPriceSales(stockStats.getPriceSales().doubleValue());
-        companyStats.setBookValuePerShare(stockStats.getBookValuePerShare().doubleValue());
-        companyStats.setRevenue(stockStats.getRevenue().doubleValue());
-        companyStats.setEBITDA(stockStats.getEBITDA().doubleValue());
-        companyStats.setOneYearTargetPrice(stockStats.getOneYearTargetPrice().doubleValue());
-        companyStats.setShortRatio(stockStats.getShortRatio().doubleValue());
-        companyStats.setEarningsAnnouncement(stockStats.getEarningsAnnouncement().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-        return companyStats;
     }
 }

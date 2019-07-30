@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Component
 public class CalculateAverageVolume implements ICalculateJob {
     public void calculate(Company company) {
-        company.getDays().forEach(day -> {
+        company.getDays().stream().filter(day -> day.getThirtyAverageVolume() == 0).forEach(day -> {
             Day searchDay = new Day(day.getDate());
 
             Day nextDay = new Day(day.getDate().plus(1, ChronoUnit.DAYS));

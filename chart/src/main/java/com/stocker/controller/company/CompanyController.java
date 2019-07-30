@@ -26,7 +26,7 @@ public class CompanyController {
     @Autowired
     private CompanyDataClient companyDataClient;
 
-    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MMM dd, yyyy, hh:mm:ss a");
     private static final double volumeMultiplicator = 4.0d;
 
     private static final int GRAPH_SIZE = 200;
@@ -100,7 +100,7 @@ public class CompanyController {
     private Map<String, Object> prepareCompanyData(Set<Day> days) {
         Map<String, Object> map = new HashMap<>();
         JSONArray array = new JSONArray();
-        array.addAll(days.stream().map(day -> DATE_FORMAT.format(day.getDate())).collect(Collectors.toList()));
+        array.addAll(days.stream().map(day -> DATE_FORMAT.format(day.getDate().atStartOfDay())).collect(Collectors.toList()));
         map.put("labels", array);
         map.put("volumeMax", getMaxDayVolume(days));
         map.put("maxPrice", getMaxPrice(days));
