@@ -2,12 +2,10 @@ package com.stocker.yahoo.data;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
-import java.util.Calendar;
 
 @Data
 @Log4j
@@ -15,6 +13,7 @@ import java.util.Calendar;
 @Document
 public class CompanyStats {
 
+    //
     private double marketCap;
     private long sharesFloat;
     private long sharesOutstanding;
