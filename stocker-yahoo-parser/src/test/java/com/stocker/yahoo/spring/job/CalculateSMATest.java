@@ -23,7 +23,7 @@ public class CalculateSMATest {
     @Test
     public void calculate() {
         Company company = new Company();
-        for (int i = 1; i <= 30; i++) {
+        for (int i = 1; i <= 201; i++) {
             Day day = new Day(LocalDate.now().plus(i, ChronoUnit.DAYS));
             day.setPrice(i);
             company.getDays().add(day);
@@ -31,11 +31,11 @@ public class CalculateSMATest {
 
         calculateSMA.calculate(company);
 
-        assertEquals(28, company.getDays().last().getSMA5(), 0.1);
-        assertEquals(25.5, company.getDays().last().getSMA10(), 0.1);
-        assertEquals(23, company.getDays().last().getSMA20(), 0.1);
-        assertEquals(20.5, company.getDays().last().getSMA50(), 0.1);
-        assertEquals(18, company.getDays().last().getSMA200(), 0.1);
+        assertEquals(199, company.getDays().last().getSMA5(), 0.1);
+        assertEquals(196.5, company.getDays().last().getSMA10(), 0.1);
+        assertEquals(191.5, company.getDays().last().getSMA20(), 0.1);
+        assertEquals(176.5, company.getDays().last().getSMA50(), 0.1);
+        assertEquals(101.5, company.getDays().last().getSMA200(), 0.1);
     }
 
     @Test

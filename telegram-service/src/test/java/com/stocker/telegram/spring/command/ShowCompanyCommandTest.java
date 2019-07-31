@@ -1,6 +1,7 @@
 package com.stocker.telegram.spring.command;
 
 import com.stocker.telegram.exception.NoSymbolException;
+import com.stocker.yahoo.data.Company;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

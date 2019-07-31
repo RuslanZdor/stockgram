@@ -74,25 +74,25 @@ public class CompanyController {
 
     private Map<String, Object> prepareSMAData(Set<Day> days) {
         Map<String, Object> map = new HashMap<>();
-        map.put("SMA 5", hide(createLineChartData(FIVE_SMA_LABEL, PRICE_Y_AXIS,
+        map.put("SMA 5", hide(createLineChartData(SMA_5_LABEL, PRICE_Y_AXIS,
                 days.stream().map(Day::getSMA5).collect(Collectors.toList()))));
-        map.put("SMA 10", hide(createLineChartData(TEN_SMA_LABEL, PRICE_Y_AXIS,
+        map.put("SMA 10", hide(createLineChartData(SMA_10_LABEL, PRICE_Y_AXIS,
                 days.stream().map(Day::getSMA10).collect(Collectors.toList()))));
-        map.put("SMA 20", hide(createLineChartData(FIFTEEN_SMA_LABEL, PRICE_Y_AXIS,
+        map.put("SMA 20", hide(createLineChartData(SMA_20_LABEL, PRICE_Y_AXIS,
                 days.stream().map(Day::getSMA20).collect(Collectors.toList()))));
-        map.put("SMA 50", hide(createLineChartData(TWENTY_SMA_LABEL, PRICE_Y_AXIS,
+        map.put("SMA 50", hide(createLineChartData(SMA_50_LABEL, PRICE_Y_AXIS,
                 days.stream().map(Day::getSMA50).collect(Collectors.toList()))));
-        map.put("SMA 200", hide(createLineChartData(TWENTY_FVE_SMA_LABEL, PRICE_Y_AXIS,
+        map.put("SMA 200", hide(createLineChartData(SMA_200_LABEL, PRICE_Y_AXIS,
                 days.stream().map(Day::getSMA200).collect(Collectors.toList()))));
-        map.put("EMA 5", hide(createLineChartData(FIVE_EMA_LABEL, PRICE_Y_AXIS,
+        map.put("EMA 5", hide(createLineChartData(EMA_5_LABEL, PRICE_Y_AXIS,
                 days.stream().map(Day::getEMA5).collect(Collectors.toList()))));
-        map.put("EMA 10", hide(createLineChartData(TEN_EMA_LABEL, PRICE_Y_AXIS,
+        map.put("EMA 10", hide(createLineChartData(EMA_10_LABEL, PRICE_Y_AXIS,
                 days.stream().map(Day::getEMA10).collect(Collectors.toList()))));
-        map.put("EMA 20", hide(createLineChartData(FIFTEEN_EMA_LABEL, PRICE_Y_AXIS,
+        map.put("EMA 20", hide(createLineChartData(EMA_20_LABEL, PRICE_Y_AXIS,
                 days.stream().map(Day::getEMA20).collect(Collectors.toList()))));
-        map.put("EMA 50", hide(createLineChartData(TWENTY_EMA_LABEL, PRICE_Y_AXIS,
+        map.put("EMA 50", hide(createLineChartData(EMA_50_LABEL, PRICE_Y_AXIS,
                 days.stream().map(Day::getEMA50).collect(Collectors.toList()))));
-        map.put("EMA 200", hide(createLineChartData(TWENTY_FIVE_EMA_LABEL, PRICE_Y_AXIS,
+        map.put("EMA 200", hide(createLineChartData(EMA_200_LABEL, PRICE_Y_AXIS,
                 days.stream().map(Day::getEMA200).collect(Collectors.toList()))));
         return map;
     }

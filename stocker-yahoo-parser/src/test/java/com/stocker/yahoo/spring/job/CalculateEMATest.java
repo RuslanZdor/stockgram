@@ -42,9 +42,9 @@ public class CalculateEMATest {
         ema.calculate(company);
         assertEquals(3.0, company.getDays().last().getEMA5(), 0.1);
         assertEquals(5.5, company.getDays().last().getEMA10(), 0.1);
-        assertEquals(7.8, company.getDays().last().getEMA20(), 0.1);
-        assertEquals(10.0, company.getDays().last().getEMA50(), 0.1);
-        assertEquals(11.9, company.getDays().last().getEMA200(), 0.1);
+        assertEquals(10.5, company.getDays().last().getEMA20(), 0.1);
+        assertEquals(25.5, company.getDays().last().getEMA50(), 0.1);
+        assertEquals(87, company.getDays().last().getEMA200(), 0.1);
     }
 
 }
