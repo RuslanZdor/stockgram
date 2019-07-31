@@ -1,4 +1,10 @@
 .idea/*
 stockergraph/target/*
 telegram-service/target/*
-*.iml
+beans/target/*
+chart/target/*
+eureka-server/target/*
+stocker-yahoo-parser/target/*
+stockerdata/target/*
+**.iml
+**.log

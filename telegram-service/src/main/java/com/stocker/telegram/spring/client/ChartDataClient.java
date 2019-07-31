@@ -14,7 +14,9 @@ import java.io.IOException;
 
 @Log4j2
 @Component
-public class ChartDataClient {
+public class ChartDataClient extends AbstractClient {
+
+    private static final String SERVICE = "stocker-chart";
 
     public File getCompany(String symbol) {
         log.info(String.format("getting chart for company with symbol %s", symbol));
@@ -27,7 +29,7 @@ public class ChartDataClient {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1024","--ignore-certificate-errors");
             driver = new ChromeDriver(options);
-            driver.get(String.format("http://localhost:8083/company/%s/", symbol));
+            driver.get(String.format("%s/company/%s/", getWebClient(SERVICE), symbol));
             File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(screenshot, new File("screenshot.png"));
         } catch (IOException e) {

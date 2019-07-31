@@ -1,25 +1,26 @@
 package com.stocker.telegram.spring.client;
 
+import com.netflix.discovery.DiscoveryClient;
 import com.stocker.telegram.spring.callback.AbstractCallback;
 import com.stocker.telegram.spring.callback.AddToWatchListCallback;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @Log4j2
 @Component
-public class CallbackDataClient {
+public class CallbackDataClient extends AbstractClient {
 
-    private final WebClient client;
+    private static final String SERVICE = "stocker-data";
 
-    public CallbackDataClient() {
-        this.client = WebClient.builder().baseUrl("http://localhost:8081/").build();
-    }
+    @Autowired
+    private DiscoveryClient discoveryClient;
 
     public Mono<AddToWatchListCallback> getAddToWatchListCallback(String id) {
         log.info(String.format("getting callback with id %s", id));
-        return this.client
+        discoveryClient.getApplication("stocker-data").getInstances().get(0).getHomePageUrl();
+        return this.getWebClient(SERVICE)
                 .get()
                 .uri(String.format("callback/%s/", id))
                 .retrieve()
@@ -28,7 +29,7 @@ public class CallbackDataClient {
 
     public Mono<AbstractCallback> addCallback(AbstractCallback callback) {
         log.info(String.format("add new callback with id %s", callback.getId()));
-        return this.client
+        return this.getWebClient(SERVICE)
                 .post()
                 .uri("/addCallback/")
                 .syncBody(callback).retrieve().bodyToMono(AbstractCallback.class);

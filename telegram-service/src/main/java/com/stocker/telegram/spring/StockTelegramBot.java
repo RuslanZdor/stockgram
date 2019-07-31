@@ -81,7 +81,7 @@ public class StockTelegramBot extends TelegramLongPollingBot {
      * @param data message
      * @return first word from @data
      */
-    protected static String getCommandName(String data) throws UnexpectedCommandException {
+    static String getCommandName(String data) throws UnexpectedCommandException {
         if (StringUtils.isBlank(data)) {
             throw new UnexpectedCommandException(data);
         }
@@ -99,7 +99,7 @@ public class StockTelegramBot extends TelegramLongPollingBot {
      * @return fount command for message
      * @throws UnexpectedCommandException in case when command is not found
      */
-    protected ICommandProcessor findCommand(Update update) throws UnexpectedCommandException {
+    ICommandProcessor findCommand(Update update) throws UnexpectedCommandException {
         String messageCommand = ICommandProcessor.getText(update);
         log.info(String.format("Processing %s", messageCommand));
         String command = getCommandName(messageCommand);
@@ -112,11 +112,11 @@ public class StockTelegramBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return "";
+        return "stockTensorFlowBot";
     }
 
     @Override
     public String getBotToken() {
-        return "";
+        return "675780010:AAF_PDdmbF1oexPs5VqdUvKbSwA5SRNo7aM";
     }
 }

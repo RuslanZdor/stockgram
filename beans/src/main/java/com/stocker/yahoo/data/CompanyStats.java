@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Log4j
 @NoArgsConstructor
 @Document
-public class CompanyStats {
+class CompanyStats {
 
     private double marketCap;
     private long sharesFloat;

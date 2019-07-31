@@ -11,6 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
@@ -22,7 +23,7 @@ import java.util.Arrays;
 @ComponentScan(basePackages = "com.stocker")
 @SpringBootApplication
 @EnableDiscoveryClient
-public class ChartConfiguration extends WebMvcConfigurerAdapter {
+public class ChartConfiguration implements WebMvcConfigurer {
 
     public static void main(String[] args) {
         SpringApplication.run(ChartConfiguration.class, args);

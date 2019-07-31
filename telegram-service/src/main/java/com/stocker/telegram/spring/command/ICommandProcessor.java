@@ -1,6 +1,5 @@
 package com.stocker.telegram.spring.command;
 
-import com.stocker.telegram.exception.UnexpectedCommandException;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;

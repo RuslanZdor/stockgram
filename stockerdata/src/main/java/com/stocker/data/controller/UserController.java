@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
 
 @Log4j2
 @RestController
-public class UserController {
+class UserController {
 
     @Autowired
     private UserRepository repository;
