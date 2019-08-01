@@ -21,6 +21,6 @@ public abstract class AbstractClient {
         if (discoveryClient.getInstancesById(serviceName).isEmpty()) {
             throw new IllegalStateException(String.format("Service with name %s is not found", serviceName));
         }
-        return WebClient.builder().baseUrl("http://localhost:8081/").build();
+        return WebClient.builder().baseUrl(discoveryClient.getInstancesById(serviceName).get(0).getHostName()).build();
     }
 }

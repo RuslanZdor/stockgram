@@ -10,15 +10,11 @@ import reactor.core.publisher.Mono;
 @Component
 public class CompanyDataClient {
 
-    private final WebClient client;
-
-    public CompanyDataClient() {
-        this.client = WebClient.builder().baseUrl("http://localhost:8081/").build();
-    }
+    private static final String SERVICE = "stocker-data";
 
     public Mono<Company> getCompany(String symbol) {
         log.info(String.format("getting company with symbol %s", symbol));
-        return this.client
+        return this.getWebClient(SERVICE)
                 .get()
                 .uri(String.format("company/%s/", symbol))
                 .retrieve()
