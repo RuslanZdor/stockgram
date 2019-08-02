@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class YahooDataClient extends AbstractClient {
 
-    private static final String SERVICE = "yahoo-service";
+    private static final String SERVICE = "YAHOO-SERVICE";
     public Mono<Company> updateCompany(String symbol) {
         log.info(String.format("send stock for update %s", symbol));
         return this.getWebClient(SERVICE)

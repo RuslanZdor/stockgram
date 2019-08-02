@@ -16,7 +16,7 @@ import java.io.IOException;
 @Component
 public class ChartDataClient extends AbstractClient {
 
-    private static final String SERVICE = "stocker-chart";
+    private static final String SERVICE = "STOCKER-CHART";
 
     public File getCompany(String symbol) {
         log.info(String.format("getting chart for company with symbol %s", symbol));

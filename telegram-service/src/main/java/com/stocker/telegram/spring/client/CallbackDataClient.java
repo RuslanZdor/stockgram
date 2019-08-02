@@ -14,12 +14,8 @@ public class CallbackDataClient extends AbstractClient {
 
     private static final String SERVICE = "stocker-data";
 
-    @Autowired
-    private DiscoveryClient discoveryClient;
-
     public Mono<AddToWatchListCallback> getAddToWatchListCallback(String id) {
         log.info(String.format("getting callback with id %s", id));
-        discoveryClient.getApplication("stocker-data").getInstances().get(0).getHomePageUrl();
         return this.getWebClient(SERVICE)
                 .get()
                 .uri(String.format("callback/%s/", id))

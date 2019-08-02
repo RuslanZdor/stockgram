@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class UserDataClient extends AbstractClient {
 
-    private static final String SERVICE = "stocker-data";
+    private static final String SERVICE = "STOCKER-DATA";
 
     public Mono<User> getUser(String telegramId) {
         log.info(String.format("getting user with telegramId %s", telegramId));

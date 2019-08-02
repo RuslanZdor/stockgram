@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class CompanyDataClient extends AbstractClient {
 
-    private static final String SERVICE = "stocker-data";
+    private static final String SERVICE = "STOCKER-DATA";
 
     public Mono<Company> getCompany(String symbol) {
         log.info(String.format("getting company with symbol %s", symbol));

@@ -8,7 +8,7 @@ import reactor.core.publisher.Mono;
 
 @Log4j2
 @Component
-public class CompanyDataClient {
+public class CompanyDataClient extends AbstractClient {
 
     private static final String SERVICE = "stocker-data";
 
