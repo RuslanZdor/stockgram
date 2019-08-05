@@ -18,6 +18,6 @@ public abstract class AbstractClient {
         if (StringUtils.isBlank(serviceName)) {
             throw new IllegalArgumentException("service name cannot be empty");
         }
-        return WebClient.builder().baseUrl(discoveryClient.getNextServerFromEureka(serviceName, false).getHomePageUrl()).build();
+        return WebClient.builder().baseUrl(discoveryClient.getApplication(serviceName).getInstances().get(0).getHomePageUrl()).build();
     }
 }
