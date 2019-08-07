@@ -62,22 +62,24 @@ public class Company {
 
     public void setCompanyStats(StockStats stats) {
         companyStats = new CompanyStats();
-        companyStats.setSharesFloat(stats.getSharesFloat());
-        companyStats.setSharesOutstanding(stats.getSharesOutstanding());
-        companyStats.setSharesOwned(stats.getSharesOwned());
-        companyStats.setEps(stats.getEps().doubleValue());
-        companyStats.setPe(stats.getPe().doubleValue());
-        companyStats.setPeg(stats.getPeg().doubleValue());
-        companyStats.setEpsEstimateCurrentYear(stats.getEpsEstimateCurrentYear().doubleValue());
-        companyStats.setEpsEstimateNextQuarter(stats.getEpsEstimateNextQuarter().doubleValue());
-        companyStats.setEpsEstimateNextYear(stats.getEpsEstimateNextYear().doubleValue());
-        companyStats.setPriceBook(stats.getPriceBook().doubleValue());
-        companyStats.setPriceSales(stats.getPriceSales().doubleValue());
-        companyStats.setBookValuePerShare(stats.getBookValuePerShare().doubleValue());
-        companyStats.setRevenue(stats.getRevenue().doubleValue());
-        companyStats.setEBITDA(stats.getEBITDA().doubleValue());
-        companyStats.setOneYearTargetPrice(stats.getOneYearTargetPrice().doubleValue());
-        companyStats.setShortRatio(stats.getShortRatio().doubleValue());
-        companyStats.setEarningsAnnouncement(LocalDateTime.ofInstant(stats.getEarningsAnnouncement().toInstant(), ZoneId.systemDefault()).toLocalDate());
+        companyStats.setSharesFloat(stats.getSharesFloat() == null ? 0 : stats.getSharesFloat());
+        companyStats.setSharesOutstanding(stats.getSharesOutstanding() == null ? 0 : stats.getSharesOutstanding());
+        companyStats.setSharesOwned(stats.getSharesOwned() == null ? 0 : stats.getSharesOwned());
+        companyStats.setEps(stats.getEps() == null ? 0 : stats.getEps().doubleValue());
+        companyStats.setPe(stats.getPe() == null ? 0 : stats.getPe().doubleValue());
+        companyStats.setPeg(stats.getPeg() == null ? 0 : stats.getPeg().doubleValue());
+        companyStats.setEpsEstimateCurrentYear(stats.getEpsEstimateCurrentYear() == null ? 0 : stats.getEpsEstimateCurrentYear().doubleValue());
+        companyStats.setEpsEstimateNextQuarter(stats.getEpsEstimateNextQuarter() == null ? 0 : stats.getEpsEstimateNextQuarter().doubleValue());
+        companyStats.setEpsEstimateNextYear(stats.getEpsEstimateNextYear() == null ? 0 : stats.getEpsEstimateNextYear().doubleValue());
+        companyStats.setPriceBook(stats.getPriceBook() == null ? 0 : stats.getPriceBook().doubleValue());
+        companyStats.setPriceSales(stats.getPriceSales() == null ? 0 : stats.getPriceSales().doubleValue());
+        companyStats.setBookValuePerShare(stats.getBookValuePerShare() == null ? 0 : stats.getBookValuePerShare().doubleValue());
+        companyStats.setRevenue(stats.getRevenue() == null ? 0 : stats.getRevenue().doubleValue());
+        companyStats.setEBITDA(stats.getEBITDA() == null ? 0 : stats.getEBITDA().doubleValue());
+        companyStats.setOneYearTargetPrice(stats.getOneYearTargetPrice() == null ? 0 : stats.getOneYearTargetPrice().doubleValue());
+        companyStats.setShortRatio(stats.getShortRatio() == null ? 0 : stats.getShortRatio().doubleValue());
+        if (stats.getEarningsAnnouncement() != null) {
+            companyStats.setEarningsAnnouncement(LocalDateTime.ofInstant(stats.getEarningsAnnouncement().toInstant(), ZoneId.systemDefault()).toLocalDate());
+        }
     }
 }

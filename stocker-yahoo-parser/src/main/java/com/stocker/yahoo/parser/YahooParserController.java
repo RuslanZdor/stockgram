@@ -47,8 +47,8 @@ class YahooParserController {
     public void reloadStocks() {
         companyRepository.findAll().subscribe(company -> {
             try {
-                company.setDays(new TreeSet<>());
                 downloadHistoricalData.download(company);
+                allUpdates(company);
                 companyRepository.save(company).subscribe();
             } catch (NoDayException e) {
                 log.info(String.format("removing company %s", company.getSymbol()));

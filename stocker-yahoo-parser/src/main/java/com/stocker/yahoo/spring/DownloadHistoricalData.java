@@ -39,7 +39,8 @@ public class DownloadHistoricalData {
             if (histQuotes.stream().anyMatch(data -> data.getDate() == null && data.getClose() == null)) {
                 throw new NoDayException(String.format("Stock %s has bad data", company.getSymbol()));
             }
-            company.setCompanyStats(companyData.getStats());
+
+            company.setCompanyStats(companyData.getStats(true));
             histQuotes.stream()
                     .filter(data -> data.getDate() != null)
                     .filter(data -> data.getClose() != null)
