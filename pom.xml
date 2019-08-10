@@ -15,6 +15,7 @@
         <module>stocker-yahoo-parser</module>
         <module>chart</module>
         <module>beans</module>
+        <module>weka-service</module>
     </modules>
 
 </project>
