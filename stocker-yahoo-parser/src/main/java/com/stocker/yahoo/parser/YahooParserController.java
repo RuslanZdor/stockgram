@@ -1,5 +1,6 @@
 package com.stocker.yahoo.parser;
 
+import com.netflix.discovery.converters.Auto;
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.exception.NoDayException;
 import com.stocker.yahoo.spring.CompanyRepository;
@@ -41,6 +42,12 @@ class YahooParserController {
 
     @Autowired
     private CalculateMACDSignal calculateMACDSignal;
+
+    @Autowired
+    private CalculateRising calculateRising;
+
+    @Autowired
+    private CalculateNextRising calculateNextRising;
 
 
     @GetMapping("/manager/reloadStocks")
@@ -92,5 +99,7 @@ class YahooParserController {
         calculateRSI.calculate(company);
         calculateMACDLine.calculate(company);
         calculateMACDSignal.calculate(company);
+        calculateRising.calculate(company);
+        calculateNextRising.calculate(company);
     }
 }

@@ -90,6 +90,8 @@ public class Day implements Comparable<Day>{
 
     private boolean isRising = false;
 
+    private boolean isNextRise = false;
+
     public Day(LocalDate date) {
         this.date = date;
     }
