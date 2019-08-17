@@ -36,7 +36,7 @@ public class CompanyController {
         log.info("loading " + symbol);
         ModelAndView model = new ModelAndView("welcome");
         Company company = companyDataClient.getCompany(symbol).block();
-
+        log.info(String.format("found %s", company.getName()));
         if (!Objects.isNull(company)) {
             Set<Day> filtered = filterDays(company, GraphInterval.DAILY);
             model.addObject("title", String.format("'%s'", company.getName()));

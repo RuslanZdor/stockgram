@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
+import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -50,6 +51,10 @@ public class StockTelegramBot extends TelegramLongPollingBot {
             if (message instanceof SendMessage) {
                 this.execute((SendMessage) message);
             }
+            if (message instanceof SendDocument) {
+                this.execute((SendDocument) message);
+            }
+            throw new TelegramApiException("Unexpected type of object");
         } catch (TelegramApiException e) {
             log.error(e);
         }

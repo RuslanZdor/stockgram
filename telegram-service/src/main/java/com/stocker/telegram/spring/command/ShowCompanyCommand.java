@@ -13,6 +13,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
+import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -75,9 +76,9 @@ public class ShowCompanyCommand extends ICommandProcessor {
                                     callback.apply(sendMessage);
                                 });
 
-                                SendPhoto sendPhoto = new SendPhoto();
+                                SendDocument sendPhoto = new SendDocument();
                                 sendPhoto.setChatId(getMessage(update).getChatId());
-                                sendPhoto.setPhoto(chartDataClient.getCompany(symbol));
+                                sendPhoto.setDocument(chartDataClient.getCompany(symbol));
 
                                 callback.apply(sendPhoto);
                             },
