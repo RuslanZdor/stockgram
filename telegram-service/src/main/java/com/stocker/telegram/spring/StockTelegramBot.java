@@ -47,14 +47,13 @@ public class StockTelegramBot extends TelegramLongPollingBot {
         try {
             if (message instanceof SendPhoto) {
                 this.execute((SendPhoto) message);
-            }
-            if (message instanceof SendMessage) {
+            } else if (message instanceof SendMessage) {
                 this.execute((SendMessage) message);
-            }
-            if (message instanceof SendDocument) {
+            }else if (message instanceof SendDocument) {
                 this.execute((SendDocument) message);
+            } else {
+                throw new TelegramApiException("Unexpected type of object");
             }
-            throw new TelegramApiException("Unexpected type of object");
         } catch (TelegramApiException e) {
             log.error(e);
         }

@@ -12,6 +12,9 @@
 	<div style="height:690px; width:1800px;">
 	    <canvas id="myChart" width="400" height="150"></canvas>
     </div>
+	<div style="height:180px; width:1800px;">
+	    <canvas id="volume" width="400" height="40"></canvas>
+    </div>
 	<div style="height:190px; width:1800px;">
     	<canvas id="oscillograph" width="400" height="50"></canvas>
     </div>
@@ -25,24 +28,14 @@
 			data: {
                 labels: ${labels},
                 datasets: [
-                    ${price},
-                    ${volume},
-                    ${fiveSMA}
+                    ${price}
                 ]
             },
 
 			options: {
 			    legend: {
-			        display: true,
-			        position: 'left'
+			        display: false
 			    },
-                legendCallback: function(chart) {
-                    var ul = document.createElement('ul');
-                    chart.data.labels.forEach(function(label, index) {
-                        ul.innerHTML += '<li><span></span>${label}</li>';
-                    })
-                    return ul.outerHTML;
-                },
                 title : {
                     display : true,
                     text : ${title}
@@ -62,18 +55,6 @@
                             min: ${maxPrice},
                             max: ${minPrice}
                         }
-					}, {
-						type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-						display: false,
-						position: 'right',
-						id: 'volume',
-						ticks: {
-                            min: 0,
-                            max: ${volumeMax}
-                        },
-						gridLines: {
-							drawOnChartArea: true
-						},
 					}],
 				},
 				animation: {
@@ -82,6 +63,52 @@
 			}
 		});
 		</script>
+
+			<script>
+        		var ctx = document.getElementById("volume").getContext('2d');
+        		var priceChart = new Chart(ctx, {
+        		    type: 'bar',
+        			data: {
+                        labels: ${labels},
+                        datasets: [
+                            ${volume}
+                        ]
+                    },
+
+        			options: {
+        			    legend: {
+        			        display: false
+        			    },
+                        title : {
+                            display : false
+                        },
+        				scales: {
+        					responsive: true,
+           					hoverMode: 'index',
+           					stacked: false,
+           					xAxes: [{
+                            	display: false
+                            }],
+        					yAxes: [{
+        						type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+        						display: false,
+        						position: 'right',
+        						id: 'volume',
+        						ticks: {
+                                    min: 0,
+                                    max: ${volumeMax}
+                                },
+        						gridLines: {
+        							drawOnChartArea: true
+        						},
+        					}],
+        				},
+        				animation: {
+                            duration: 0
+                        }
+        			}
+        		});
+        		</script>
 
 		<script>
         		var ctx = document.getElementById("oscillograph").getContext('2d');

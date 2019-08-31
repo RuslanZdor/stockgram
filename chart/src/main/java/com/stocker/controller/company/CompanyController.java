@@ -27,7 +27,7 @@ public class CompanyController {
     private CompanyDataClient companyDataClient;
 
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MMM dd, yyyy, hh:mm:ss a");
-    private static final double volumeMultiplicator = 4.0d;
+    private static final double volumeMultiplicator = 1.0d;
 
     private static final int GRAPH_SIZE = 200;
 
@@ -139,10 +139,10 @@ public class CompanyController {
     }
 
     private double getMaxPrice(Set<Day> days) {
-        return days.stream().map(Day::getMaxPrice).max(Double::compareTo).orElse(100.0) * 1.05;
+        return days.stream().map(Day::getMaxPrice).max(Double::compareTo).orElse(100.0);
     }
 
     private double getMinPrice(Set<Day> days) {
-        return days.stream().map(Day::getMinPrice).min(Double::compareTo).orElse(0.0) * 0.8;
+        return days.stream().map(Day::getMinPrice).min(Double::compareTo).orElse(0.0);
     }
 }

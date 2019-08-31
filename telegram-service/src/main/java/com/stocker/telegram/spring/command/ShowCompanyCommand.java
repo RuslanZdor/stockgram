@@ -66,7 +66,7 @@ public class ShowCompanyCommand extends ICommandProcessor {
                     companyDataClient.getCompany(symbol).single().subscribe(
                             company -> {
                                 sendMessage.setText(String.format("found for %s", company.getName()));
-
+                                sendMessage.disableNotification();
                                 AddToWatchListCallback toWatchListCallback = new AddToWatchListCallback();
                                 toWatchListCallback.setSymbol(company.getSymbol());
                                 toWatchListCallback.setTelegramId(getMessage(update).getFrom().getId().toString());
@@ -78,6 +78,7 @@ public class ShowCompanyCommand extends ICommandProcessor {
 
                                 SendDocument sendPhoto = new SendDocument();
                                 sendPhoto.setChatId(getMessage(update).getChatId());
+                                sendPhoto.disableNotification();
                                 sendPhoto.setDocument(chartDataClient.getCompany(symbol));
 
                                 callback.apply(sendPhoto);
