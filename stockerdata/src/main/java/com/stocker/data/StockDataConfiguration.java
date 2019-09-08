@@ -46,7 +46,7 @@ public class StockDataConfiguration {
 
     @Bean
     public MongoClient mongoClient() {
-        return MongoClients.create("mongodb://localhost");
+        return MongoClients.create("mongodb://192.168.99.100");
     }
 
     private ReactiveMongoDatabaseFactory mongoDbFactory() {
