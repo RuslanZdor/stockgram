@@ -10,11 +10,11 @@
 
     <modules>
 	<module>telegram-service</module>
+        <module>beans</module>
         <module>stockerdata</module>
         <module>eureka-server</module>
         <module>stocker-yahoo-parser</module>
         <module>chart</module>
-        <module>beans</module>
         <module>weka-service</module>
     </modules>
 

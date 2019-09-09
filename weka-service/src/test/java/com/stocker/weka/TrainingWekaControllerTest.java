@@ -8,12 +8,12 @@ public class TrainingWekaControllerTest {
 
     @Test
     public void prepare() throws Exception {
-        new TrainingWekaController().prepare();
+//        new TrainingWekaController().prepare();
     }
 
     @Test
     public void classification() throws Exception {
-        new TrainingWekaController().classify();
+//        new TrainingWekaController().classify();
     }
 
 
