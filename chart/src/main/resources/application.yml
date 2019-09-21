@@ -12,6 +12,7 @@ eureka:
     appname: stocker-chart
     prefer-ip-address: true
     ip-address: 192.168.99.100
+    nonSecurePort: 8081
   client:
     fetchRegistry: true
     serviceUrl:
