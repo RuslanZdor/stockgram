@@ -6,6 +6,8 @@ spring:
 eureka:
   instance:
     appname: stocker-data
+    prefer-ip-address: true
+    ip-address: 192.168.99.100
   client:
     fetchRegistry: true
     serviceUrl:
