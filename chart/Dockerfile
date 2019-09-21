@@ -9,6 +9,6 @@ apt-get install default-jre -y
 
 ADD ./target/stocker-graph-1.0.war stocker-graph.war
 
-EXPOSE 8080
+EXPOSE 8082
 
 CMD java -jar stocker-graph.war

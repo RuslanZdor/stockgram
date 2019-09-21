@@ -1,11 +1,13 @@
 server:
-  port: 8080
+  port: 8081
 spring:
   application:
     name: yahoo-service
 eureka:
   instance:
     appname: yahoo-service
+    prefer-ip-address: true
+    ip-address: 192.168.99.100
   client:
     fetchRegistry: true
     serviceUrl:
