@@ -9,6 +9,6 @@ apt-get install default-jre -y
 
 ADD ./target/telegram-1.0.jar telegram.jar
 
-EXPOSE 8081
+EXPOSE 8083
 
 CMD java -jar telegram.jar
