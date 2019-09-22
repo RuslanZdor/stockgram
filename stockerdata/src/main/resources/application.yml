@@ -14,9 +14,11 @@ eureka:
       defaultZone: http://192.168.99.100:8761/eureka
 logging:
   level:
-    org.springframework: ERROR
-    com.stocker: DEBUG
+    org:
+      springframework: INFO
+    com: INFO
   pattern:
     console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
     file: "%d %p %c{1.} [%t] %m%n"
   file: app.log
+
