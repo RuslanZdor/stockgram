@@ -24,7 +24,7 @@ public class ChartDataClient extends AbstractClient {
         WebDriver driver = null;
 
         try {
-            String chromeDriverPath = "/usr/local/bin/chromedriver/chromedriver.exe" ;
+            String chromeDriverPath = "/usr/local/bin/chromedriver" ;
             System.setProperty("webdriver.chrome.driver", chromeDriverPath);
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1024","--ignore-certificate-errors");
