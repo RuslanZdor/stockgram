@@ -7,7 +7,7 @@ apt-get update -y && \
 # Install Java
 apt-get install default-jre -y && \
 # Install curl
-apt-get install curl
+apt-get install curl -y
 
 # Install Chrome for Selenium
 RUN curl https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o /chrome.deb
