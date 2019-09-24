@@ -23,8 +23,8 @@ RUN chmod +x /usr/local/bin/chromedriver
 #selenium chrome server
 RUN curl https://selenium-release.storage.googleapis.com/3.141/selenium-server-standalone-3.141.59.jar
 
-wget http://www.java2s.com/Code/JarDownload/testng/testng-6.8.7.jar.zip
-unzip testng-6.8.7.jar.zip
+RUN wget http://www.java2s.com/Code/JarDownload/testng/testng-6.8.7.jar.zip
+RUN unzip testng-6.8.7.jar.zip
 
 ADD ./target/telegram-1.0.jar telegram.jar
 
