@@ -7,8 +7,8 @@ apt-get update -y && \
 # Install Java
 apt-get install default-jre -y && \
 # Install curl
-apt-get install curl -y \
-apt-get install wget -y \
+apt-get install curl -y && \
+apt-get install wget -y && \
 apt-get install unzip -y
 
 # Install Chrome for Selenium
