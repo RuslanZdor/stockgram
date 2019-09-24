@@ -21,7 +21,7 @@ RUN curl https://chromedriver.storage.googleapis.com/77.0.3865.40/chromedriver_l
 RUN chmod +x /usr/local/bin/chromedriver
 
 #selenium chrome server
-RUN curl https://selenium-release.storage.googleapis.com/3.141/selenium-server-standalone-3.141.59.jar
+RUN wget https://selenium-release.storage.googleapis.com/3.141/selenium-server-standalone-3.141.59.jar
 
 RUN wget http://www.java2s.com/Code/JarDownload/testng/testng-6.8.7.jar.zip
 RUN unzip testng-6.8.7.jar.zip
