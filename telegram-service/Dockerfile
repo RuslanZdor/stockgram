@@ -15,7 +15,7 @@ RUN dpkg -i /chrome.deb || apt-get install -yf
 RUN rm /chrome.deb
 
 # Install chromedriver for Selenium
-RUN curl https://chromedriver.storage.googleapis.com/2.31/chromedriver_linux64.zip -o /usr/local/bin/chromedriver
+RUN curl https://chromedriver.storage.googleapis.com/77.0.3865.40/chromedriver_linux64.zip -o /usr/local/bin/chromedriver
 RUN chmod +x /usr/local/bin/chromedriver
 
 ADD ./target/telegram-1.0.jar telegram.jar
