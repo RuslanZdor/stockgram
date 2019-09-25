@@ -31,6 +31,6 @@ ADD ./target/telegram-1.0.jar telegram.jar
 
 EXPOSE 8083
 
-CMD xvfb-run java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar selenium-server-standalone-3.141.59.jar
+CMD xvfb-run java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar selenium-server-standalone-3.141.59.jar &
 CMD chromedriver --url-base=/wd/hub
 CMD java -jar telegram.jar
