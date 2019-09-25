@@ -9,7 +9,8 @@ apt-get install default-jre -y && \
 # Install curl
 apt-get install curl -y && \
 apt-get install wget -y && \
-apt-get install unzip -y
+apt-get install unzip -y && \
+apt-get install xvfb -y
 
 # Install Chrome for Selenium
 RUN curl https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o /chrome.deb
@@ -30,4 +31,5 @@ ADD ./target/telegram-1.0.jar telegram.jar
 
 EXPOSE 8083
 
+RUN vfb-run java -Dwebdriver.chrome.driver=/usr/bin/chromedriver -jar selenium-server-standalone-3.141.59.jar
 CMD java -jar telegram.jar
