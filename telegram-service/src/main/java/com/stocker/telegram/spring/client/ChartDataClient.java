@@ -27,7 +27,7 @@ public class ChartDataClient extends AbstractClient {
             String chromeDriverPath = "/usr/local/bin/chromedriver" ;
             System.setProperty("webdriver.chrome.driver", chromeDriverPath);
             ChromeOptions options = new ChromeOptions();
-            options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1024","--ignore-certificate-errors");
+            options.addArguments("--headless", "--no-sandbox", "--disable-gpu", "--window-size=1920,1024","--ignore-certificate-errors");
             driver = new ChromeDriver(options);
             driver.get(String.format("%s/company/%s/", getDiscoveryClient().getApplication(SERVICE).getInstances().get(0).getHomePageUrl(), symbol));
             File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
