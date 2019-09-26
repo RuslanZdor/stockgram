@@ -5,32 +5,46 @@ RUN \
 # Update
 apt-get update -y && \
 # Install Java
-apt-get install default-jre -y && \
+apt-get install -y unzip openjdk-8-jre-headless xvfb libxi6 libgconf-2-4 && \
 # Install curl
 apt-get install curl -y && \
 apt-get install wget -y && \
 apt-get install unzip -y && \
-apt-get install xvfb -y
+apt-get install gnupg -y && \
+apt-get install xvfb -y && \
+apt-get install -y apt-transport-https
 
-# Install Chrome for Selenium
-RUN curl https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o /chrome.deb
-RUN dpkg -i /chrome.deb || apt-get install -yf
-RUN rm /chrome.deb
+# Versions
+#ENV CHROME_DRIVER_VERSION="curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE"
+ENV CHROME_DRIVER_VERSION=77.0.3865.40
+ENV SELENIUM_STANDALONE_VERSION=3.4.0
+ENV SELENIUM_SUBDIR=3.4
 
-# Install chromedriver for Selenium
-RUN curl https://chromedriver.storage.googleapis.com/77.0.3865.40/chromedriver_linux64.zip -o /usr/local/bin/chromedriver
-RUN chmod +x /usr/local/bin/chromedriver
+# Install dependencies.
+RUN apt-get install -y unzip openjdk-8-jre-headless xvfb libxi6 libgconf-2-4
 
-#selenium chrome server
-RUN wget https://selenium-release.storage.googleapis.com/3.141/selenium-server-standalone-3.141.59.jar
+# Install Chrome.
+RUN curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
+RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
+RUN apt-get -y update
+RUN apt-get -y install google-chrome-stable
 
-RUN wget http://www.java2s.com/Code/JarDownload/testng/testng-6.8.7.jar.zip
-RUN unzip testng-6.8.7.jar.zip
+# Install ChromeDriver.
+RUN curl https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip -o chromedriver_linux64.zip
+#                                                                      77.0.3865.40/chromedriver_linux64.zip
+RUN unzip chromedriver_linux64.zip -d /
+RUN rm chromedriver_linux64.zip
+RUN mv -f chromedriver /usr/local/bin/chromedriver
+RUN chown root:root /usr/local/bin/chromedriver
+RUN chmod 0755 /usr/local/bin/chromedriver
 
-ADD ./target/telegram-1.0.jar telegram.jar
+# Install Selenium.
+RUN curl http://selenium-release.storage.googleapis.com/${SELENIUM_SUBDIR}/selenium-server-standalone-${SELENIUM_STANDALONE_VERSION}.jar -o selenium-server-standalone-${SELENIUM_STANDALONE_VERSION}.jar
+RUN mv -f selenium-server-standalone-${SELENIUM_STANDALONE_VERSION}.jar /usr/local/bin/selenium-server-standalone.jar
+RUN chown root:root /usr/local/bin/selenium-server-standalone.jar
+RUN chmod 0755 /usr/local/bin/selenium-server-standalone.jar
 
 EXPOSE 8083
 
-CMD xvfb-run java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar selenium-server-standalone-3.141.59.jar &
-CMD chromedriver --url-base=/wd/hub
+ADD ./target/telegram-1.0.jar telegram.jar
 CMD java -jar telegram.jar
