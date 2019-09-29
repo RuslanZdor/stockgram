@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * daily information
@@ -21,12 +22,15 @@ public class Day implements Comparable<Day>{
 
     private LocalDate date;
 
+    private LocalDateTime lastUpdate;
+
     private long volume;
 
     private double price;
     private double minPrice;
     private double maxPrice;
     private double openPrice;
+    private double closePrice;
 
     private double EMA5;
     private double EMA10;

@@ -55,7 +55,9 @@ public class DownloadHistoricalData {
                         day.setMinPrice(data.getLow().doubleValue());
                         day.setMaxPrice(data.getHigh().doubleValue());
                         day.setOpenPrice(data.getOpen().doubleValue());
+                        day.setClosePrice(data.getClose().doubleValue());
                         day.setVolume(data.getVolume());
+                        day.setLastUpdate(LocalDateTime.now());
                         company.getDays().add(day);
                     });
         } catch (IOException ex) {
