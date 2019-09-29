@@ -1,6 +1,5 @@
 package com.stocker.yahoo.parser;
 
-import com.netflix.discovery.converters.Auto;
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.exception.NoDayException;
 import com.stocker.yahoo.spring.CompanyRepository;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
-
-import java.util.TreeSet;
 
 @Log4j2
 @RestController
