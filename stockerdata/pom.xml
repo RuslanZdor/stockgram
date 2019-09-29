@@ -114,6 +114,11 @@
             <version>3.9</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>io.projectreactor.netty</groupId>
+            <artifactId>reactor-netty</artifactId>
+            <version>0.8.9.RELEASE</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -54,7 +54,7 @@ public class ViewCompanyCommand extends ICommandProcessor {
                         callback.apply(sendPhoto);
                     },
                     error -> {
-                        sendMessage.setText(String.format("nothing was found for symbol %s", symbol));
+                        sendMessage.setText(String.format("Error happen during search request %s", symbol));
                         callback.apply(sendMessage);
                     },
                     () -> log.info("view finished")
