@@ -57,7 +57,7 @@ public class CompanyController {
             model.addObject("openPrice", company.getDays().first().getOpenPrice());
             model.addObject("currentPrice", company.getDays().first().getPrice());
             model.addObject("closePrice", company.getDays().first().getClosePrice());
-            model.addObject("currentDate", company.getDays().first().getDate().atStartOfDay().format(DATE_FORMAT));
+            model.addObject("currentDate", company.getDays().first().getLastUpdate().format(DATE_FORMAT));
         }
         return model;
     }
