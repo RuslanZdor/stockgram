@@ -41,4 +41,28 @@ public class ChartDataClient extends AbstractClient {
         }
         return new File("screenshot.png");
     }
+
+    public File getView(String symbol) {
+        log.info(String.format("getting view for company with symbol %s", symbol));
+
+        WebDriver driver = null;
+
+        try {
+            String chromeDriverPath = "/usr/local/bin/chromedriver" ;
+            System.setProperty("webdriver.chrome.driver", chromeDriverPath);
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--headless", "--no-sandbox", "--disable-gpu", "--window-size=400,400","--ignore-certificate-errors");
+            driver = new ChromeDriver(options);
+            driver.get(String.format("%s/view/%s/", getDiscoveryClient().getApplication(SERVICE).getInstances().get(0).getHomePageUrl(), symbol));
+            File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            FileUtils.copyFile(screenshot, new File("screenshot.png"));
+        } catch (IOException e) {
+            log.error(e);
+        } finally {
+            if (driver != null) {
+                driver.quit();
+            }
+        }
+        return new File("screenshot.png");
+    }
 }

@@ -33,6 +33,9 @@ public class StockTelegramBot extends TelegramLongPollingBot {
     private ShowCompanyCommand showCommand;
 
     @Autowired
+    private ViewCompanyCommand viewCommand;
+
+    @Autowired
     private UnexpectedCommand unexpectedCommand;
 
     @Autowired
@@ -65,6 +68,7 @@ public class StockTelegramBot extends TelegramLongPollingBot {
         commandMap.put(OverSellCommand.COMMAND, overSellCommand);
         commandMap.put(ShowCompanyCommand.COMMAND, showCommand);
         commandMap.put(WatchListCommand.COMMAND, watchListCommand);
+        commandMap.put(ViewCompanyCommand.COMMAND, viewCommand);
         commandMap.put(AddToWatchListCompanyCommand.COMMAND, addToWatchListCompanyCommand);
     }
 
