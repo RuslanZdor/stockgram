@@ -65,7 +65,7 @@ public class ViewCompanyCommand extends ICommandProcessor {
                                 SendPhoto sendPhoto = new SendPhoto();
                                 sendPhoto.setChatId(getMessage(update).getChatId());
                                 sendPhoto.disableNotification();
-                                sendPhoto.setPhoto(chartDataClient.getCompany(symbol));
+                                sendPhoto.setPhoto(chartDataClient.getView(symbol));
 
                                 callback.apply(sendPhoto);
                             },
