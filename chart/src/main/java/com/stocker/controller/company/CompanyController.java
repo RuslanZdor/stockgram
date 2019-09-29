@@ -32,9 +32,9 @@ public class CompanyController {
     private static final int GRAPH_SIZE = 200;
 
     @RequestMapping("/company/{symbol}/")
-    public ModelAndView helloWorld(@PathVariable("symbol") String symbol) {
+    public ModelAndView company(@PathVariable("symbol") String symbol) {
         log.info("loading " + symbol);
-        ModelAndView model = new ModelAndView("welcome");
+        ModelAndView model = new ModelAndView("company");
         Company company = companyDataClient.getCompany(symbol).block();
         log.info(String.format("found %s", company.getName()));
         if (!Objects.isNull(company)) {
@@ -44,6 +44,25 @@ public class CompanyController {
             model.addAllObjects(prepareMACDData(filtered));
             model.addAllObjects(prepareCompanyData(filtered));
             model.addAllObjects(prepareRSI(filtered));
+        }
+        return model;
+    }
+
+    @RequestMapping("/overview/{symbol}/")
+    public ModelAndView overview(@PathVariable("symbol") String symbol) {
+        log.info("loading " + symbol);
+        ModelAndView model = new ModelAndView("overview");
+        Company company = companyDataClient.getCompany(symbol).block();
+        if (!Objects.isNull(company)) {
+            model.addObject("title", company.getName());
+            log.info("loading " + company.getDays().first().getOpenPrice());
+            log.info("loading " + company.getDays().first().getPrice());
+            log.info("loading " + company.getDays().first().getPrice());
+            log.info("loading " + company.getDays().first().getDate().atStartOfDay().format(DATE_FORMAT));
+            model.addObject("openPrice", company.getDays().first().getOpenPrice());
+            model.addObject("currentPrice", company.getDays().first().getPrice());
+            model.addObject("closePrice", company.getDays().first().getPrice());
+            model.addObject("currentDate", company.getDays().first().getDate().atStartOfDay().format(DATE_FORMAT));
         }
         return model;
     }
