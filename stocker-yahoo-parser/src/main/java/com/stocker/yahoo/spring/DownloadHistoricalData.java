@@ -38,6 +38,9 @@ public class DownloadHistoricalData {
                         .minus(1, ChronoUnit.DAYS).atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli());
             }
 
+            log.info(yearAgo.toString());
+            log.info(tomorrow.toString());
+
             List<HistoricalQuote> histQuotes = companyData.getHistory(yearAgo, tomorrow, Interval.DAILY);
             if (histQuotes.stream().anyMatch(data -> data.getDate() == null && data.getClose() == null)) {
                 throw new NoDayException(String.format("Stock %s has bad data", company.getSymbol()));
@@ -58,6 +61,7 @@ public class DownloadHistoricalData {
                         day.setClosePrice(data.getClose().doubleValue());
                         day.setVolume(data.getVolume());
                         day.setLastUpdate(LocalDateTime.now());
+                        company.getDays().removeIf(day1 -> day1.getDate().equals(day.getDate()));
                         company.getDays().add(day);
                     });
         } catch (IOException ex) {
