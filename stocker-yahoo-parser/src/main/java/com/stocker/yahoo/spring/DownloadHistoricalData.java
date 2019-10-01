@@ -38,15 +38,15 @@ public class DownloadHistoricalData {
                         .minus(1, ChronoUnit.DAYS).atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli());
             }
 
-            log.info(yearAgo.toString());
-            log.info(tomorrow.toString());
-
             List<HistoricalQuote> histQuotes = companyData.getHistory(yearAgo, tomorrow, Interval.DAILY);
             if (histQuotes.stream().anyMatch(data -> data.getDate() == null && data.getClose() == null)) {
                 throw new NoDayException(String.format("Stock %s has bad data", company.getSymbol()));
             }
 
             setCompanyStats(company, companyData.getStats(true));
+
+            log.info("size " + histQuotes.size());
+
             histQuotes.stream()
                     .filter(data -> data.getDate() != null)
                     .filter(data -> data.getClose() != null)
