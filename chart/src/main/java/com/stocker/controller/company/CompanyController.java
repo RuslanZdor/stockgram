@@ -54,10 +54,10 @@ public class CompanyController {
         Company company = companyDataClient.getCompany(symbol).block();
         if (!Objects.isNull(company)) {
             model.addObject("title", company.getName());
-            model.addObject("openPrice", company.getDays().first().getOpenPrice());
-            model.addObject("currentPrice", company.getDays().first().getPrice());
-            model.addObject("closePrice", company.getDays().first().getClosePrice());
-            model.addObject("currentDate", company.getDays().first().getLastUpdate().format(DATE_FORMAT));
+            model.addObject("openPrice", company.getDays().last().getOpenPrice());
+            model.addObject("currentPrice", company.getDays().last().getPrice());
+            model.addObject("closePrice", company.getDays().last().getClosePrice());
+            model.addObject("currentDate", company.getDays().last().getLastUpdate().format(DATE_FORMAT));
         }
         return model;
     }
