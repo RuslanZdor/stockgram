@@ -14,7 +14,15 @@ import java.util.TreeSet;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "company")
-public class Company extends ViewCompany {
+public class Company {
+
+    @Id
+    private String id;
+    private String name;
+    private String symbol;
+    private String industry;
+
+    private CompanyStats companyStats;
 
     private NavigableSet<Day> days = new TreeSet<>();
 
