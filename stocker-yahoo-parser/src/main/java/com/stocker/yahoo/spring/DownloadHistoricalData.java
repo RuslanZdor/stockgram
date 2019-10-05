@@ -64,6 +64,11 @@ public class DownloadHistoricalData {
                         company.getDays().removeIf(day1 -> day1.getDate().equals(day.getDate()));
                         company.getDays().add(day);
                     });
+
+            company.getCompanyStats().setLastDayOpenPrice(company.getDays().last().getOpenPrice());
+            company.getCompanyStats().setLastDayClosePrice(company.getDays().last().getClosePrice());
+            company.getCompanyStats().setLastPrice(company.getDays().last().getPrice());
+            company.getCompanyStats().setLastUpdate(company.getDays().last().getLastUpdate());
         } catch (IOException ex) {
             throw new NoDayException(String.format("Stock %s has bad data", company.getSymbol()), ex);
         }

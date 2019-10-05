@@ -1,4 +1,4 @@
-package com.stocker.data;
+package com.stocker.data.bean;
 
 
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.stocker.data.spring;
+package com.stocker.data.spring.client;
 
 import com.stocker.yahoo.data.Company;
 import lombok.extern.log4j.Log4j2;

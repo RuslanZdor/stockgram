@@ -4,8 +4,10 @@ import static com.stocker.ChartjsUtils.*;
 
 import com.stocker.GraphInterval;
 import com.stocker.spring.CompanyDataClient;
+import com.stocker.spring.ViewCompanyDataClient;
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.data.Day;
+import com.stocker.yahoo.data.ViewCompany;
 import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class CompanyController {
 
     @Autowired
     private CompanyDataClient companyDataClient;
+
+    @Autowired
+    private ViewCompanyDataClient viewCompanyDataClient;
 
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MMM dd, yyyy, hh:mm:ss a");
     private static final double volumeMultiplicator = 1.0d;
@@ -51,13 +56,13 @@ public class CompanyController {
     public ModelAndView overview(@PathVariable("symbol") String symbol) {
         log.info("loading " + symbol);
         ModelAndView model = new ModelAndView("overview");
-        Company company = companyDataClient.getCompany(symbol).block();
+        ViewCompany company = viewCompanyDataClient.getViewCompany(symbol).block();
         if (!Objects.isNull(company)) {
             model.addObject("title", company.getName());
-            model.addObject("openPrice", company.getDays().last().getOpenPrice());
-            model.addObject("currentPrice", company.getDays().last().getPrice());
-            model.addObject("closePrice", company.getDays().last().getClosePrice());
-            model.addObject("currentDate", company.getDays().last().getLastUpdate().format(DATE_FORMAT));
+            model.addObject("openPrice", company.getCompanyStats().getLastDayOpenPrice());
+            model.addObject("currentPrice", company.getCompanyStats().getLastPrice());
+            model.addObject("closePrice", company.getCompanyStats().getLastDayClosePrice());
+            model.addObject("currentDate", company.getCompanyStats().getLastUpdate().format(DATE_FORMAT));
         }
         return model;
     }

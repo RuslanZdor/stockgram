@@ -1,7 +1,7 @@
 package com.stocker.data.controller;
 
-import com.stocker.data.User;
-import com.stocker.data.spring.UserRepository;
+import com.stocker.data.bean.User;
+import com.stocker.data.spring.repo.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;

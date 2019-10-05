@@ -1,22 +1,26 @@
-package com.stocker.data;
+package com.stocker.yahoo.data;
 
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.NavigableSet;
+import java.util.TreeSet;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document
-@ToString
-public class Callback {
+@Document(collection = "company")
+public class ViewCompany {
 
     @Id
     private String id;
-    private String telegramId;
+    private String name;
     private String symbol;
+    private String industry;
+
+    private CompanyStats companyStats;
 }
