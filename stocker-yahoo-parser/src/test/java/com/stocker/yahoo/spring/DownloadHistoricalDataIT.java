@@ -1,5 +1,7 @@
 package com.stocker.yahoo.spring;
 
+import com.stocker.yahoo.data.Company;
+import com.stocker.yahoo.exception.NoDayException;
 import org.junit.Test;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
@@ -55,14 +57,12 @@ public class DownloadHistoricalDataIT {
     }
 
     @Test
-    public void allDivHistory() throws IOException {
-        Stock companyData = YahooFinance.get("T", Interval.DAILY);
-        Calendar tomorrow = Calendar.getInstance();
-        tomorrow.add(Calendar.DATE, 1);
-
-        Calendar yearAgo =  Calendar.getInstance();
-        yearAgo.add(Calendar.YEAR, -1);
-        List<HistoricalDividend> stats = companyData.getDividendHistory(yearAgo);
-        assertTrue(Objects.nonNull(stats));
+    public void download() throws NoDayException {
+        Company company = new Company();
+        company.setSymbol("AAPL");
+        DownloadHistoricalData downloadHistoricalData = new DownloadHistoricalData();
+        downloadHistoricalData.download(company);
+        assertFalse(company.getDividends().isEmpty());
     }
+
 }

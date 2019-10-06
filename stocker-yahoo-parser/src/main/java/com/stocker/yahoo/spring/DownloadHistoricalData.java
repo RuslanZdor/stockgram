@@ -49,9 +49,7 @@ public class DownloadHistoricalData {
             }
 
             Calendar year =  Calendar.getInstance();
-            if (company.getDays().isEmpty()) {
-                year.add(Calendar.YEAR, -25);
-            }
+            year.add(Calendar.YEAR, -25);
             setCompanyStats(company, companyData.getStats(false));
             setDividendHistory(company, companyData.getDividendHistory(year));
 
