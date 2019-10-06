@@ -5,6 +5,8 @@ import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.histquotes.Interval;
+import yahoofinance.histquotes2.HistoricalDividend;
+import yahoofinance.quotes.stock.StockDividend;
 import yahoofinance.quotes.stock.StockStats;
 
 import java.io.IOException;
@@ -27,6 +29,7 @@ public class DownloadHistoricalDataIT {
         List<HistoricalQuote> histQuotes = companyData.getHistory(yearAgo, tomorrow, Interval.DAILY);
         assertFalse(histQuotes.isEmpty());
     }
+
     @Test
     public void allStats() throws IOException {
         Stock companyData = YahooFinance.get("T", Interval.DAILY);
@@ -39,4 +42,27 @@ public class DownloadHistoricalDataIT {
         assertTrue(Objects.nonNull(stats));
     }
 
+    @Test
+    public void allDivs() throws IOException {
+        Stock companyData = YahooFinance.get("T", Interval.DAILY);
+        Calendar tomorrow = Calendar.getInstance();
+        tomorrow.add(Calendar.DATE, 1);
+
+        Calendar yearAgo =  Calendar.getInstance();
+        yearAgo.add(Calendar.YEAR, -1);
+        StockDividend stats = companyData.getDividend(false);
+        assertTrue(Objects.nonNull(stats));
+    }
+
+    @Test
+    public void allDivHistory() throws IOException {
+        Stock companyData = YahooFinance.get("T", Interval.DAILY);
+        Calendar tomorrow = Calendar.getInstance();
+        tomorrow.add(Calendar.DATE, 1);
+
+        Calendar yearAgo =  Calendar.getInstance();
+        yearAgo.add(Calendar.YEAR, -1);
+        List<HistoricalDividend> stats = companyData.getDividendHistory(yearAgo);
+        assertTrue(Objects.nonNull(stats));
+    }
 }

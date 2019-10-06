@@ -25,6 +25,7 @@ public class Company {
     private CompanyStats companyStats;
 
     private NavigableSet<Day> days = new TreeSet<>();
+    private NavigableSet<Dividend> dividends = new TreeSet<>();
 
     /**
      * return day with the same date as in parameter

@@ -3,6 +3,7 @@ package com.stocker.yahoo.spring;
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.data.CompanyStats;
 import com.stocker.yahoo.data.Day;
+import com.stocker.yahoo.data.Dividend;
 import com.stocker.yahoo.exception.NoDayException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
@@ -10,15 +11,19 @@ import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.histquotes.Interval;
+import yahoofinance.histquotes2.HistoricalDividend;
 import yahoofinance.quotes.stock.StockStats;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Log4j2
 @Component
@@ -43,7 +48,8 @@ public class DownloadHistoricalData {
                 throw new NoDayException(String.format("Stock %s has bad data", company.getSymbol()));
             }
 
-            setCompanyStats(company, companyData.getStats(true));
+            setCompanyStats(company, companyData.getStats(false));
+            setDividendHistory(company, companyData.getDividendHistory());
 
             log.info("size " + histQuotes.size());
 
@@ -96,5 +102,10 @@ public class DownloadHistoricalData {
             companyStats.setEarningsAnnouncement(LocalDateTime.ofInstant(stats.getEarningsAnnouncement().toInstant(), ZoneId.systemDefault()).toLocalDate());
         }
         company.setCompanyStats(companyStats);
+    }
+
+    private void setDividendHistory(Company company, List<HistoricalDividend> stats) {
+        company.getDividends().clear();
+        stats.stream().forEach(data -> company.getDividends().add(new Dividend(LocalDate.ofInstant(data.getDate().toInstant(), ZoneId.systemDefault()), data.getAdjDividend().doubleValue())));
     }
 }
