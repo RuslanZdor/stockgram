@@ -58,10 +58,7 @@ public class CompanyController {
         ModelAndView model = new ModelAndView("overview");
         ViewCompany company = viewCompanyDataClient.getViewCompany(symbol).block();
         if (!Objects.isNull(company)) {
-            model.addObject("title", company.getName());
-            model.addObject("openPrice", company.getCompanyStats().getLastDayOpenPrice());
-            model.addObject("currentPrice", company.getCompanyStats().getLastPrice());
-            model.addObject("closePrice", company.getCompanyStats().getLastDayClosePrice());
+            model.addObject("company", company);
             model.addObject("currentDate", company.getCompanyStats().getLastUpdate().format(DATE_FORMAT));
         }
         return model;

@@ -11,19 +11,45 @@
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
     </head>
+
 	<body>
-        <div style="height:400px; width:400px;">
-            <div class="header">
-                <span id="header-label">${title}</span>
+        <div class="panel panel-success" style="height:400px; width:400px;">
+            <div class="panel-heading">
+                <span id="panel-title">${company.name}</span>
             </div>
-            <div class="line">
-            </div>
-            <div class="body">
-                <div class="price">
-                    <span id="open-price-label">${openPrice}</span>
-                    <span id="current-price-label">${currentPrice}</span>
-                    <span id="close-price-label">${closePrice}</span>
-                </div>
+            <div class="panel-body">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Current Price</th>
+                            <td>${company.companyStats.lastPrice}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">EPS</th>
+                            <td>${company.companyStats.eps}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">P/E RATIO</th>
+                            <td>${company.companyStats.pe}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">EPS Estimate Current Year</th>
+                            <td>${company.companyStats.epsEstimateCurrentYear}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Price to Book</th>
+                            <td>${company.companyStats.priceBook}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Book Per Share</th>
+                            <td>${company.companyStats.bookValuePerShare}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Short Ratio</th>
+                            <td>${company.companyStats.shortRatio}</td>
+                        </tr>
+                    </tbody>
+                </table>
                 <div class="date">
                     <span id="date-label">${currentDate}</span>
                 </div>
