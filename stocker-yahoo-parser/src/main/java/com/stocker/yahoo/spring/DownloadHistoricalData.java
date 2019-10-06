@@ -106,6 +106,11 @@ public class DownloadHistoricalData {
 
     private void setDividendHistory(Company company, List<HistoricalDividend> stats) {
         company.getDividends().clear();
-        stats.stream().forEach(data -> company.getDividends().add(new Dividend(LocalDate.ofInstant(data.getDate().toInstant(), ZoneId.systemDefault()), data.getAdjDividend().doubleValue())));
+        stats.stream().forEach(data -> {
+            LocalDate date = data.getDate().getTime().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+            company.getDividends().add(new Dividend(date, data.getAdjDividend().doubleValue()));
+        });
     }
 }
