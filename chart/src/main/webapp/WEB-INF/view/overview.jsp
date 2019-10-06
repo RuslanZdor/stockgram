@@ -13,7 +13,7 @@
     </head>
 
 	<body>
-        <div class="panel panel-success" style="height:380px; width:380px;">
+        <div class="panel panel-success" style="height:400px; width:400px; margin-bottom: 0px;">
             <div class="panel-heading">
                 <span id="panel-title">${company.name}</span>
             </div>
