@@ -48,8 +48,12 @@ public class DownloadHistoricalData {
                 throw new NoDayException(String.format("Stock %s has bad data", company.getSymbol()));
             }
 
+            Calendar year =  Calendar.getInstance();
+            if (company.getDays().isEmpty()) {
+                yearAgo.add(Calendar.YEAR, -25);
+            }
             setCompanyStats(company, companyData.getStats(false));
-            setDividendHistory(company, companyData.getDividendHistory());
+            setDividendHistory(company, companyData.getDividendHistory(year));
 
             log.info("size " + histQuotes.size());
 
