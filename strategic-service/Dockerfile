@@ -9,6 +9,6 @@ apt-get install default-jre -y
 
 ADD ./target/strategic-service-1.0.jar strategic-service.jar
 
-EXPOSE 8083
+EXPOSE 8084
 
 CMD java -jar strategic-service.jar
