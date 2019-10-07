@@ -26,7 +26,8 @@ public class DividendAristocratsCalculation {
 
     public List<Company> calculate() {
 
-        strategyRepository.deleteAll().subscribe(aVoid -> companyRepository.findLongDividendsHistory().subscribe(company -> {
+        strategyRepository.deleteAll().block();
+        companyRepository.findLongDividendsHistory().subscribe(company -> {
             Iterator<Dividend> iterator = company.getDividends().iterator();
 
             boolean isAristocrat = true;
@@ -44,7 +45,7 @@ public class DividendAristocratsCalculation {
             if (isAristocrat) {
                 strategyRepository.save(new StrategyResult(NAME, company.getSymbol())).subscribe();
             }
-        }));
+        });
 
         return Collections.emptyList();
     }
