@@ -42,6 +42,9 @@ public class StockTelegramBot extends TelegramLongPollingBot {
     private WatchListCommand watchListCommand;
 
     @Autowired
+    private ShowStrategyCommand showStrategyCommand;
+
+    @Autowired
     private AddToWatchListCompanyCommand addToWatchListCompanyCommand;
 
     private Map<String, ICommandProcessor> commandMap = new HashMap<>();
@@ -70,11 +73,11 @@ public class StockTelegramBot extends TelegramLongPollingBot {
         commandMap.put(WatchListCommand.COMMAND, watchListCommand);
         commandMap.put(ViewCompanyCommand.COMMAND, viewCommand);
         commandMap.put(AddToWatchListCompanyCommand.COMMAND, addToWatchListCompanyCommand);
+        commandMap.put(ShowStrategyCommand.COMMAND, showStrategyCommand);
     }
 
     @Override
     public void onUpdateReceived(Update update) {
-        Message message = update.hasCallbackQuery() ? update.getCallbackQuery().getMessage() : update.getMessage();
         try {
             ICommandProcessor processor = findCommand(update);
             processor.process(update, this::processorCallback);

@@ -15,7 +15,7 @@ public class StrategyResultDataClient extends AbstractClient {
         log.info(String.format("getting strategy result with name %s", strategyName));
         return this.getWebClient(SERVICE)
                 .get()
-                .uri(String.format("strategy/%s/result", strategyName))
+                .uri(String.format("strategy/%s", strategyName))
                 .retrieve()
                 .bodyToFlux(StrategyResult.class);
     }
