@@ -58,7 +58,7 @@ public class ShowStrategyCommand extends ICommandProcessor {
                         callback.apply(sendMessage);
                     },
                     error -> {
-                        sendMessage.setText(String.format("nothing was found for symbol %s", symbol));
+                        sendMessage.setText(String.format("nothing was found for symbol %s", error.getMessage()));
                         callback.apply(sendMessage);
                     },
                     () -> log.info(sendMessage.getText())
