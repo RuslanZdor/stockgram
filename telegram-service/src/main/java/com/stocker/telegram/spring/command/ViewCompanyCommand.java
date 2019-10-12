@@ -54,6 +54,7 @@ public class ViewCompanyCommand extends ICommandProcessor {
                         callback.apply(sendPhoto);
                     },
                     error -> {
+                        log.error(error);
                         sendMessage.setText(String.format("Error happen during search request %s", symbol));
                         callback.apply(sendMessage);
                     },

@@ -78,6 +78,7 @@ public class ShowCompanyCommand extends ICommandProcessor {
                         callback.apply(sendPhoto);
                     },
                     error -> {
+                        log.error(error);
                         sendMessage.setText(String.format("nothing was found for symbol %s", symbol));
                         callback.apply(sendMessage);
                     },
