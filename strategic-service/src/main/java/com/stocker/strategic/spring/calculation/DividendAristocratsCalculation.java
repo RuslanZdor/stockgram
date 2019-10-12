@@ -17,7 +17,7 @@ import java.util.List;
 @Component
 public class DividendAristocratsCalculation {
 
-    public static final String NAME = "DividendAristocrats";
+    public static final String NAME = "DIVIDENDARISTOCRATS";
 
     @Autowired
     private CompanyRepository companyRepository;

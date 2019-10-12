@@ -25,4 +25,11 @@ public class StrategyResultDataClientIT {
         assertTrue(strategyResultDataClient.getStrategyResult("dividendsAristocrats").count().block() > 0);
     }
 
+    @Test
+    public void getStrategyResultShow() {
+        strategyResultDataClient.getStrategyResult("dividendsAristocrats").subscribe(strategyResult -> {
+           log.info(strategyResult.getSymbol());
+        });
+    }
+
 }

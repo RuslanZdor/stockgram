@@ -54,10 +54,11 @@ public class ShowStrategyCommand extends ICommandProcessor {
 
             strategyResultDataClient.getStrategyResult(symbol).subscribe(strategyResult -> {
                         sendMessage.disableNotification();
-                        sendMessage.setText(strategyResult.getStrategyName());
+                        sendMessage.setText(String.format("Open /show\\_%s \n", strategyResult.getSymbol()));
                         callback.apply(sendMessage);
                     },
                     error -> {
+                        log.error(error);
                         sendMessage.setText(String.format("nothing was found for symbol %s", error.getMessage()));
                         callback.apply(sendMessage);
                     },
