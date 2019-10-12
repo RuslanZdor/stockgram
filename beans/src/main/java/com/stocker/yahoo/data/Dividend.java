@@ -2,10 +2,12 @@ package com.stocker.yahoo.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class Dividend implements Comparable<Dividend>{
     private LocalDate date;
