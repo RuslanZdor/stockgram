@@ -28,22 +28,25 @@ public class DividendAristocratsCalculation {
 
         strategyRepository.deleteAll().block();
         companyRepository.findLongDividendsHistory().subscribe(company -> {
-            Iterator<Dividend> iterator = company.getDividends().iterator();
 
-            boolean isAristocrat = true;
-            double lastYear = 0;
-            for (int i = 0; i < 24; i++) {
-                double newYear = getYearDividends(iterator);
-                if (lastYear > newYear) {
-                    isAristocrat = false;
-                    break;
-                } else {
-                    lastYear = newYear;
-                }
-            }
-            log.info(company.getSymbol() + " " + isAristocrat);
+            boolean isAristocrat = company.getCompanyStats().getMarketCap() < 1000000000;
+
             if (isAristocrat) {
-                strategyRepository.save(new StrategyResult(NAME, company.getSymbol())).subscribe();
+                Iterator<Dividend> iterator = company.getDividends().iterator();
+                double lastYear = 0;
+                for (int i = 0; i < 24; i++) {
+                    double newYear = getYearDividends(iterator);
+                    if (lastYear > newYear || newYear == 0.0) {
+                        isAristocrat = false;
+                        break;
+                    } else {
+                        lastYear = newYear;
+                    }
+                }
+                log.info(company.getSymbol() + " " + isAristocrat);
+                if (isAristocrat) {
+                    strategyRepository.save(new StrategyResult(NAME, company.getSymbol())).subscribe();
+                }
             }
         });
 
