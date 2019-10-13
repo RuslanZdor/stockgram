@@ -85,7 +85,7 @@ public class DownloadHistoricalData {
     private void setCompanyStats(Company company, StockStats stats) {
         CompanyStats companyStats = new CompanyStats();
         companyStats.setSharesFloat(stats.getSharesFloat() == null ? 0 : stats.getSharesFloat());
-        companyStats.setMarketCap(stats.getMarketCap() == null ? 0 : stats.getSharesFloat());
+        companyStats.setMarketCap(stats.getMarketCap() == null ? 0 : stats.getMarketCap().doubleValue());
         companyStats.setSharesOutstanding(stats.getSharesOutstanding() == null ? 0 : stats.getSharesOutstanding());
         companyStats.setSharesOwned(stats.getSharesOwned() == null ? 0 : stats.getSharesOwned());
         companyStats.setEps(stats.getEps() == null ? 0 : stats.getEps().doubleValue());
