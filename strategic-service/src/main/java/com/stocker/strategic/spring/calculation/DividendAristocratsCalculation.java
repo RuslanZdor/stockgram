@@ -29,7 +29,7 @@ public class DividendAristocratsCalculation {
         strategyRepository.deleteAll().block();
         companyRepository.findLongDividendsHistory().subscribe(company -> {
 
-            boolean isAristocrat = company.getCompanyStats().getMarketCap() < 1000000000;
+            boolean isAristocrat = company.getCompanyStats().getMarketCap() > 1000000000;
 
             if (isAristocrat) {
                 Iterator<Dividend> iterator = company.getDividends().iterator();
