@@ -3,6 +3,11 @@ package com.stocker.yahoo.spring;
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.exception.NoDayException;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
@@ -18,7 +23,13 @@ import java.util.Objects;
 
 import static org.junit.Assert.*;
 
+@SpringBootTest
+@RunWith(SpringRunner.class)
+@ContextConfiguration(classes = {StockYahooConfigurationForTest.class})
 public class DownloadHistoricalDataIT {
+
+    @Autowired
+    private DownloadHistoricalData downloadHistoricalData;
 
     @Test
     public void allDays() throws IOException {
@@ -60,7 +71,6 @@ public class DownloadHistoricalDataIT {
     public void download() throws NoDayException {
         Company company = new Company();
         company.setSymbol("AAPL");
-        DownloadHistoricalData downloadHistoricalData = new DownloadHistoricalData();
         downloadHistoricalData.download(company);
         assertFalse(company.getDividends().isEmpty());
     }
