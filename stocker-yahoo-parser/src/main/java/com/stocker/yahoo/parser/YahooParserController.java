@@ -56,7 +56,6 @@ class YahooParserController {
                 companyRepository.save(company).subscribe();
             } catch (NoDayException e) {
                 log.info(String.format("removing company %s", company.getSymbol()));
-                companyRepository.delete(company).subscribe();
             }
         });
     }

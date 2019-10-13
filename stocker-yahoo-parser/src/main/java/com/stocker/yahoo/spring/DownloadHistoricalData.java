@@ -6,7 +6,9 @@ import com.stocker.yahoo.data.Day;
 import com.stocker.yahoo.data.Dividend;
 import com.stocker.yahoo.exception.NoDayException;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
@@ -28,6 +30,9 @@ import java.util.stream.Collectors;
 @Log4j2
 @Component
 public class DownloadHistoricalData {
+
+    @Autowired
+    private CompanyFlagRepository companyFlagRepository;
 
     public void download(Company company) throws NoDayException {
         try {
@@ -52,6 +57,7 @@ public class DownloadHistoricalData {
             year.add(Calendar.YEAR, -25);
             setCompanyStats(company, companyData.getStats(false));
             setDividendHistory(company, companyData.getDividendHistory(year));
+            company.setSp500Flag(companyFlagRepository.findFirstBySymbol(Mono.just(company.getSymbol())).blockOptional().isPresent());
 
             log.info("size " + histQuotes.size());
 

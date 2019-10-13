@@ -21,6 +21,7 @@ public class Company {
     private String name;
     private String symbol;
     private String industry;
+    private boolean sp500Flag;
 
     private CompanyStats companyStats;
 
