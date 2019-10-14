@@ -73,6 +73,7 @@ public class DownloadHistoricalDataIT {
         company.setSymbol("AAPL");
         downloadHistoricalData.download(company);
         assertFalse(company.getDividends().isEmpty());
+        assertTrue(company.isSp500Flag());
     }
 
 }
