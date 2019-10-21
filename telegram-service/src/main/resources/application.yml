@@ -5,11 +5,11 @@ eureka:
   instance:
     appname: telegram-service
     prefer-ip-address: true
-    ip-address: 192.168.99.100
+    ip-address: eureka-server-service
   client:
     fetchRegistry: true
     serviceUrl:
-      defaultZone: http://192.168.99.100:8761/eureka
+      defaultZone: http://eureka-server-service:8761/eureka
 logging:
   level:
     org:
