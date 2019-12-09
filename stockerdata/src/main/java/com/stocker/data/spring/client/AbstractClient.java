@@ -25,7 +25,7 @@ public abstract class AbstractClient {
         if (StringUtils.isBlank(serviceName)) {
             throw new IllegalArgumentException("service name cannot be empty");
         }
-        return discoveryClient.getApplication(serviceName).size() > 0;
+        return discoveryClient.getApplication(serviceName) != null && discoveryClient.getApplication(serviceName).size() > 0;
     }
 
     public EurekaClient getDiscoveryClient() {
