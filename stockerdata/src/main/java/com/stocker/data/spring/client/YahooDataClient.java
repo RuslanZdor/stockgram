@@ -10,6 +10,7 @@ import reactor.core.publisher.Mono;
 public class YahooDataClient extends AbstractClient {
 
     private static final String SERVICE = "YAHOO-SERVICE";
+
     public Mono<Company> updateCompany(String symbol) {
         log.info(String.format("send stock for update %s", symbol));
         return this.getWebClient(SERVICE)
@@ -17,5 +18,9 @@ public class YahooDataClient extends AbstractClient {
                 .uri(String.format("/manager/refresh/%s/", symbol))
                 .retrieve()
                 .bodyToMono(Company.class);
+    }
+
+    public boolean isAvailable() {
+        return this.isAvailable(SERVICE);
     }
 }

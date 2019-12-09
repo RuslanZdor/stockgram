@@ -67,6 +67,12 @@ class CompanyController {
         if (StringUtils.isBlank(symbol)) {
             throw new IllegalArgumentException("Symbol cannot be empty");
         }
-        yahooDataClient.updateCompany(symbol).block();
+        if (yahooDataClient.isAvailable()) {
+            try {
+                yahooDataClient.updateCompany(symbol).block();
+            } catch (Exception ex) {
+                log.error(ex);
+            }
+        }
     }
 }

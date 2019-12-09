@@ -21,6 +21,13 @@ public abstract class AbstractClient {
         return WebClient.builder().baseUrl(discoveryClient.getApplication(serviceName).getInstances().get(0).getHomePageUrl()).build();
     }
 
+    protected boolean isAvailable(String serviceName) {
+        if (StringUtils.isBlank(serviceName)) {
+            throw new IllegalArgumentException("service name cannot be empty");
+        }
+        return discoveryClient.getApplication(serviceName).size() > 0;
+    }
+
     public EurekaClient getDiscoveryClient() {
         return discoveryClient;
     }
