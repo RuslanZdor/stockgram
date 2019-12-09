@@ -23,6 +23,6 @@ public class UserRepositoryIT {
 
     @Test
     public void findFirstByTelegramId() {
-        assertNotNull(userRepository.findFirstByTelegramId(Mono.just("testid")).single().block());
+        assertNotNull(userRepository.findFirstByTelegramId(Mono.just("test_id")).single().block());
     }
 }

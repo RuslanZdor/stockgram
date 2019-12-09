@@ -11,6 +11,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import reactor.core.publisher.Mono;
 
+import java.util.Objects;
+
 import static org.junit.Assert.*;
 
 @Log4j2
@@ -25,6 +27,7 @@ public class CompanyRepositoryIT {
     @Test
     public void findFirstByTelegramId() {
         Company company = companyRepository.findFirstBySymbol(Mono.just("AAPL")).single().block();
+        Objects.requireNonNull(company);
         assertEquals("AAPL", company.getSymbol());
         assertFalse(company.getDays().isEmpty());
     }

@@ -21,4 +21,8 @@ logging:
     console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
     file: "%d %p %c{1.} [%t] %m%n"
   file: app.log
-
+stocker:
+  mongodb:
+    url: mongodb://192.168.99.100
+  strategy:
+    dividendAristocrats: DIVIDENDARISTOCRATS

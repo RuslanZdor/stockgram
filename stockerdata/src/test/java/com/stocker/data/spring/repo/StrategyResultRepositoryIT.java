@@ -1,6 +1,7 @@
 package com.stocker.data.spring.repo;
 
 import com.stocker.data.StockDataConfigurationForTest;
+import com.stocker.data.StockDataProperties;
 import com.stocker.yahoo.data.StrategyResult;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Test;
@@ -20,11 +21,14 @@ import static org.junit.Assert.*;
 public class StrategyResultRepositoryIT {
 
     @Autowired
-    private StrategyResultRepository strategyRessultRepository;
+    private StrategyResultRepository strategyResultRepository;
+
+    @Autowired
+    private StockDataProperties stockDataProperties;
 
     @Test
     public void findResults() {
-        StrategyResult result = strategyRessultRepository.findByStrategyName(Mono.just("DividendAristocrats")).blockFirst();
+        StrategyResult result = strategyResultRepository.findByStrategyName(Mono.just(stockDataProperties.getDividendAristocrats())).blockFirst();
         assertNotNull(result);
     }
 }

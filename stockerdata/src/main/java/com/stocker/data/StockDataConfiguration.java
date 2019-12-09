@@ -2,10 +2,12 @@ package com.stocker.data;
 
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoClients;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -19,11 +21,16 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
 import java.util.Arrays;
 
 @Configuration
+@EnableConfigurationProperties
+@ConfigurationProperties
 @ComponentScan(basePackages = "com.stocker")
 @SpringBootApplication
 @EnableEurekaClient
 @EnableReactiveMongoRepositories("com.stocker")
 public class StockDataConfiguration {
+
+    @Value("${stocker.mongodb.url}")
+    private String mongodbURL;
 
     public static void main(String[] args) {
         SpringApplication.run(StockDataConfiguration.class, args);
@@ -46,7 +53,7 @@ public class StockDataConfiguration {
 
     @Bean
     public MongoClient mongoClient() {
-        return MongoClients.create("mongodb://192.168.99.100");
+        return MongoClients.create(mongodbURL);
     }
 
     private ReactiveMongoDatabaseFactory mongoDbFactory() {
