@@ -3,7 +3,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/min/moment.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.0"></script>
         <script src="https://www.chartjs.org/chartjs-chart-financial/chartjs-chart-financial.js"></script>
     </head>
 
