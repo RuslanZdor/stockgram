@@ -1,1 +1,1 @@
-mvn spring-boot:run -Dagentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8761
+java -jar target/eureka-server-1.0.jar

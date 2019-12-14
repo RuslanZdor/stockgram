@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
+import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -32,10 +33,16 @@ public class StockTelegramBot extends TelegramLongPollingBot {
     private ShowCompanyCommand showCommand;
 
     @Autowired
+    private ViewCompanyCommand viewCommand;
+
+    @Autowired
     private UnexpectedCommand unexpectedCommand;
 
     @Autowired
     private WatchListCommand watchListCommand;
+
+    @Autowired
+    private ShowStrategyCommand showStrategyCommand;
 
     @Autowired
     private AddToWatchListCompanyCommand addToWatchListCompanyCommand;
@@ -46,9 +53,12 @@ public class StockTelegramBot extends TelegramLongPollingBot {
         try {
             if (message instanceof SendPhoto) {
                 this.execute((SendPhoto) message);
-            }
-            if (message instanceof SendMessage) {
+            } else if (message instanceof SendMessage) {
                 this.execute((SendMessage) message);
+            }else if (message instanceof SendDocument) {
+                this.execute((SendDocument) message);
+            } else {
+                throw new TelegramApiException("Unexpected type of object");
             }
         } catch (TelegramApiException e) {
             log.error(e);
@@ -61,12 +71,13 @@ public class StockTelegramBot extends TelegramLongPollingBot {
         commandMap.put(OverSellCommand.COMMAND, overSellCommand);
         commandMap.put(ShowCompanyCommand.COMMAND, showCommand);
         commandMap.put(WatchListCommand.COMMAND, watchListCommand);
+        commandMap.put(ViewCompanyCommand.COMMAND, viewCommand);
         commandMap.put(AddToWatchListCompanyCommand.COMMAND, addToWatchListCompanyCommand);
+        commandMap.put(ShowStrategyCommand.COMMAND, showStrategyCommand);
     }
 
     @Override
     public void onUpdateReceived(Update update) {
-        Message message = update.hasCallbackQuery() ? update.getCallbackQuery().getMessage() : update.getMessage();
         try {
             ICommandProcessor processor = findCommand(update);
             processor.process(update, this::processorCallback);

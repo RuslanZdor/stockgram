@@ -16,7 +16,7 @@ import java.util.Arrays;
 @ComponentScan(basePackages = "com.stocker")
 @SpringBootApplication
 @EnableEurekaClient
-class StockTelegramConfiguration {
+public class StockTelegramConfiguration {
 
     public static void main(String[] args) {
         ApiContextInitializer.init();

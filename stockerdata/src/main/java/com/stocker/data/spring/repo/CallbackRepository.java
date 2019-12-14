@@ -1,6 +1,6 @@
-package com.stocker.data.spring;
+package com.stocker.data.spring.repo;
 
-import com.stocker.data.Callback;
+import com.stocker.data.bean.Callback;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 

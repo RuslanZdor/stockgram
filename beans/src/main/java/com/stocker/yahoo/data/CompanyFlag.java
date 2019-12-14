@@ -1,22 +1,14 @@
-package com.stocker.data;
-
+package com.stocker.yahoo.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document
-@ToString
-public class Callback {
-
-    @Id
-    private String id;
-    private String telegramId;
+@Document(collection = "sp500")
+public class CompanyFlag {
     private String symbol;
 }

@@ -6,12 +6,13 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Log4j
 @NoArgsConstructor
 @Document
-class CompanyStats {
+public class CompanyStats {
 
     private double marketCap;
     private long sharesFloat;
@@ -31,5 +32,10 @@ class CompanyStats {
     private double oneYearTargetPrice;
     private double shortRatio;
     private LocalDate earningsAnnouncement;
+
+    private double lastPrice;
+    private double lastDayOpenPrice;
+    private double lastDayClosePrice;
+    private LocalDateTime lastUpdate;
 
 }

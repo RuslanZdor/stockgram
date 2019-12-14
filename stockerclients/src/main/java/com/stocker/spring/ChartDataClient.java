@@ -24,12 +24,36 @@ public class ChartDataClient extends AbstractClient {
         WebDriver driver = null;
 
         try {
-            String chromeDriverPath = "D:\\ruslan_zdor\\chromedriver.exe" ;
+            String chromeDriverPath = "/usr/local/bin/chromedriver" ;
             System.setProperty("webdriver.chrome.driver", chromeDriverPath);
             ChromeOptions options = new ChromeOptions();
-            options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1024","--ignore-certificate-errors");
+            options.addArguments("--headless", "--no-sandbox", "--disable-gpu", "--window-size=1920,1024","--ignore-certificate-errors");
             driver = new ChromeDriver(options);
-            driver.get(String.format("%s/company/%s/", getWebClient(SERVICE), symbol));
+            driver.get(String.format("%s/company/%s/", getDiscoveryClient().getApplication(SERVICE).getInstances().get(0).getHomePageUrl(), symbol));
+            File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            FileUtils.copyFile(screenshot, new File("screenshot.png"));
+        } catch (IOException e) {
+            log.error(e);
+        } finally {
+            if (driver != null) {
+                driver.quit();
+            }
+        }
+        return new File("screenshot.png");
+    }
+
+    public File getView(String symbol) {
+        log.info(String.format("getting view for company with symbol %s", symbol));
+
+        WebDriver driver = null;
+
+        try {
+            String chromeDriverPath = "/usr/local/bin/chromedriver" ;
+            System.setProperty("webdriver.chrome.driver", chromeDriverPath);
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--headless", "--no-sandbox", "--disable-gpu", "--window-size=400,400","--ignore-certificate-errors");
+            driver = new ChromeDriver(options);
+            driver.get(String.format("%s/overview/%s/", getDiscoveryClient().getApplication(SERVICE).getInstances().get(0).getHomePageUrl(), symbol));
             File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(screenshot, new File("screenshot.png"));
         } catch (IOException e) {

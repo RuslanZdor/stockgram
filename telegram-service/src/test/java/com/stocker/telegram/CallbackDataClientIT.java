@@ -1,5 +1,6 @@
 package com.stocker.telegram;
 
+import com.netflix.discovery.EurekaClient;
 import com.stocker.telegram.spring.client.CallbackDataClient;
 import com.stocker.telegram.spring.callback.AddToWatchListCallback;
 import lombok.extern.log4j.Log4j2;
@@ -7,15 +8,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 @Log4j2
-@SpringBootTest
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {StockTelegramConfigurationForTest.class})
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CallbackDataClientIT {
 
     @Autowired

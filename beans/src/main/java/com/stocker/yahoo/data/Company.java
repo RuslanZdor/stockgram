@@ -6,18 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import yahoofinance.quotes.stock.StockStats;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.NavigableSet;
 import java.util.TreeSet;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document
+@Document(collection = "company")
 public class Company {
 
     @Id
@@ -25,10 +21,12 @@ public class Company {
     private String name;
     private String symbol;
     private String industry;
+    private boolean sp500Flag;
 
     private CompanyStats companyStats;
 
     private NavigableSet<Day> days = new TreeSet<>();
+    private NavigableSet<Dividend> dividends = new TreeSet<>();
 
     /**
      * return day with the same date as in parameter
@@ -49,6 +47,7 @@ public class Company {
     public long getMaxDayVolume() {
         return getDays().stream().map(Day::getVolume).max(Long::compare).orElse(0L);
     }
+<<<<<<< HEAD
 
     /**
      * Parse yahoo API object and save fill company stats
@@ -74,4 +73,6 @@ public class Company {
         companyStats.setShortRatio(stats.getShortRatio().doubleValue());
         companyStats.setEarningsAnnouncement(LocalDateTime.ofInstant(stats.getEarningsAnnouncement().toInstant(), ZoneId.systemDefault()).toLocalDate());
     }
+=======
+>>>>>>> 8e5f698671d004b31dc26da208a79d50a9ca06d1
 }

@@ -1,6 +1,6 @@
-package com.stocker.data.spring;
+package com.stocker.data.spring.repo;
 
-import com.stocker.data.User;
+import com.stocker.data.bean.User;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;

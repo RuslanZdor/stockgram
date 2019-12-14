@@ -4,9 +4,14 @@ import static com.stocker.ChartjsUtils.*;
 
 import com.stocker.GraphInterval;
 import com.stocker.spring.CompanyDataClient;
+<<<<<<< HEAD
 import spring.CompanyDataClient;
+=======
+import com.stocker.spring.ViewCompanyDataClient;
+>>>>>>> 8e5f698671d004b31dc26da208a79d50a9ca06d1
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.data.Day;
+import com.stocker.yahoo.data.ViewCompany;
 import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,17 +35,23 @@ public class CompanyController {
     @Autowired
     private CompanyDataClient companyDataClient;
 
+    @Autowired
+    private ViewCompanyDataClient viewCompanyDataClient;
+
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MMM dd, yyyy, hh:mm:ss a");
-    private static final double volumeMultiplicator = 4.0d;
+    private static final double volumeMultiplicator = 1.0d;
 
     private static final int GRAPH_SIZE = 200;
 
     @RequestMapping("/company/{symbol}/")
+<<<<<<< HEAD
     public ModelAndView companyPriceChart(@PathVariable("symbol") String symbol) {
+=======
+    public ModelAndView company(@PathVariable("symbol") String symbol) {
+>>>>>>> 8e5f698671d004b31dc26da208a79d50a9ca06d1
         log.info("loading " + symbol);
-        ModelAndView model = new ModelAndView("welcome");
+        ModelAndView model = new ModelAndView("company");
         Company company = companyDataClient.getCompany(symbol).block();
-
         if (!Objects.isNull(company)) {
             Set<Day> filtered = filterDays(company, GraphInterval.DAILY);
             model.addObject("title", String.format("'%s'", company.getName()));
@@ -48,6 +59,18 @@ public class CompanyController {
             model.addAllObjects(prepareMACDData(filtered));
             model.addAllObjects(prepareCompanyData(filtered));
             model.addAllObjects(prepareRSI(filtered));
+        }
+        return model;
+    }
+
+    @RequestMapping("/overview/{symbol}/")
+    public ModelAndView overview(@PathVariable("symbol") String symbol) {
+        log.info("loading " + symbol);
+        ModelAndView model = new ModelAndView("overview");
+        ViewCompany company = viewCompanyDataClient.getViewCompany(symbol).block();
+        if (!Objects.isNull(company)) {
+            model.addObject("company", company);
+            model.addObject("currentDate", company.getCompanyStats().getLastUpdate().format(DATE_FORMAT));
         }
         return model;
     }
@@ -143,10 +166,10 @@ public class CompanyController {
     }
 
     private double getMaxPrice(Set<Day> days) {
-        return days.stream().map(Day::getMaxPrice).max(Double::compareTo).orElse(100.0) * 1.05;
+        return days.stream().map(Day::getMaxPrice).max(Double::compareTo).orElse(100.0);
     }
 
     private double getMinPrice(Set<Day> days) {
-        return days.stream().map(Day::getMinPrice).min(Double::compareTo).orElse(0.0) * 0.8;
+        return days.stream().map(Day::getMinPrice).min(Double::compareTo).orElse(0.0);
     }
 }

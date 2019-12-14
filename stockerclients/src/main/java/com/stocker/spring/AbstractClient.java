@@ -20,4 +20,8 @@ public abstract class AbstractClient {
         }
         return WebClient.builder().baseUrl(discoveryClient.getApplication(serviceName).getInstances().get(0).getHomePageUrl()).build();
     }
+
+    public EurekaClient getDiscoveryClient() {
+        return discoveryClient;
+    }
 }

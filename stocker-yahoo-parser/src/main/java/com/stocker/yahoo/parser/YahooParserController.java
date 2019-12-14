@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
-import java.util.TreeSet;
-
 @Log4j2
 @RestController
 class YahooParserController {
@@ -42,17 +40,22 @@ class YahooParserController {
     @Autowired
     private CalculateMACDSignal calculateMACDSignal;
 
+    @Autowired
+    private CalculateRising calculateRising;
+
+    @Autowired
+    private CalculateNextRising calculateNextRising;
+
 
     @GetMapping("/manager/reloadStocks")
     public void reloadStocks() {
         companyRepository.findAll().subscribe(company -> {
             try {
-                company.setDays(new TreeSet<>());
                 downloadHistoricalData.download(company);
+                allUpdates(company);
                 companyRepository.save(company).subscribe();
             } catch (NoDayException e) {
                 log.info(String.format("removing company %s", company.getSymbol()));
-                companyRepository.delete(company).subscribe();
             }
         });
     }
@@ -92,5 +95,7 @@ class YahooParserController {
         calculateRSI.calculate(company);
         calculateMACDLine.calculate(company);
         calculateMACDSignal.calculate(company);
+        calculateRising.calculate(company);
+        calculateNextRising.calculate(company);
     }
 }
