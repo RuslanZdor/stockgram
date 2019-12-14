@@ -15,18 +15,12 @@
     </properties>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.6.RELEASE</version>
+        <artifactId>stocker</artifactId>
+        <groupId>com.stocker</groupId>
+        <version>1.0</version>
     </parent>
 
     <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.8</version>
-            <scope>compile</scope>
-        </dependency>
        <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
@@ -36,16 +30,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-webflux</artifactId>
             <version>5.1.8.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>com.stocker</groupId>
-            <artifactId>beans</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.9</version>
         </dependency>
         <dependency>
             <groupId>io.projectreactor.netty</groupId>
@@ -68,10 +52,19 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>com.stocker</groupId>
+            <artifactId>beans</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.stocker</groupId>
+            <artifactId>stocker-clients</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
-        <!-- To define the plugin version in your parent POM -->
         <pluginManagement>
             <plugins>
                 <plugin>

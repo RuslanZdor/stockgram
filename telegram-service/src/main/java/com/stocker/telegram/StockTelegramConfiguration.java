@@ -1,6 +1,7 @@
 package com.stocker.telegram;
 
 import com.stocker.telegram.spring.StockTelegramComponent;
+import lombok.extern.log4j.Log4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,7 +11,7 @@ import org.springframework.context.annotation.*;
 import org.telegram.telegrambots.ApiContextInitializer;
 
 import java.util.Arrays;
-
+@Log4j
 @Configuration
 @ComponentScan(basePackages = "com.stocker")
 @SpringBootApplication
@@ -25,15 +26,8 @@ class StockTelegramConfiguration {
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         return args -> {
-
-            System.out.println("Let's inspect the beans provided by Spring Boot:");
-
-            String[] beanNames = ctx.getBeanDefinitionNames();
-            Arrays.sort(beanNames);
-            for (String beanName : beanNames) {
-                System.out.println(beanName);
-            }
-
+            log.debug("Let's inspect the beans provided by Spring Boot:");
+            Arrays.stream(ctx.getBeanDefinitionNames()).forEach(log::debug);
         };
     }
 

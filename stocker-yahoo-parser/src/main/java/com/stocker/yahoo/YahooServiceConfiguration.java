@@ -2,6 +2,7 @@ package com.stocker.yahoo;
 
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoClients;
+import lombok.extern.log4j.Log4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,7 +18,7 @@ import org.springframework.data.mongodb.core.SimpleReactiveMongoDatabaseFactory;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 
 import java.util.Arrays;
-
+@Log4j
 @Configuration
 @ComponentScan(basePackages = "com.stocker")
 @SpringBootApplication
@@ -32,15 +33,8 @@ public class YahooServiceConfiguration {
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         return args -> {
-
-            System.out.println("Let's inspect the beans provided by Spring Boot:");
-
-            String[] beanNames = ctx.getBeanDefinitionNames();
-            Arrays.sort(beanNames);
-            for (String beanName : beanNames) {
-                System.out.println(beanName);
-            }
-
+            log.debug("Let's inspect the beans provided by Spring Boot:");
+            Arrays.stream(ctx.getBeanDefinitionNames()).forEach(log::debug);
         };
     }
 

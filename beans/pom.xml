@@ -5,7 +5,12 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.stocker</groupId>
+    <parent>
+        <artifactId>stocker</artifactId>
+        <groupId>com.stocker</groupId>
+        <version>1.0</version>
+    </parent>
+
     <artifactId>beans</artifactId>
     <version>1.0</version>
     <build>
@@ -22,16 +27,6 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.8</version>
-        </dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-commons</artifactId>
             <version>2.1.4.RELEASE</version>
@@ -40,18 +35,6 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-mongodb</artifactId>
             <version>2.1.9.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/log4j/log4j -->
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
         </dependency>
         <dependency>
             <groupId>com.yahoofinance-api</groupId>

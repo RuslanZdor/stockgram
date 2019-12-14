@@ -3,7 +3,6 @@ package com.stocker.telegram.spring.command;
 import com.stocker.telegram.exception.NoSymbolException;
 import com.stocker.telegram.spring.client.CallbackDataClient;
 import com.stocker.telegram.spring.client.ChartDataClient;
-import com.stocker.telegram.spring.client.CompanyDataClient;
 import com.stocker.telegram.spring.StockTelegramBot;
 import com.stocker.telegram.spring.callback.AbstractCallback;
 import com.stocker.telegram.spring.callback.AddToWatchListCallback;

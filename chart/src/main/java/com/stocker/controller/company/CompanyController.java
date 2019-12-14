@@ -4,6 +4,7 @@ import static com.stocker.ChartjsUtils.*;
 
 import com.stocker.GraphInterval;
 import com.stocker.spring.CompanyDataClient;
+import spring.CompanyDataClient;
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.data.Day;
 import lombok.extern.log4j.Log4j2;
@@ -19,6 +20,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Web controller for company chart pages
+ */
 @Log4j2
 @Controller
 public class CompanyController {
@@ -32,7 +36,7 @@ public class CompanyController {
     private static final int GRAPH_SIZE = 200;
 
     @RequestMapping("/company/{symbol}/")
-    public ModelAndView helloWorld(@PathVariable("symbol") String symbol) {
+    public ModelAndView companyPriceChart(@PathVariable("symbol") String symbol) {
         log.info("loading " + symbol);
         ModelAndView model = new ModelAndView("welcome");
         Company company = companyDataClient.getCompany(symbol).block();

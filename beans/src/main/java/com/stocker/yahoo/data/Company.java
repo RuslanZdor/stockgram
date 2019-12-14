@@ -38,28 +38,22 @@ public class Company {
      * @return founded or created day
      */
     public Day getDay(Day day) {
-        Object[] foundDays = days.stream().filter(fDay -> fDay.getDate().equals(day.getDate())).toArray();
-        if (foundDays.length > 0) {
-            return (Day) foundDays[0];
-        }
-        return getDays().first();
+        return days.stream().filter(fDay -> fDay.getDate().equals(day.getDate())).findFirst().orElse(getDays().first());
     }
 
     /**
      * find max daily volume for this company
-     *
+     * zero in case of empty list
      * @return max volume
      */
     public long getMaxDayVolume() {
-        long maxVolume = 0;
-        for (Day day : getDays()) {
-            if (maxVolume < day.getVolume()) {
-                maxVolume = day.getVolume();
-            }
-        }
-        return maxVolume;
+        return getDays().stream().map(Day::getVolume).max(Long::compare).orElse(0L);
     }
 
+    /**
+     * Parse yahoo API object and save fill company stats
+     * @param stats
+     */
     public void setCompanyStats(StockStats stats) {
         companyStats = new CompanyStats();
         companyStats.setSharesFloat(stats.getSharesFloat());

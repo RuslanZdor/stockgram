@@ -9,12 +9,42 @@
     <packaging>pom</packaging>
 
     <modules>
-	<module>telegram-service</module>
+        <module>beans</module>
+        <module>stockerclients</module>
+    	<module>telegram-service</module>
         <module>stockerdata</module>
         <module>eureka-server</module>
         <module>stocker-yahoo-parser</module>
         <module>chart</module>
-        <module>beans</module>
     </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.8</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.projectreactor.netty</groupId>
+            <artifactId>reactor-netty</artifactId>
+            <version>0.8.9.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
 
 </project>

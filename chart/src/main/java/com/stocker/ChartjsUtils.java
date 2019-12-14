@@ -37,9 +37,9 @@ public class ChartjsUtils {
     public static final String PRICE_Y_AXIS = "price";
     public static final String OSCILLATOR_Y_AXIS = "oscillator";
 
-    public static final String TYPE_LINE = "line";
-    public static final String TYPE_BAR = "bar";
-    public static final String TYPE_CANDLESTICK = "candlestick";
+    private static final String TYPE_LINE = "line";
+    private static final String TYPE_BAR = "bar";
+    private static final String TYPE_CANDLESTICK = "candlestick";
 
     public static JSONObject createBarChartData(String label, String yAxis, List data) {
         return createChartData(label, yAxis, TYPE_BAR, data);
