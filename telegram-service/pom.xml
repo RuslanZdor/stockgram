@@ -15,11 +15,6 @@
         <version>1.0</version>
     </parent>
 
-    <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.telegram</groupId>
@@ -31,18 +26,6 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>3.0.1</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>5.1.5.RELEASE</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>3.0.0</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -60,12 +43,6 @@
             <version>2.1.2.RELEASE</version>
         </dependency>
         <dependency>
-            <groupId>io.projectreactor</groupId>
-            <artifactId>reactor-test</artifactId>
-            <version>3.2.10.RELEASE</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-chrome-driver</artifactId>
             <version>3.8.1</version>
@@ -76,14 +53,13 @@
             <version>3.14.0</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-test</artifactId>
-            <version>2.1.6.RELEASE</version>
-            <scope>test</scope>
+            <groupId>com.stocker</groupId>
+            <artifactId>beans</artifactId>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>com.stocker</groupId>
-            <artifactId>beans</artifactId>
+            <artifactId>stocker-clients</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>

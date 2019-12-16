@@ -2,7 +2,7 @@ package com.stocker.data.controller;
 
 import com.stocker.data.spring.repo.StrategyResultRepository;
 import com.stocker.yahoo.data.StrategyResult;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 /**
  * REST API controller for Strategy objects
  */
-@Log4j2
+@Slf4j
 @RestController
 public class StrategyController {
 

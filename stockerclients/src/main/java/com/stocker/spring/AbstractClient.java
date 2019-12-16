@@ -1,13 +1,13 @@
 package com.stocker.spring;
 
 import com.netflix.discovery.EurekaClient;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
-@Log4j2
+@Slf4j
 @Component
 public abstract class AbstractClient {
 
@@ -21,7 +21,7 @@ public abstract class AbstractClient {
         return WebClient.builder().baseUrl(discoveryClient.getApplication(serviceName).getInstances().get(0).getHomePageUrl()).build();
     }
 
-    public EurekaClient getDiscoveryClient() {
+    EurekaClient getDiscoveryClient() {
         return discoveryClient;
     }
 }

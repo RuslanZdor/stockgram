@@ -2,11 +2,8 @@ package com.stocker.data;
 
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoClients;
-<<<<<<< HEAD
-import lombok.extern.log4j.Log4j;
-=======
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
->>>>>>> 8e5f698671d004b31dc26da208a79d50a9ca06d1
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,7 +21,7 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
 
 import java.util.Arrays;
 
-@Log4j
+@Slf4j
 @Configuration
 @EnableConfigurationProperties
 @ConfigurationProperties

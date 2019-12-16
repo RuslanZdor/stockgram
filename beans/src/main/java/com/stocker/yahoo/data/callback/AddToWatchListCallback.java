@@ -1,4 +1,4 @@
-package com.stocker.telegram.spring.callback;
+package com.stocker.yahoo.data.callback;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

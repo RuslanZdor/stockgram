@@ -2,7 +2,7 @@ package com.stocker.data.controller;
 
 import com.stocker.data.bean.User;
 import com.stocker.data.spring.repo.UserRepository;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 /**
  * Rest API for User Objects
  */
-@Log4j2
+@Slf4j
 @RestController
 class UserController {
 

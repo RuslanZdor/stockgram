@@ -2,7 +2,7 @@ package com.stocker.yahoo.spring.job;
 
 import com.stocker.yahoo.spring.CompanyRepository;
 import com.stocker.yahoo.spring.StockYahooConfigurationForTest;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 
 import static org.junit.Assert.*;
 
-@Log4j2
+@Slf4j
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {StockYahooConfigurationForTest.class})

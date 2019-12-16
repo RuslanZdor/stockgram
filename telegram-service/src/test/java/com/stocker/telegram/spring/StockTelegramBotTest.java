@@ -25,6 +25,9 @@ public class StockTelegramBotTest {
     @MockBean
     private EurekaClient eurekaClient;
 
+    @MockBean
+    private StockTelegramComponent stockTelegramComponent;
+
     @Autowired
     private StockTelegramBot stockTelegramBot;
 

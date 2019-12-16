@@ -5,14 +5,17 @@ import com.stocker.yahoo.exception.NoDayException;
 import com.stocker.yahoo.spring.CompanyRepository;
 import com.stocker.yahoo.spring.DownloadHistoricalData;
 import com.stocker.yahoo.spring.job.*;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
-@Log4j2
+/**
+ * Main Controller for Yahoo parser service
+ */
+@Slf4j
 @RestController
 class YahooParserController {
 
@@ -76,7 +79,7 @@ class YahooParserController {
             try {
                 downloadHistoricalData.download(company);
             } catch (NoDayException e) {
-                log.error(e);
+                log.error("Company hasn't historical information", e);
             }
             allUpdates(company);
             companyRepository.save(company).subscribe(company1 -> {

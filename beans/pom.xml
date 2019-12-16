@@ -12,19 +12,7 @@
     </parent>
 
     <artifactId>beans</artifactId>
-    <version>1.0</version>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.data</groupId>
@@ -32,20 +20,10 @@
             <version>2.1.9.RELEASE</version>
         </dependency>
         <dependency>
-<<<<<<< HEAD
-            <groupId>com.yahoofinance-api</groupId>
-            <artifactId>YahooFinanceAPI</artifactId>
-            <version>3.14.0</version>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.10.5</version>
+            <scope>compile</scope>
         </dependency>
-
-=======
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
->>>>>>> 8e5f698671d004b31dc26da208a79d50a9ca06d1
     </dependencies>
-
-
 </project>

@@ -1,6 +1,6 @@
 package com.stocker.telegram.spring.command;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.function.Function;
 
-@Log4j2
+@Slf4j
 @Component
 public class UnexpectedCommand extends ICommandProcessor {
 

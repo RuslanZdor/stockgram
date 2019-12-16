@@ -9,11 +9,6 @@
     <version>1.0</version>
     <packaging>war</packaging>
 
-    <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
-
     <parent>
         <artifactId>stocker</artifactId>
         <groupId>com.stocker</groupId>
@@ -32,11 +27,6 @@
             <version>5.1.8.RELEASE</version>
         </dependency>
         <dependency>
-            <groupId>io.projectreactor.netty</groupId>
-            <artifactId>reactor-netty</artifactId>
-            <version>0.8.9.RELEASE</version>
-        </dependency>
-        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
@@ -44,6 +34,7 @@
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
+            <version>RELEASE</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

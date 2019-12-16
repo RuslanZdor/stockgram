@@ -2,7 +2,7 @@ package com.stocker.telegram.spring;
 
 import com.stocker.telegram.spring.command.*;
 import com.stocker.telegram.exception.UnexpectedCommandException;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -21,7 +21,7 @@ import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
-@Log4j2
+@Slf4j
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class StockTelegramBot extends TelegramLongPollingBot {
@@ -61,7 +61,7 @@ public class StockTelegramBot extends TelegramLongPollingBot {
                 throw new TelegramApiException("Unexpected type of object");
             }
         } catch (TelegramApiException e) {
-            log.error(e);
+            log.error("Failed to communicate with telegram API", e);
         }
         return message;
     }
@@ -82,7 +82,7 @@ public class StockTelegramBot extends TelegramLongPollingBot {
             ICommandProcessor processor = findCommand(update);
             processor.process(update, this::processorCallback);
         } catch (UnexpectedCommandException ex) {
-            log.error(ex);
+            log.error("Wrong command to process", ex);
             unexpectedCommand.process(update, this::processorCallback);
         }
     }

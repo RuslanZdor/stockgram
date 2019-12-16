@@ -1,8 +1,8 @@
 package com.stocker.telegram.spring.command;
 
-import com.stocker.telegram.data.User;
-import com.stocker.telegram.spring.client.UserDataClient;
-import lombok.extern.log4j.Log4j2;
+import com.stocker.spring.UserDataClient;
+import com.stocker.yahoo.data.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
@@ -12,7 +12,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.function.Function;
 
-@Log4j2
+@Slf4j
 @Component
 public class WatchListCommand extends ICommandProcessor {
 
@@ -60,7 +60,7 @@ public class WatchListCommand extends ICommandProcessor {
      * @param user for search watchlist
      * @return text of watchlist message
      */
-    protected String buildWatchList(User user) {
+    private String buildWatchList(User user) {
         StringBuilder sb = new StringBuilder();
         sb.append("Watch List \n");
         if (user.getWatchList().isEmpty()) {

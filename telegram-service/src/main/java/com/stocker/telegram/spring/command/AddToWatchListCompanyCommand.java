@@ -1,10 +1,9 @@
 package com.stocker.telegram.spring.command;
 
-import com.stocker.telegram.exception.NoSymbolException;
-import com.stocker.telegram.spring.client.CallbackDataClient;
+import com.stocker.spring.CallbackDataClient;
+import com.stocker.spring.UserDataClient;
 import com.stocker.telegram.spring.StockTelegramBot;
-import com.stocker.telegram.spring.client.UserDataClient;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
@@ -12,10 +11,11 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Log4j2
+@Slf4j
 @Component
 public class AddToWatchListCompanyCommand extends ICommandProcessor {
 
@@ -39,8 +39,7 @@ public class AddToWatchListCompanyCommand extends ICommandProcessor {
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(getMessage(update).getChatId());
 
-        try {
-            String callbackId = getSymbol(getText(update));
+        getSymbol(getText(update)).ifPresentOrElse(callbackId -> {
             log.info(String.format("Calling callback %s", callbackId));
             callbackDataClient.getAddToWatchListCallback(callbackId).subscribe(abstractCallback -> {
                         log.info(String.format("Searching user %s", abstractCallback.getTelegramId()));
@@ -57,9 +56,10 @@ public class AddToWatchListCompanyCommand extends ICommandProcessor {
                         callback.apply(sendMessage);
                     },
                     () -> log.info(sendMessage.getText()));
-        } catch (NoSymbolException e) {
-            log.error(e);
-        }
+        }, () -> {
+            sendMessage.setText("Wrong message, company symbol is not found");
+            callback.apply(sendMessage);
+        });
     }
 
     /**
@@ -67,13 +67,13 @@ public class AddToWatchListCompanyCommand extends ICommandProcessor {
      *
      * @param text for extraction
      * @return company Symbol
-     * @throws NoSymbolException in case when there are no extraction
+     * Option.empty() in case when there are no extraction
      */
-    private static String getSymbol(String text) throws NoSymbolException {
+    private static Optional<String> getSymbol(String text) {
         String[] words = StockTelegramBot.splitMessage(text);
         if (words.length < 2 || words[1].length() == 0) {
-            throw new NoSymbolException(String.format("command %s has no company symbol", text));
+            return Optional.empty();
         }
-        return words[1];
+        return Optional.of(words[1]);
     }
 }

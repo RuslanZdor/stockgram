@@ -2,14 +2,14 @@ package com.stocker.yahoo.data;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
-@Log4j
+@Slf4j
 @NoArgsConstructor
 @Document
 public class CompanyStats {

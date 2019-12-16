@@ -2,7 +2,7 @@ package com.stocker.data.controller;
 
 import com.stocker.data.bean.Callback;
 import com.stocker.data.spring.repo.CallbackRepository;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 /**
  * API controller for telegram callback
  */
-@Log4j2
+@Slf4j
 @RestController
 class CallbackController {
 

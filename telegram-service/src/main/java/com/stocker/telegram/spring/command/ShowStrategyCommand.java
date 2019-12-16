@@ -2,30 +2,19 @@ package com.stocker.telegram.spring.command;
 
 import com.stocker.telegram.exception.NoSymbolException;
 import com.stocker.telegram.spring.StockTelegramBot;
-import com.stocker.telegram.spring.callback.AbstractCallback;
-import com.stocker.telegram.spring.callback.AddToWatchListCallback;
-import com.stocker.telegram.spring.client.CallbackDataClient;
-import com.stocker.telegram.spring.client.ChartDataClient;
-import com.stocker.telegram.spring.client.CompanyDataClient;
-import com.stocker.telegram.spring.client.StrategyResultDataClient;
-import com.stocker.yahoo.data.Company;
-import lombok.extern.log4j.Log4j2;
+import com.stocker.spring.StrategyResultDataClient;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
-import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 import java.util.function.Function;
 
-@Log4j2
+@Slf4j
 @Component
 public class ShowStrategyCommand extends ICommandProcessor {
 
@@ -49,25 +38,22 @@ public class ShowStrategyCommand extends ICommandProcessor {
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(getMessage(update).getChatId());
 
-        try {
-            String symbol = getSymbol(getText(update));
-
-            strategyResultDataClient.getStrategyResult(symbol).subscribe(strategyResult -> {
-                        sendMessage.disableNotification();
-                        sendMessage.setText(String.format("Open /show\\_%s \n", strategyResult.getSymbol()));
-                        callback.apply(sendMessage);
-                    },
-                    error -> {
-                        log.error(error);
-                        sendMessage.setText(String.format("nothing was found for symbol %s", error.getMessage()));
-                        callback.apply(sendMessage);
-                    },
-                    () -> log.info(sendMessage.getText())
-            );
-        } catch (NoSymbolException e) {
-            sendMessage.setText(String.format("Bot wasn't found symbol in message: %s", getText(update)));
-            callback.apply(sendMessage);
-        }
+        getSymbol(getText(update)).ifPresentOrElse(symbol -> strategyResultDataClient.getStrategyResult(symbol).subscribe(strategyResult -> {
+                    sendMessage.disableNotification();
+                    sendMessage.setText(String.format("Open /show\\_%s \n", strategyResult.getSymbol()));
+                    callback.apply(sendMessage);
+                },
+                error -> {
+                    log.error("Telegram service failed get strategy information", error);
+                    sendMessage.setText(String.format("nothing was found for symbol %s", error.getMessage()));
+                    callback.apply(sendMessage);
+                },
+                () -> log.info(sendMessage.getText())
+        ),
+                () -> {
+                    sendMessage.setText(String.format("Bot wasn't found symbol in message: %s", getText(update)));
+                    callback.apply(sendMessage);
+                });
     }
 
     /**
@@ -75,13 +61,12 @@ public class ShowStrategyCommand extends ICommandProcessor {
      *
      * @param text for extraction
      * @return company Symbol
-     * @throws NoSymbolException in case when there are no extraction
      */
-    protected static String getSymbol(String text) throws NoSymbolException {
+    private static Optional<String> getSymbol(String text) {
         String[] words = StockTelegramBot.splitMessage(text);
         if (words.length < 2 || words[1].length() == 0) {
-            throw new NoSymbolException(String.format("command %s has no company symbol", text));
+            return Optional.empty();
         }
-        return words[1].toUpperCase();
+        return Optional.of(words[1].toUpperCase());
     }
 }

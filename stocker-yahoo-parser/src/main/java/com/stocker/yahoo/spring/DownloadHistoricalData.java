@@ -5,7 +5,7 @@ import com.stocker.yahoo.data.CompanyStats;
 import com.stocker.yahoo.data.Day;
 import com.stocker.yahoo.data.Dividend;
 import com.stocker.yahoo.exception.NoDayException;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -27,7 +27,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Log4j2
+@Slf4j
 @Component
 public class DownloadHistoricalData {
 
@@ -115,7 +115,7 @@ public class DownloadHistoricalData {
 
     private void setDividendHistory(Company company, List<HistoricalDividend> stats) {
         company.getDividends().clear();
-        stats.stream().forEach(data -> {
+        stats.forEach(data -> {
             LocalDate date = data.getDate().getTime().toInstant()
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate();

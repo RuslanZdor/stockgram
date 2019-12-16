@@ -1,7 +1,7 @@
 package com.stocker.telegram;
 
 import com.stocker.telegram.spring.StockTelegramComponent;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.*;
 import org.telegram.telegrambots.ApiContextInitializer;
 
 import java.util.Arrays;
-@Log4j
+@Slf4j
 @Configuration
 @ComponentScan(basePackages = "com.stocker")
 @SpringBootApplication

@@ -1,4 +1,4 @@
-package com.stocker.telegram.data;
+package com.stocker.yahoo.data;
 
 
 import lombok.AllArgsConstructor;

@@ -5,7 +5,7 @@ import com.stocker.data.spring.repo.ViewCompanyRepository;
 import com.stocker.data.spring.client.YahooDataClient;
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.data.ViewCompany;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
 /**
  * API REST controller to handle company requests
  */
-@Log4j2
+@Slf4j
 @RestController
 class CompanyController {
 
@@ -71,7 +71,7 @@ class CompanyController {
             try {
                 yahooDataClient.updateCompany(symbol).block();
             } catch (Exception ex) {
-                log.error(ex);
+                log.error("Failed to call yahoo service to update company", ex);
             }
         }
     }

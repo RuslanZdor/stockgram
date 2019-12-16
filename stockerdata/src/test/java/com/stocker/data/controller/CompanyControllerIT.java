@@ -2,7 +2,7 @@ package com.stocker.data.controller;
 
 import com.stocker.data.StockDataConfigurationForTest;
 import com.stocker.yahoo.data.Company;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.Objects;
 
 import static org.junit.Assert.*;
 
-@Log4j2
+@Slf4j
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {StockDataConfigurationForTest.class})

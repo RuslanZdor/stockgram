@@ -1,6 +1,6 @@
 package com.stocker.spring;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.IOException;
 
-@Log4j2
+@Slf4j
 @Component
 public class ChartDataClient extends AbstractClient {
 
@@ -33,7 +33,7 @@ public class ChartDataClient extends AbstractClient {
             File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(screenshot, new File("screenshot.png"));
         } catch (IOException e) {
-            log.error(e);
+            log.error("Chrome driver could't create screenshot", e);
         } finally {
             if (driver != null) {
                 driver.quit();
@@ -57,7 +57,7 @@ public class ChartDataClient extends AbstractClient {
             File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(screenshot, new File("screenshot.png"));
         } catch (IOException e) {
-            log.error(e);
+            log.error("Chrome driver could't create screenshot", e);
         } finally {
             if (driver != null) {
                 driver.quit();

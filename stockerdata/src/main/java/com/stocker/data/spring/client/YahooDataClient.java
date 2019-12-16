@@ -1,11 +1,11 @@
 package com.stocker.data.spring.client;
 
 import com.stocker.yahoo.data.Company;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
-@Log4j2
+@Slf4j
 @Component
 public class YahooDataClient extends AbstractClient {
 

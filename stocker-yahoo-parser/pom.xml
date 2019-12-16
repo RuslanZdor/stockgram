@@ -11,9 +11,9 @@
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.6.RELEASE</version>
+        <groupId>com.stocker</groupId>
+        <artifactId>stocker</artifactId>
+        <version>1.0</version>
     </parent>
 
     <dependencies>
@@ -55,18 +55,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-commons</artifactId>
             <version>2.1.2.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>5.1.5.RELEASE</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-test</artifactId>
-            <version>2.1.6.RELEASE</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.stocker</groupId>

@@ -1,10 +1,10 @@
 package com.stocker.telegram.spring.command;
 
+import com.stocker.spring.ChartDataClient;
+import com.stocker.spring.CompanyDataClient;
 import com.stocker.telegram.exception.NoSymbolException;
 import com.stocker.telegram.spring.StockTelegramBot;
-import com.stocker.telegram.spring.client.ChartDataClient;
-import com.stocker.telegram.spring.client.CompanyDataClient;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
@@ -15,7 +15,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.function.Function;
 
-@Log4j2
+@Slf4j
 @Component
 public class ViewCompanyCommand extends ICommandProcessor {
 
@@ -54,7 +54,7 @@ public class ViewCompanyCommand extends ICommandProcessor {
                         callback.apply(sendPhoto);
                     },
                     error -> {
-                        log.error(error);
+                        log.error("Telegram service failed get company information", error);
                         sendMessage.setText(String.format("Error happen during search request %s", symbol));
                         callback.apply(sendMessage);
                     },
@@ -73,7 +73,7 @@ public class ViewCompanyCommand extends ICommandProcessor {
      * @return company Symbol
      * @throws NoSymbolException in case when there are no extraction
      */
-    protected static String getSymbol(String text) throws NoSymbolException {
+    private static String getSymbol(String text) throws NoSymbolException {
         String[] words = StockTelegramBot.splitMessage(text);
         if (words.length < 2 || words[1].length() == 0) {
             throw new NoSymbolException(String.format("command %s has no company symbol", text));

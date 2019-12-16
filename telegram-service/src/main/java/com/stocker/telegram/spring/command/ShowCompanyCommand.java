@@ -1,13 +1,14 @@
 package com.stocker.telegram.spring.command;
 
+import com.stocker.spring.CallbackDataClient;
+import com.stocker.spring.ChartDataClient;
+import com.stocker.spring.CompanyDataClient;
 import com.stocker.telegram.exception.NoSymbolException;
-import com.stocker.telegram.spring.client.CallbackDataClient;
-import com.stocker.telegram.spring.client.ChartDataClient;
 import com.stocker.telegram.spring.StockTelegramBot;
-import com.stocker.telegram.spring.callback.AbstractCallback;
-import com.stocker.telegram.spring.callback.AddToWatchListCallback;
+import com.stocker.yahoo.data.callback.AbstractCallback;
+import com.stocker.yahoo.data.callback.AddToWatchListCallback;
 import com.stocker.yahoo.data.Company;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
@@ -23,7 +24,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
 
-@Log4j2
+@Slf4j
 @Component
 public class ShowCompanyCommand extends ICommandProcessor {
 
@@ -77,7 +78,7 @@ public class ShowCompanyCommand extends ICommandProcessor {
                         callback.apply(sendPhoto);
                     },
                     error -> {
-                        log.error(error);
+                        log.error("Telegram service failed get company information", error);
                         sendMessage.setText(String.format("nothing was found for symbol %s", symbol));
                         callback.apply(sendMessage);
                     },

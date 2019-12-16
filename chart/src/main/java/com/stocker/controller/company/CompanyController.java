@@ -4,15 +4,11 @@ import static com.stocker.ChartjsUtils.*;
 
 import com.stocker.GraphInterval;
 import com.stocker.spring.CompanyDataClient;
-<<<<<<< HEAD
-import spring.CompanyDataClient;
-=======
 import com.stocker.spring.ViewCompanyDataClient;
->>>>>>> 8e5f698671d004b31dc26da208a79d50a9ca06d1
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.data.Day;
 import com.stocker.yahoo.data.ViewCompany;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +24,7 @@ import java.util.stream.Collectors;
 /**
  * Web controller for company chart pages
  */
-@Log4j2
+@Slf4j
 @Controller
 public class CompanyController {
 
@@ -44,11 +40,7 @@ public class CompanyController {
     private static final int GRAPH_SIZE = 200;
 
     @RequestMapping("/company/{symbol}/")
-<<<<<<< HEAD
     public ModelAndView companyPriceChart(@PathVariable("symbol") String symbol) {
-=======
-    public ModelAndView company(@PathVariable("symbol") String symbol) {
->>>>>>> 8e5f698671d004b31dc26da208a79d50a9ca06d1
         log.info("loading " + symbol);
         ModelAndView model = new ModelAndView("company");
         Company company = companyDataClient.getCompany(symbol).block();
@@ -132,7 +124,7 @@ public class CompanyController {
         map.put("volumeMax", getMaxDayVolume(days));
         map.put("maxPrice", getMaxPrice(days));
         map.put("minPrice", getMinPrice(days));
-        map.put("price", createCandleStickChartData(PRICE_LABEL, PRICE_Y_AXIS, days.stream().collect(Collectors.toList())));
+        map.put("price", createCandleStickChartData(PRICE_LABEL, PRICE_Y_AXIS, new ArrayList<>(days)));
         map.put("volume", addColor(createBarChartData(VOLUME_LABEL, VOLUME_Y_AXIS,
                 days.stream().map(Day::getVolume).collect(Collectors.toList())),
                 days.stream().map(day -> day.isRising() ? "green" : "red").collect(Collectors.toList())));

@@ -1,6 +1,6 @@
 package com.stocker.weka;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import weka.classifiers.functions.Logistic;
@@ -10,7 +10,7 @@ import weka.core.Instances;
 import weka.core.SerializationHelper;
 import weka.core.converters.ConverterUtils;
 
-@Log4j2
+@Slf4j
 @RestController
 public class TrainingWekaController {
 

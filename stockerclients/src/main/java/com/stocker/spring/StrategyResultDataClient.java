@@ -1,11 +1,11 @@
-package com.stocker.telegram.spring.client;
+package com.stocker.spring;
 
 import com.stocker.yahoo.data.StrategyResult;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
-@Log4j2
+@Slf4j
 @Component
 public class StrategyResultDataClient extends AbstractClient {
 

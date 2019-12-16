@@ -2,12 +2,10 @@ package com.stocker.weka;
 
 import com.stocker.weka.spring.CompanyRepository;
 import com.stocker.yahoo.data.Day;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
 import weka.core.Instances;
@@ -15,15 +13,13 @@ import weka.core.converters.ArffLoader;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 import static weka.core.converters.ConverterUtils.*;
 
-@Log4j2
+@Slf4j
 @RestController
 public class PrepareWekaData {
 
@@ -56,7 +52,7 @@ public class PrepareWekaData {
                     ArffLoader.ArffReader arff = new ArffLoader.ArffReader(buffer);
                     dataset = arff.getData();
                 } catch (java.io.IOException e) {
-                    log.error(e);
+                    log.error("Failed to read weka model file", e);
                 }
             } else {
                 ArrayList<Attribute> attributes = new ArrayList<>();
@@ -89,7 +85,7 @@ public class PrepareWekaData {
                 log.error("Failed to save data to: " + outputFilename);
                 e.printStackTrace();
             }
-        }, throwable -> log.error(throwable));
+        }, throwable -> log.error("Cannot find company for prediction", throwable));
     }
 
 }
