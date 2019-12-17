@@ -1,10 +1,9 @@
 package com.stocker.telegram.spring.command;
 
-import com.stocker.spring.CallbackDataClient;
-import com.stocker.spring.UserDataClient;
-import com.stocker.telegram.spring.StockTelegramBot;
+import com.stocker.spring.client.CallbackDataClient;
+import com.stocker.spring.client.UserDataClient;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -17,15 +16,14 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class AddToWatchListCompanyCommand extends ICommandProcessor {
 
     public static final String COMMAND = "addToWatchList";
 
-    @Autowired
-    private UserDataClient userDataClient;
+    private final UserDataClient userDataClient;
 
-    @Autowired
-    private CallbackDataClient callbackDataClient;
+    private final CallbackDataClient callbackDataClient;
 
     /**
      * Add  Company to watch list implementation
@@ -70,7 +68,7 @@ public class AddToWatchListCompanyCommand extends ICommandProcessor {
      * Option.empty() in case when there are no extraction
      */
     private static Optional<String> getSymbol(String text) {
-        String[] words = StockTelegramBot.splitMessage(text);
+        String[] words = splitMessage(text);
         if (words.length < 2 || words[1].length() == 0) {
             return Optional.empty();
         }

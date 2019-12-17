@@ -1,16 +1,14 @@
 package com.stocker.controller.company;
 
-import static com.stocker.ChartjsUtils.*;
-
 import com.stocker.GraphInterval;
-import com.stocker.spring.CompanyDataClient;
-import com.stocker.spring.ViewCompanyDataClient;
+import com.stocker.spring.client.CompanyDataClient;
+import com.stocker.spring.client.ViewCompanyDataClient;
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.data.Day;
 import com.stocker.yahoo.data.ViewCompany;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,18 +19,18 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.stocker.ChartjsUtils.*;
+
 /**
  * Web controller for company chart pages
  */
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class CompanyController {
 
-    @Autowired
-    private CompanyDataClient companyDataClient;
-
-    @Autowired
-    private ViewCompanyDataClient viewCompanyDataClient;
+    private final CompanyDataClient companyDataClient;
+    private final ViewCompanyDataClient viewCompanyDataClient;
 
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MMM dd, yyyy, hh:mm:ss a");
     private static final double volumeMultiplicator = 1.0d;

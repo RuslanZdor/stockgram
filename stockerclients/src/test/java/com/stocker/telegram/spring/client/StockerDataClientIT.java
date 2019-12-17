@@ -1,6 +1,6 @@
 package com.stocker.telegram.spring.client;
 
-import com.stocker.spring.CompanyDataClient;
+import com.stocker.spring.client.CompanyDataClient;
 import com.stocker.telegram.spring.StockConfigurationForTest;
 import com.stocker.yahoo.data.Company;
 import lombok.extern.slf4j.Slf4j;

@@ -6,6 +6,6 @@ import com.stocker.yahoo.data.Company;
 /**
  * Interface for calculation daily parameter for company
  */
-interface ICalculateJob {
+public interface ICalculateJob {
     void calculate(Company company);
 }

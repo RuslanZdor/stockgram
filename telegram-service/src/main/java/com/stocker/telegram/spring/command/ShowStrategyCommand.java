@@ -1,10 +1,8 @@
 package com.stocker.telegram.spring.command;
 
-import com.stocker.telegram.exception.NoSymbolException;
-import com.stocker.telegram.spring.StockTelegramBot;
-import com.stocker.spring.StrategyResultDataClient;
+import com.stocker.spring.client.StrategyResultDataClient;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -16,12 +14,12 @@ import java.util.function.Function;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class ShowStrategyCommand extends ICommandProcessor {
 
     public static final String COMMAND = "strategy";
 
-    @Autowired
-    private StrategyResultDataClient strategyResultDataClient;
+    private final StrategyResultDataClient strategyResultDataClient;
 
     /**
      * Show Company implementation
@@ -63,7 +61,7 @@ public class ShowStrategyCommand extends ICommandProcessor {
      * @return company Symbol
      */
     private static Optional<String> getSymbol(String text) {
-        String[] words = StockTelegramBot.splitMessage(text);
+        String[] words = splitMessage(text);
         if (words.length < 2 || words[1].length() == 0) {
             return Optional.empty();
         }

@@ -2,9 +2,9 @@ package com.stocker.data.controller;
 
 import com.stocker.data.bean.User;
 import com.stocker.data.spring.repo.UserRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -14,10 +14,10 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 class UserController {
 
-    @Autowired
-    private UserRepository repository;
+    private final UserRepository repository;
 
     @GetMapping("/user/{telegramId}/")
     public Publisher<User> getUser(@PathVariable("telegramId") String telegramId) {

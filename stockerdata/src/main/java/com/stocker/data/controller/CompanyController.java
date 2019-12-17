@@ -2,15 +2,14 @@ package com.stocker.data.controller;
 
 import com.stocker.data.spring.repo.CompanyRepository;
 import com.stocker.data.spring.repo.ViewCompanyRepository;
-import com.stocker.data.spring.client.YahooDataClient;
+import com.stocker.spring.client.YahooDataClient;
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.data.ViewCompany;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import reactor.core.publisher.Mono;
 
 /**
@@ -18,16 +17,12 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 class CompanyController {
 
-    @Autowired
-    private ViewCompanyRepository viewCompanyRepository;
-
-    @Autowired
-    private CompanyRepository companyRepository;
-
-    @Autowired
-    private YahooDataClient yahooDataClient;
+    private final ViewCompanyRepository viewCompanyRepository;
+    private final CompanyRepository companyRepository;
+    private final YahooDataClient yahooDataClient;
 
     /**
      * Get all company information in json format

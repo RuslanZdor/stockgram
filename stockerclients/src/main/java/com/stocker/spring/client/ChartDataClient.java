@@ -1,5 +1,6 @@
-package com.stocker.spring;
+package com.stocker.spring.client;
 
+import com.netflix.discovery.EurekaClient;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -7,6 +8,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -17,6 +19,10 @@ import java.io.IOException;
 public class ChartDataClient extends AbstractClient {
 
     private static final String SERVICE = "STOCKER-CHART";
+
+    public ChartDataClient(@Qualifier("eurekaClient") EurekaClient eurekaClient) {
+        super(eurekaClient);
+    }
 
     public File getCompany(String symbol) {
         log.info(String.format("getting chart for company with symbol %s", symbol));

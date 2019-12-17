@@ -5,6 +5,7 @@ import com.stocker.strategic.spring.StrategyResultRepository;
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.data.Dividend;
 import com.stocker.yahoo.data.StrategyResult;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,14 +16,13 @@ import java.util.List;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class DividendAristocratsCalculation {
 
     private static final String NAME = "DIVIDENDARISTOCRATS";
 
-    @Autowired
-    private CompanyRepository companyRepository;
-    @Autowired
-    private StrategyResultRepository strategyRepository;
+    private final CompanyRepository companyRepository;
+    private final StrategyResultRepository strategyRepository;
 
     public List<Company> calculate() {
 

@@ -2,6 +2,7 @@ package com.stocker.yahoo.spring.job;
 
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.data.Day;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;

@@ -2,6 +2,7 @@ package com.stocker.yahoo.data;
 
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -10,8 +11,8 @@ import java.util.NavigableSet;
 import java.util.TreeSet;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Document(collection = "company")
 public class Company {
 

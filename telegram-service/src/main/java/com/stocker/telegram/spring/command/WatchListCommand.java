@@ -1,9 +1,9 @@
 package com.stocker.telegram.spring.command;
 
-import com.stocker.spring.UserDataClient;
+import com.stocker.spring.client.UserDataClient;
 import com.stocker.yahoo.data.User;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -14,12 +14,12 @@ import java.util.function.Function;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class WatchListCommand extends ICommandProcessor {
 
     public static final String COMMAND = "watchlist";
 
-    @Autowired
-    private UserDataClient userDataClient;
+    private final UserDataClient userDataClient;
 
     /**
      * Show Watch list for user

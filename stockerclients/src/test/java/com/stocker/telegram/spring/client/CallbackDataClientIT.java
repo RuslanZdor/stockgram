@@ -1,6 +1,6 @@
 package com.stocker.telegram.spring.client;
 
-import com.stocker.spring.CallbackDataClient;
+import com.stocker.spring.client.CallbackDataClient;
 import com.stocker.telegram.spring.StockConfigurationForTest;
 import com.stocker.yahoo.data.callback.AddToWatchListCallback;
 import lombok.extern.slf4j.Slf4j;

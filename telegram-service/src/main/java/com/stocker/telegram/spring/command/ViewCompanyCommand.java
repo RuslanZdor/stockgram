@@ -1,11 +1,10 @@
 package com.stocker.telegram.spring.command;
 
-import com.stocker.spring.ChartDataClient;
-import com.stocker.spring.CompanyDataClient;
+import com.stocker.spring.client.ChartDataClient;
+import com.stocker.spring.client.CompanyDataClient;
 import com.stocker.telegram.exception.NoSymbolException;
-import com.stocker.telegram.spring.StockTelegramBot;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -17,15 +16,13 @@ import java.util.function.Function;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class ViewCompanyCommand extends ICommandProcessor {
 
     public static final String COMMAND = "view";
 
-    @Autowired
-    private CompanyDataClient companyDataClient;
-
-    @Autowired
-    private ChartDataClient chartDataClient;
+    private final CompanyDataClient companyDataClient;
+    private final ChartDataClient chartDataClient;
 
     /**
      * Show Company implementation
@@ -74,7 +71,7 @@ public class ViewCompanyCommand extends ICommandProcessor {
      * @throws NoSymbolException in case when there are no extraction
      */
     private static String getSymbol(String text) throws NoSymbolException {
-        String[] words = StockTelegramBot.splitMessage(text);
+        String[] words = splitMessage(text);
         if (words.length < 2 || words[1].length() == 0) {
             throw new NoSymbolException(String.format("command %s has no company symbol", text));
         }

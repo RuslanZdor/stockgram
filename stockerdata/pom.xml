@@ -73,6 +73,11 @@
             <version>1.0</version>
         </dependency>
         <dependency>
+            <groupId>com.stocker</groupId>
+            <artifactId>stocker-clients</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-netflix-eureka-client</artifactId>
             <version>2.1.2.RELEASE</version>
@@ -82,6 +87,7 @@
             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
             <version>2.1.2.RELEASE</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webflux</artifactId>

@@ -1,7 +1,9 @@
-package com.stocker.spring;
+package com.stocker.spring.client;
 
+import com.netflix.discovery.EurekaClient;
 import com.stocker.yahoo.data.Company;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -13,6 +15,10 @@ import reactor.core.publisher.Mono;
 public class CompanyDataClient extends AbstractClient {
 
     private static final String SERVICE = "STOCKER-DATA";
+
+    public CompanyDataClient(@Qualifier("eurekaClient") EurekaClient eurekaClient) {
+        super(eurekaClient);
+    }
 
     /**
      * Return All information about  company with historical proce data

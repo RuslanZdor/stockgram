@@ -5,8 +5,8 @@ import com.stocker.yahoo.data.CompanyStats;
 import com.stocker.yahoo.data.Day;
 import com.stocker.yahoo.data.Dividend;
 import com.stocker.yahoo.exception.NoDayException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import yahoofinance.Stock;
@@ -23,16 +23,14 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class DownloadHistoricalData {
 
-    @Autowired
-    private CompanyFlagRepository companyFlagRepository;
+    private final CompanyFlagRepository companyFlagRepository;
 
     public void download(Company company) throws NoDayException {
         try {

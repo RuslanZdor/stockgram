@@ -2,10 +2,10 @@ package com.stocker.data.controller;
 
 import com.stocker.data.bean.Callback;
 import com.stocker.data.spring.repo.CallbackRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.reactivestreams.Publisher;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -15,10 +15,10 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 class CallbackController {
 
-    @Autowired
-    private CallbackRepository repository;
+    private final CallbackRepository repository;
 
     /**
      * Return @Callback object in json format if it available

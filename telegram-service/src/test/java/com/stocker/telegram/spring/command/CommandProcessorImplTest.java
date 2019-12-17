@@ -1,11 +1,10 @@
-package com.stocker.telegram.spring;
+package com.stocker.telegram.spring.command;
 
-import com.netflix.discovery.EurekaClient;
+import com.stocker.spring.client.*;
 import com.stocker.telegram.StockTelegramConfigurationForTest;
 import com.stocker.telegram.exception.UnexpectedCommandException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,43 +14,53 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {StockTelegramConfigurationForTest.class})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class StockTelegramBotTest {
+public class CommandProcessorImplTest {
 
     @MockBean
-    private EurekaClient eurekaClient;
+    private UserDataClient userDataClient;
 
     @MockBean
-    private StockTelegramComponent stockTelegramComponent;
+    private CallbackDataClient callbackDataClient;
+
+    @MockBean
+    private CompanyDataClient companyDataClient;
+
+    @MockBean
+    private ChartDataClient chartDataClient;
+
+    @MockBean
+    private StrategyResultDataClient strategyResultDataClient;
 
     @Autowired
-    private StockTelegramBot stockTelegramBot;
+    private CommandProcessorImpl commandProcessorImpl;
 
     @Test
     public void getCommandName() throws UnexpectedCommandException {
-        assertEquals("space at start should be skipped", "show", StockTelegramBot.getCommandName(" show"));
-        assertEquals("multiple space at start should be skipped", "show", StockTelegramBot.getCommandName("  show"));
-        assertEquals("first word should be taken", "show", StockTelegramBot.getCommandName("show t"));
-        assertEquals("/ command char should be removed", "show", StockTelegramBot.getCommandName("/show t"));
+        assertEquals("space at start should be skipped", "show", CommandProcessorImpl.getCommandName(" show"));
+        assertEquals("multiple space at start should be skipped", "show", CommandProcessorImpl.getCommandName("  show"));
+        assertEquals("first word should be taken", "show", CommandProcessorImpl.getCommandName("show t"));
+        assertEquals("/ command char should be removed", "show", CommandProcessorImpl.getCommandName("/show t"));
     }
 
     @Test(expected = UnexpectedCommandException.class)
     public void getCommandNameEmptyMessage() throws UnexpectedCommandException {
-        StockTelegramBot.getCommandName("");
+        CommandProcessorImpl.getCommandName("");
     }
 
     @Test(expected = UnexpectedCommandException.class)
     public void getCommandNameNullMessage() throws UnexpectedCommandException {
-        StockTelegramBot.getCommandName(null);
+        CommandProcessorImpl.getCommandName(null);
     }
 
     @Test(expected = UnexpectedCommandException.class)
     public void getCommandNameSpaceMessage() throws UnexpectedCommandException {
-        StockTelegramBot.getCommandName(" ");
+        CommandProcessorImpl.getCommandName(" ");
     }
 
 
@@ -61,9 +70,9 @@ public class StockTelegramBotTest {
         Message message = Mockito.mock(Message.class);
         Mockito.when(update.getMessage()).thenReturn(message);
         Mockito.when(message.getText()).thenReturn("show");
-        assertNotNull(stockTelegramBot.findCommand(update));
+        assertNotNull(commandProcessorImpl.findCommand(update));
 
         Mockito.when(message.getText()).thenReturn("oversell");
-        assertNotNull(stockTelegramBot.findCommand(update));
+        assertNotNull(commandProcessorImpl.findCommand(update));
     }
 }

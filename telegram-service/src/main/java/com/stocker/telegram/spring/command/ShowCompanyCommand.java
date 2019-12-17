@@ -1,15 +1,14 @@
 package com.stocker.telegram.spring.command;
 
-import com.stocker.spring.CallbackDataClient;
-import com.stocker.spring.ChartDataClient;
-import com.stocker.spring.CompanyDataClient;
+import com.stocker.spring.client.CallbackDataClient;
+import com.stocker.spring.client.ChartDataClient;
+import com.stocker.spring.client.CompanyDataClient;
 import com.stocker.telegram.exception.NoSymbolException;
-import com.stocker.telegram.spring.StockTelegramBot;
 import com.stocker.yahoo.data.callback.AbstractCallback;
 import com.stocker.yahoo.data.callback.AddToWatchListCallback;
 import com.stocker.yahoo.data.Company;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
@@ -26,18 +25,14 @@ import java.util.function.Function;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class ShowCompanyCommand extends ICommandProcessor {
 
     public static final String COMMAND = "show";
 
-    @Autowired
-    private CompanyDataClient companyDataClient;
-
-    @Autowired
-    private CallbackDataClient callbackDataClient;
-
-    @Autowired
-    private ChartDataClient chartDataClient;
+    private final CompanyDataClient companyDataClient;
+    private final CallbackDataClient callbackDataClient;
+    private final ChartDataClient chartDataClient;
 
     /**
      * Show Company implementation
@@ -98,7 +93,7 @@ public class ShowCompanyCommand extends ICommandProcessor {
      * @throws NoSymbolException in case when there are no extraction
      */
     protected static String getSymbol(String text) throws NoSymbolException {
-        String[] words = StockTelegramBot.splitMessage(text);
+        String[] words = splitMessage(text);
         if (words.length < 2 || words[1].length() == 0) {
             throw new NoSymbolException(String.format("command %s has no company symbol", text));
         }

@@ -5,8 +5,8 @@ import com.stocker.yahoo.exception.NoDayException;
 import com.stocker.yahoo.spring.CompanyRepository;
 import com.stocker.yahoo.spring.DownloadHistoricalData;
 import com.stocker.yahoo.spring.job.*;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,38 +17,12 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 class YahooParserController {
 
-    @Autowired
     private CompanyRepository companyRepository;
-
-    @Autowired
     private DownloadHistoricalData downloadHistoricalData;
-
-    @Autowired
-    private CalculateSMA calculateSMA;
-
-    @Autowired
-    private CalculateEMA calculateEMA;
-
-    @Autowired
-    private CalculateAverageVolume calculateAverageVolume;
-
-    @Autowired
-    private CalculateRSI calculateRSI;
-
-    @Autowired
-    private CalculateMACDLine calculateMACDLine;
-
-    @Autowired
-    private CalculateMACDSignal calculateMACDSignal;
-
-    @Autowired
-    private CalculateRising calculateRising;
-
-    @Autowired
-    private CalculateNextRising calculateNextRising;
-
+    private ICalculateJob calculateAllFields;
 
     @GetMapping("/manager/reloadStocks")
     public void reloadStocks() {
@@ -92,13 +66,6 @@ class YahooParserController {
 
     private void allUpdates(Company company) {
         log.info(String.format("Calculate new values for %s", company.getName()));
-        calculateSMA.calculate(company);
-        calculateEMA.calculate(company);
-        calculateAverageVolume.calculate(company);
-        calculateRSI.calculate(company);
-        calculateMACDLine.calculate(company);
-        calculateMACDSignal.calculate(company);
-        calculateRising.calculate(company);
-        calculateNextRising.calculate(company);
+        calculateAllFields.calculate(company);
     }
 }
