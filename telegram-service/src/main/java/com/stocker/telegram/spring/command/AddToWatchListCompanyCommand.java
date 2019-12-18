@@ -37,7 +37,9 @@ public class AddToWatchListCompanyCommand extends ICommandProcessor {
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(getMessage(update).getChatId());
 
-        getSymbol(getText(update)).ifPresentOrElse(callbackId -> {
+        Optional<String> findSymbol = getSymbol(getText(update));
+        if (findSymbol.isPresent()) {
+            String callbackId = findSymbol.get();
             log.info(String.format("Calling callback %s", callbackId));
             callbackDataClient.getAddToWatchListCallback(callbackId).subscribe(abstractCallback -> {
                         log.info(String.format("Searching user %s", abstractCallback.getTelegramId()));
@@ -54,10 +56,10 @@ public class AddToWatchListCompanyCommand extends ICommandProcessor {
                         callback.apply(sendMessage);
                     },
                     () -> log.info(sendMessage.getText()));
-        }, () -> {
+        } else {
             sendMessage.setText("Wrong message, company symbol is not found");
             callback.apply(sendMessage);
-        });
+        }
     }
 
     /**

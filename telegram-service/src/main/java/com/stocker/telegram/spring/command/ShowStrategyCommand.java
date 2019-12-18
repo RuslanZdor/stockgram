@@ -36,7 +36,8 @@ public class ShowStrategyCommand extends ICommandProcessor {
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(getMessage(update).getChatId());
 
-        getSymbol(getText(update)).ifPresentOrElse(symbol -> strategyResultDataClient.getStrategyResult(symbol).subscribe(strategyResult -> {
+        Optional<String> findSymbol = getSymbol(getText(update));
+        findSymbol.ifPresent(symbol -> strategyResultDataClient.getStrategyResult(symbol).subscribe(strategyResult -> {
                     sendMessage.disableNotification();
                     sendMessage.setText(String.format("Open /show\\_%s \n", strategyResult.getSymbol()));
                     callback.apply(sendMessage);
@@ -47,11 +48,11 @@ public class ShowStrategyCommand extends ICommandProcessor {
                     callback.apply(sendMessage);
                 },
                 () -> log.info(sendMessage.getText())
-        ),
-                () -> {
-                    sendMessage.setText(String.format("Bot wasn't found symbol in message: %s", getText(update)));
-                    callback.apply(sendMessage);
-                });
+        ));
+        if (!findSymbol.isPresent()) {
+            sendMessage.setText(String.format("Bot wasn't found symbol in message: %s", getText(update)));
+            callback.apply(sendMessage);
+        }
     }
 
     /**
