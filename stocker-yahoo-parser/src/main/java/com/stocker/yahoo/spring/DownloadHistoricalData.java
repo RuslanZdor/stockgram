@@ -40,7 +40,7 @@ public class DownloadHistoricalData {
 
             Calendar yearAgo =  Calendar.getInstance();
             if (company.getDays().isEmpty()) {
-                yearAgo.add(Calendar.YEAR, -5);
+                yearAgo.add(Calendar.YEAR, -1);
             } else {
                 yearAgo.setTimeInMillis(company.getDays().last().getDate()
                         .minus(1, ChronoUnit.DAYS).atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli());
