@@ -4,8 +4,8 @@ import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.exception.NoDayException;
 import com.stocker.yahoo.spring.CompanyRepository;
 import com.stocker.yahoo.spring.DownloadHistoricalData;
-import com.stocker.yahoo.spring.job.*;
-import lombok.RequiredArgsConstructor;
+import com.stocker.yahoo.spring.job.ICalculateJob;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @RestController
-@RequiredArgsConstructor
+@AllArgsConstructor
 class YahooParserController {
 
     private CompanyRepository companyRepository;
