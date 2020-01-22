@@ -32,6 +32,7 @@ class YahooParserController {
                 allUpdates(company);
                 companyRepository.save(company).subscribe();
             } catch (NoDayException e) {
+                log.error("no historical data", e);
                 log.info(String.format("removing company %s", company.getSymbol()));
             }
         });
