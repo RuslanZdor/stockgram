@@ -40,7 +40,7 @@ public class DownloadHistoricalData {
 
             Calendar yearAgo =  Calendar.getInstance();
             if (company.getDays().isEmpty()) {
-                yearAgo.add(Calendar.YEAR, -1);
+                yearAgo.add(Calendar.YEAR, -5);
             } else {
                 yearAgo.setTimeInMillis(company.getDays().last().getDate()
                         .minus(1, ChronoUnit.DAYS).atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli());
@@ -56,7 +56,7 @@ public class DownloadHistoricalData {
             setCompanyStats(company, companyData.getStats(false));
             setDividendHistory(company, companyData.getDividendHistory(year));
             company.setSp500Flag(companyFlagRepository.findFirstBySymbol(Mono.just(company.getSymbol())).blockOptional().isPresent());
-
+            company.setName(companyData.getName());
             log.info("size " + histQuotes.size());
 
             histQuotes.stream()
