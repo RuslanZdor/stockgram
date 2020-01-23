@@ -46,7 +46,13 @@ public class DownloadHistoricalData {
                         .minus(1, ChronoUnit.DAYS).atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli());
             }
 
-            List<HistoricalQuote> histQuotes = companyData.getHistory(yearAgo, tomorrow, Interval.DAILY);
+            List<HistoricalQuote> histQuotes = null;
+            try {
+                histQuotes = companyData.getHistory(yearAgo, tomorrow, Interval.DAILY);
+            } catch (Exception ex) {
+                throw new NoDayException(String.format("Stock %s has bad data", company.getSymbol()));
+            }
+
             if (histQuotes.stream().anyMatch(data -> data.getDate() == null && data.getClose() == null)) {
                 throw new NoDayException(String.format("Stock %s has bad data", company.getSymbol()));
             }

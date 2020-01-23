@@ -30,7 +30,7 @@ class YahooParserController {
             try {
                 downloadHistoricalData.download(company);
                 allUpdates(company);
-                companyRepository.save(company).subscribe();
+                companyRepository.save(company).block();
             } catch (NoDayException e) {
                 log.error("no historical data", e);
                 log.info(String.format("removing company %s", company.getSymbol()));
@@ -43,7 +43,7 @@ class YahooParserController {
         companyRepository.findAll().subscribe(company -> {
             log.info(String.format("Update company %s", company.getSymbol()));
             allUpdates(company);
-            companyRepository.save(company).subscribe();
+            companyRepository.save(company).block();
         });
     }
 
@@ -53,14 +53,14 @@ class YahooParserController {
         companyRepository.findFirstBySymbol(Mono.just(symbol.toUpperCase())).subscribe(company -> {
             try {
                 downloadHistoricalData.download(company);
+                allUpdates(company);
+                companyRepository.save(company).subscribe(company1 -> {
+                    log.info(String.format("id %s", company1.getId()));
+                    log.info(String.format("Saved new value %s", company1.getDays().size()));
+                });
             } catch (NoDayException e) {
                 log.error("Company hasn't historical information", e);
             }
-            allUpdates(company);
-            companyRepository.save(company).subscribe(company1 -> {
-                log.info(String.format("id %s", company1.getId()));
-                log.info(String.format("Saved new value %s", company1.getDays().size()));
-            });
         });
         return Mono.just(new Company());
     }
