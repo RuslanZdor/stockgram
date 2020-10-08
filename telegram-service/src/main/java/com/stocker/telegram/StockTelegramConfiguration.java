@@ -7,13 +7,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.telegram.telegrambots.ApiContextInitializer;
 
 import java.util.Arrays;
 @Slf4j
 @Configuration
 @ComponentScan(basePackages = "com.stocker")
+@ComponentScan(basePackages = "com.telegram.api")
 @SpringBootApplication
 @EnableEurekaClient
 public class StockTelegramConfiguration {

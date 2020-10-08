@@ -3,6 +3,7 @@ package com.stocker.telegram.spring.command;
 import com.stocker.spring.client.ChartDataClient;
 import com.stocker.spring.client.CompanyDataClient;
 import com.stocker.telegram.exception.NoSymbolException;
+import com.telegram.api.ICommandProcessor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -62,6 +63,15 @@ public class ViewCompanyCommand extends ICommandProcessor {
             callback.apply(sendMessage);
         }
     }
+
+    /**
+     * command name
+     * @return command name
+     */
+    public String getCommand() {
+        return COMMAND;
+    }
+
 
     /**
      * Extract company symbol from command

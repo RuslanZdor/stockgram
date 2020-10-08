@@ -1,5 +1,6 @@
 package com.stocker.telegram.spring.command;
 
+import com.telegram.api.ICommandProcessor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -16,4 +17,13 @@ public class OverSellCommand extends ICommandProcessor {
     public void process(Update update, Function<PartialBotApiMethod<Message>, PartialBotApiMethod<Message>> callback) {
 
     }
+
+    /**
+     * command name
+     * @return command name
+     */
+    public String getCommand() {
+        return COMMAND;
+    }
+
 }

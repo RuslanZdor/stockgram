@@ -2,6 +2,7 @@ package com.stocker.telegram.spring.command;
 
 import com.stocker.spring.client.CallbackDataClient;
 import com.stocker.spring.client.UserDataClient;
+import com.telegram.api.ICommandProcessor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -60,6 +61,14 @@ public class AddToWatchListCompanyCommand extends ICommandProcessor {
             sendMessage.setText("Wrong message, company symbol is not found");
             callback.apply(sendMessage);
         }
+    }
+
+    /**
+     * command name
+     * @return command name
+     */
+    public String getCommand() {
+        return COMMAND;
     }
 
     /**

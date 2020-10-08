@@ -62,6 +62,11 @@
             <artifactId>stocker-clients</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>groupId</groupId>
+            <artifactId>telegram-api-component</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>

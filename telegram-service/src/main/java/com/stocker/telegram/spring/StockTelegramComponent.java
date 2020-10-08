@@ -1,5 +1,6 @@
 package com.stocker.telegram.spring;
 
+import com.telegram.api.StockTelegramBot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
