@@ -1,18 +1,19 @@
 package com.stocker.yahoo.data;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "strategyResults")
+@DynamoDBTable(tableName = "strategyResults")
 public class StrategyResult {
-
+    @DynamoDBAttribute(attributeName="strategyName")
     private String strategyName;
+    @DynamoDBAttribute(attributeName="symbol")
     private String symbol;
 
 }

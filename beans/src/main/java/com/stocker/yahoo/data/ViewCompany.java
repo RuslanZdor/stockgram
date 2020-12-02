@@ -1,27 +1,26 @@
 package com.stocker.yahoo.data;
 
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.NavigableSet;
-import java.util.TreeSet;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "company")
+@DynamoDBTable(tableName = "company")
 public class ViewCompany {
 
-    @Id
+    @DynamoDBAttribute(attributeName="id")
     private String id;
+    @DynamoDBAttribute(attributeName="name")
     private String name;
+    @DynamoDBAttribute(attributeName="symbol")
     private String symbol;
+    @DynamoDBAttribute(attributeName="industry")
     private String industry;
-
+    @DynamoDBAttribute(attributeName="companyStats")
     private CompanyStats companyStats;
 }

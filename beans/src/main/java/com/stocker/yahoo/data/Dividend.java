@@ -1,7 +1,7 @@
 package com.stocker.yahoo.data;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,8 +10,10 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Dividend implements Comparable<Dividend>{
+public class Dividend implements Comparable<Dividend> {
+    @DynamoDBAttribute(attributeName="date")
     private LocalDate date;
+    @DynamoDBAttribute(attributeName="value")
     private double value;
 
     /**
