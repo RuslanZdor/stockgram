@@ -1,13 +1,9 @@
 package com.stocker.yahoo.spring;
 
-import com.stocker.yahoo.data.Company;
-import com.stocker.yahoo.data.CompanyStats;
-import com.stocker.yahoo.data.Day;
-import com.stocker.yahoo.data.Dividend;
+import com.stocker.yahoo.data.*;
 import com.stocker.yahoo.exception.NoDayException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
@@ -26,11 +22,10 @@ import java.util.Calendar;
 import java.util.List;
 
 @Slf4j
-@Component
 @RequiredArgsConstructor
 public class DownloadHistoricalData {
 
-    private final CompanyFlagRepository companyFlagRepository;
+    private final CompanyFlagRepository<CompanyFlag, String> companyFlagRepository;
 
     public void download(Company company) throws NoDayException {
         try {
@@ -46,7 +41,7 @@ public class DownloadHistoricalData {
                         .minus(1, ChronoUnit.DAYS).atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli());
             }
 
-            List<HistoricalQuote> histQuotes = null;
+            List<HistoricalQuote> histQuotes;
             try {
                 histQuotes = companyData.getHistory(yearAgo, tomorrow, Interval.DAILY);
             } catch (Exception ex) {

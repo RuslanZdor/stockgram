@@ -2,8 +2,6 @@ package com.stocker.yahoo.spring.job;
 
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.data.Day;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.NavigableSet;
@@ -12,7 +10,6 @@ import java.util.stream.Collectors;
 /**
  * Calculate simple moving average for company/market/industry
  */
-@Component
 public class CalculateSMA implements ICalculateJob {
     public void calculate(Company company) {
         company.getDays().stream().filter(day -> day.getSMA50() == 0.0).forEach(day -> {

@@ -3,16 +3,11 @@ package com.stocker.yahoo.spring;
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.exception.NoDayException;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.histquotes.Interval;
-import yahoofinance.histquotes2.HistoricalDividend;
 import yahoofinance.quotes.stock.StockDividend;
 import yahoofinance.quotes.stock.StockStats;
 
@@ -21,11 +16,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {StockYahooConfigurationForTest.class})
 public class DownloadHistoricalDataIT {
 
     @Autowired
@@ -33,14 +26,14 @@ public class DownloadHistoricalDataIT {
 
     @Test
     public void allDays() throws IOException {
-        Stock companyData = YahooFinance.get("T", Interval.DAILY);
+        Stock companyData = YahooFinance.get("SPY", Interval.DAILY);
         Calendar tomorrow = Calendar.getInstance();
         tomorrow.add(Calendar.DATE, 1);
 
         Calendar yearAgo =  Calendar.getInstance();
         yearAgo.add(Calendar.YEAR, -1);
         List<HistoricalQuote> histQuotes = companyData.getHistory(yearAgo, tomorrow, Interval.DAILY);
-        assertFalse(histQuotes.isEmpty());
+         assertFalse(histQuotes.isEmpty());
     }
 
     @Test

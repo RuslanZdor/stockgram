@@ -18,7 +18,7 @@ public class YahooParserControllerIT {
 
     @Test
     public void reloadStocks() throws InterruptedException {
-        yahooParserController.reloadStocks();
+//        yahooParserController.reloadStocks();
         Thread.sleep(300000);
     }
 

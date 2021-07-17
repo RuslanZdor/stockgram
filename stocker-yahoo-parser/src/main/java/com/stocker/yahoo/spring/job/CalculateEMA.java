@@ -2,14 +2,12 @@ package com.stocker.yahoo.spring.job;
 
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.data.Day;
-import org.springframework.stereotype.Component;
 
 import java.util.SortedSet;
 
 /**
  * Calculate Exponential moving average for company/market/industry
  */
-@Component
 public class CalculateEMA implements ICalculateJob {
     public void calculate(Company company) {
         company.getDays().stream().filter(day -> day.getEMA200() == 0.0d).forEach(day -> {
