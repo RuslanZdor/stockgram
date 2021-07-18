@@ -2,26 +2,22 @@ package com.stocker.yahoo.spring.job;
 
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.data.Day;
-import com.stocker.yahoo.spring.StockYahooConfigurationForTest;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {StockYahooConfigurationForTest.class})
 public class CalculateSMATest {
 
-    @Autowired
     private CalculateSMA calculateSMA;
+
+    @Before
+    public void init() {
+        calculateSMA = new CalculateSMA();
+    }
 
     @Test
     public void calculate() {

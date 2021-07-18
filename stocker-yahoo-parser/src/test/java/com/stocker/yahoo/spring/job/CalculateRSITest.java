@@ -2,28 +2,24 @@ package com.stocker.yahoo.spring.job;
 
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.data.Day;
-import com.stocker.yahoo.spring.StockYahooConfigurationForTest;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 import static org.junit.Assert.assertTrue;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {StockYahooConfigurationForTest.class})
 public class CalculateRSITest {
 
-    @Autowired
-    private CalculateRSI ema;
+    private CalculateRSI rsi;
 
     private Company company;
+
+    @Before
+    public void init() {
+        rsi = new CalculateRSI();
+    }
 
     @Test
     public void calculateIncreasePrice() {
@@ -37,7 +33,7 @@ public class CalculateRSITest {
         day.setPrice(30);
         company.getDays().add(day);
 
-        ema.calculate(company);
+        rsi.calculate(company);
         assertTrue(company.getDays().last().getRSI200() > 0.5);
     }
 
@@ -50,7 +46,7 @@ public class CalculateRSITest {
             company.getDays().add(day);
         }
 
-        ema.calculate(company);
+        rsi.calculate(company);
         assertTrue(company.getDays().last().getRSI200() < 0.5);
     }
 }

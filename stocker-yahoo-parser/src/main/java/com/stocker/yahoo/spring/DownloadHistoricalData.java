@@ -1,10 +1,12 @@
 package com.stocker.yahoo.spring;
 
-import com.stocker.yahoo.data.*;
+import com.stocker.yahoo.data.Company;
+import com.stocker.yahoo.data.CompanyStats;
+import com.stocker.yahoo.data.Day;
+import com.stocker.yahoo.data.Dividend;
 import com.stocker.yahoo.exception.NoDayException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import reactor.core.publisher.Mono;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
@@ -24,8 +26,6 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class DownloadHistoricalData {
-
-    private final CompanyFlagRepository<CompanyFlag, String> companyFlagRepository;
 
     public void download(Company company) throws NoDayException {
         try {
@@ -56,7 +56,6 @@ public class DownloadHistoricalData {
             year.add(Calendar.YEAR, -25);
             setCompanyStats(company, companyData.getStats(false));
             setDividendHistory(company, companyData.getDividendHistory(year));
-            company.setSp500Flag(companyFlagRepository.findFirstBySymbol(Mono.just(company.getSymbol())).blockOptional().isPresent());
             company.setName(companyData.getName());
             log.info("size " + histQuotes.size());
 
