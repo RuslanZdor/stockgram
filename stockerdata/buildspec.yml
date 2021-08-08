@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto8
+    commands:
+      - echo Build started on `date`
+      - export CODEARTIFACT_TOKEN=`aws codeartifact get-authorization-token --domain ruslanzdor --domain-owner 244092297712 --query authorizationToken --output text`
+  build:
+    commands:
+      - mvn test
+      - mvn package
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - mvn deploy
+      - aws cloudformation package --template-file template-mvn.yml --s3-bucket gram-deploy --output-template-file out.yml
+artifacts:
+  files:
+    - target/stocker-data-1.0.jar
+    - appspec.yml
+  discard-paths: yes
