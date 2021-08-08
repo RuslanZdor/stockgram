@@ -1,5 +1,6 @@
 package com.stocker.data.controller;
 
+import com.google.inject.Injector;
 import com.stocker.yahoo.data.Stock;
 import com.stocker.data.dao.StockDAO;
 import org.junit.Before;
@@ -19,7 +20,9 @@ public class ScheduleStocksRequestHandlerTest {
     @Before
     public void init() {
         stockDAO = Mockito.mock(StockDAO.class);
-        handler = new ScheduleStocksRequestHandler(stockDAO);
+        Injector injector = Mockito.mock(Injector.class);
+        Mockito.when(injector.getInstance(StockDAO.class)).thenReturn(stockDAO);
+        handler = new ScheduleStocksRequestHandler(injector);
     }
 
     @Test

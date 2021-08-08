@@ -2,8 +2,11 @@ package com.stocker.data.controller;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import com.stocker.data.bean.StockList;
 import com.stocker.data.dao.StockDAO;
+import com.stocker.data.module.DAOModule;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -12,14 +15,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ScheduleStocksRequestHandler implements RequestHandler<Object, StockList> {
 
-    private StockDAO stockDAO;
+    private final StockDAO stockDAO;
 
     public ScheduleStocksRequestHandler() {
-        stockDAO = new StockDAO();
+        this(Guice.createInjector(new DAOModule()));
     }
-
-    public ScheduleStocksRequestHandler(StockDAO stockDAO) {
-        this.stockDAO = stockDAO;
+    public ScheduleStocksRequestHandler(Injector injector) {
+        stockDAO = injector.getInstance(StockDAO.class);
     }
 
     /**
