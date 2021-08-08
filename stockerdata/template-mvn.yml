@@ -5,7 +5,7 @@ Resources:
   function:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: target/stock-data-1.0.jar
+      CodeUri: target/stocker-data-1.0.jar
       Handler: com.stocker.data.controller.ScheduleStocksRequestHandler::handleRequest
       Runtime: java8
       Description: Java function
