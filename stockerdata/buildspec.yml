@@ -15,9 +15,9 @@ phases:
     commands:
       - echo Build completed on `date`
       - mvn deploy
-      - aws cloudformation package --template-file template-mvn.yml --s3-bucket gram-deploy --output-template-file out.yml
+      - aws cloudformation package --template-file stockerdata/template-mvn.yml --s3-bucket gram-deploy --output-template-file stockerdata/out.yml
 artifacts:
   files:
-    - target/stocker-data-1.0.jar
+    - target/stockerdata/stocker-data-1.0.jar
     - appspec.yml
   discard-paths: yes
