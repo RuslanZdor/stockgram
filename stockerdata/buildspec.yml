@@ -14,7 +14,7 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
-      - mvn deploy
+      - mvn install
       - aws cloudformation package --template-file stockerdata/template-mvn.yml --s3-bucket gram-deploy --output-template-file stockerdata/out.yml
 artifacts:
   files:
