@@ -1,5 +1,10 @@
 package com.stocker.yahoo.parser;
 
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.stocker.yahoo.data.Company;
+import com.stocker.yahoo.data.Stock;
+import com.stocker.yahoo.spring.DownloadHistoricalData;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -8,13 +13,10 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @AllArgsConstructor
-class  YahooParserController {
-//
-//    private CompanyRepository companyRepository;
-//    private DownloadHistoricalData downloadHistoricalData;
-//    private ICalculateJob calculateAllFields;
-//
-////    @GetMapping("/manager/reloadStocks")
+class  YahooParserController implements RequestHandler<Stock, Company> {
+
+    private DownloadHistoricalData downloadHistoricalData;
+//    @GetMapping("/manager/reloadStocks")
 //    public void reloadStocks() {
 //        companyRepository.findAll().subscribe(company -> {
 //            try {
@@ -37,26 +39,24 @@ class  YahooParserController {
 //        });
 //    }
 //
-//    @GetMapping("/manager/refresh/{symbol}/")
-//    public Mono<Company> refreshStock(@PathVariable(name="symbol") String symbol) {
-//        log.info(String.format("Update all data for company %s", symbol));
-//        companyRepository.findFirstBySymbol(Mono.just(symbol.toUpperCase())).subscribe(company -> {
-//            try {
-//                downloadHistoricalData.download(company);
-//                allUpdates(company);
-//                companyRepository.save(company).subscribe(company1 -> {
-//                    log.info(String.format("id %s", company1.getId()));
-//                    log.info(String.format("Saved new value %s", company1.getDays().size()));
-//                });
-//            } catch (NoDayException e) {
-//                log.error("Company hasn't historical information", e);
-//            }
-//        });
-//        return Mono.just(new Company());
-//    }
-//
-//    private void allUpdates(Company company) {
-//        log.info(String.format("Calculate new values for %s", company.getName()));
+
+    public Company handleRequest(Stock stock, Context context) {
+//        log.info(String.format("Update all data for company %s", stock.getSymbol()));
+//        try {
+//            downloadHistoricalData.download(company);
+//            allUpdates(company);
+//            companyRepository.save(company).subscribe(comp -> {
+//                log.info(String.format("id %s", comp.getId()));
+//                log.info(String.format("Saved new value %s", comp.getDays().size()));
+//            });
+//        } catch (NoDayException e) {
+//            log.error("Company hasn't historical information", e);
+//        }
+        return new Company();
+    }
+
+    private void allUpdates(Company company) {
+        log.info(String.format("Calculate new values for %s", company.getName()));
 //        calculateAllFields.calculate(company);
-//    }
+    }
 }

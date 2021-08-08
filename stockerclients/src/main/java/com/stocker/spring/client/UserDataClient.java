@@ -4,11 +4,9 @@ import com.netflix.discovery.EurekaClient;
 import com.stocker.yahoo.data.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 @Slf4j
-@Component
 public class UserDataClient extends AbstractClient {
 
     private static final String SERVICE = "STOCKER-DATA";

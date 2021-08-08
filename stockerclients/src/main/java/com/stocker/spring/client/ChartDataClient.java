@@ -9,13 +9,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
 
 @Slf4j
-@Component
 public class ChartDataClient extends AbstractClient {
 
     private static final String SERVICE = "STOCKER-CHART";
