@@ -20,5 +20,6 @@ artifacts:
     - stockerdata/target/stocker-data-1.0.jar
     - stockerdata/appspec.yml
     - stockerdata/buildspec.yml
+    - - stockerdata/template-mvn.yml
   discard-paths: yes
   type: zip
