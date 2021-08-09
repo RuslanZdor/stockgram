@@ -21,3 +21,4 @@ artifacts:
     - stockerdata/appspec.yml
     - stockerdata/buildspec.yml
   discard-paths: yes
+  type: zip
