@@ -5,19 +5,13 @@ Resources:
   function:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: target/stocker-data-1.0.jar
+      CodeUri: s3://gram-deploy/stocker-data-1.0.jar
       Handler: com.stocker.data.controller.ScheduleStocksRequestHandler::handleRequest
       Runtime: java8
       Description: Java function
       MemorySize: 512
       Timeout: 10
       Role: 'arn:aws:iam::244092297712:role/service-role/test-role-3gz6l3jb'
-      Events:
-        Api1:
-          Type: Api
-          Properties:
-            Path: /prod
-            Method: POST
       # Function's execution role
       Policies:
         - AWSLambdaBasicExecutionRole
