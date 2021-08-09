@@ -16,6 +16,5 @@ phases:
       - echo Build completed on `date`
 artifacts:
   files:
-    - stockerdata/target/stocker-data-1.0.jar
     - stockerdata/appspec.yml
   discard-paths: yes
