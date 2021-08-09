@@ -15,8 +15,9 @@ phases:
     commands:
       - echo Build completed on `date`
 artifacts:
+  name: stocker-data-$CODEBUILD_BUILD_NUMBER-build.zip
   files:
     - stockerdata/target/stocker-data-1.0.jar
     - stockerdata/appspec.yml
+    - stockerdata/buildspec.yml
   discard-paths: yes
-  name: stocker-data-$CODEBUILD_BUILD_NUMBER-build.zip
