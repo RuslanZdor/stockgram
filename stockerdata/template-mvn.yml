@@ -11,11 +11,12 @@ Resources:
       Description: Java function
       MemorySize: 512
       Timeout: 10
-      Role: 'arn:aws:iam::244092297712:role/service-role/test-role-3gz6l3jb'
+      Role: 'arn:aws:iam::244092297712:role/service-role/stocker-application-role-tmmxr7rw'
       # Function's execution role
       Policies:
         - AWSLambdaBasicExecutionRole
         - AWSLambdaReadOnlyAccess
         - AWSXrayWriteOnlyAccess
         - AWSLambdaVPCAccessExecutionRole
+        - AWSLambdaDynamoDBExecutionRole
       Tracing: Active
