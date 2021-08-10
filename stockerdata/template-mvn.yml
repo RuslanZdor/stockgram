@@ -2,7 +2,7 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 Description: An AWS Lambda application that calls the Lambda API.
 Resources:
-  function:
+  LoadAllStockSymbols:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: s3://gram-deploy/stocker-data-1.0.jar
