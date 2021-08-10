@@ -11,7 +11,7 @@ phases:
     commands:
       - mvn test
       - mvn package
-      - aws s3 aws s3 cp stockerdata/target/stocker-data-1.0.jar s3://gram-deploy/stocker-data-1.0.jar
+      - aws s3 cp stockerdata/target/stocker-data-1.0.jar s3://gram-deploy/stocker-data-1.0.jar
   post_build:
     commands:
       - echo Build completed on `date`
