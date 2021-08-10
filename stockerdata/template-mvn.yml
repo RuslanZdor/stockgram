@@ -5,7 +5,7 @@ Resources:
   LoadAllStockSymbols:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: ${BuildArtifact}
+      CodeUri: s3://gram-deploy/stocker-data-1.0.jar
       Handler: com.stocker.data.controller.ScheduleStocksRequestHandler::handleRequest
       Runtime: java8
       Description: Java function

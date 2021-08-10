@@ -11,15 +11,12 @@ phases:
     commands:
       - mvn test
       - mvn package
+      - aws s3 aws s3 cp stockerdata/target/stocker-data-1.0.jar s3://gram-deploy/stocker-data-1.0.jar
   post_build:
     commands:
       - echo Build completed on `date`
 artifacts:
-  name: simplename
   files:
-    - stockerdata/target/stocker-data-1.0.jar
-    - stockerdata/appspec.yml
     - stockerdata/buildspec.yml
     - stockerdata/template-mvn.yml
   discard-paths: yes
-  type: zip
