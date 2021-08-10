@@ -18,5 +18,5 @@ Resources:
         - AWSLambdaReadOnlyAccess
         - AWSXrayWriteOnlyAccess
         - AWSLambdaVPCAccessExecutionRole
-        - AWSLambdaDynamoDBExecutionRole
+        - stocker-data-dynamodb-policy
       Tracing: Active
