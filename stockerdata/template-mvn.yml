@@ -11,12 +11,20 @@ Resources:
       Description: Java function
       MemorySize: 512
       Timeout: 10
-      Role: 'arn:aws:iam::244092297712:role/service-role/stocker-application-role-tmmxr7rw'
+      Role: 'arn:aws:iam::244092297712:role/service-role/StockerDataApplicationRole'
       # Function's execution role
       Policies:
         - AWSLambdaBasicExecutionRole
         - AWSLambdaReadOnlyAccess
         - AWSXrayWriteOnlyAccess
         - AWSLambdaVPCAccessExecutionRole
-        - stocker-data-dynamodb-policy
       Tracing: Active
+  StockerDataApplicationRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+      Path: /
+      ManagedPolicyArns:
+        - stocker-data-dynamodb-policy
+        - AWSLambdaBasicExecutionRole-b8cef0c4-1121-440e-9f9f-cde9ea2fc412
