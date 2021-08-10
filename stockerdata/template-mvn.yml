@@ -8,7 +8,25 @@ Resources:
       CodeUri: s3://gram-deploy/stocker-data-1.0.jar
       Handler: com.stocker.data.controller.ScheduleStocksRequestHandler::handleRequest
       Runtime: java8
-      Description: Java function
+      Description: Get list of all available symbols
+      MemorySize: 512
+      Timeout: 10
+      Role:
+        Fn::GetAtt: StockerDataApplicationRole.Arn
+      # Function's execution role
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+      Tracing: Active
+  SaveStock:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://gram-deploy/stocker-data-1.0.jar
+      Handler: com.stocker.data.controller.SaveStockHandler::handleRequest
+      Runtime: java8
+      Description: Save stock object to dynamoDB
       MemorySize: 512
       Timeout: 10
       Role:
