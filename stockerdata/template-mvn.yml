@@ -11,7 +11,8 @@ Resources:
       Description: Java function
       MemorySize: 512
       Timeout: 10
-      Role: 'arn:aws:iam::244092297712:role/service-role/StockerDataApplicationRole'
+      Role:
+        Fn::GetAtt: StockerDataApplicationRole.Arn
       # Function's execution role
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -24,7 +25,14 @@ Resources:
     Properties:
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
       Path: /
       ManagedPolicyArns:
-        - stocker-data-dynamodb-policy
-        - AWSLambdaBasicExecutionRole-b8cef0c4-1121-440e-9f9f-cde9ea2fc412
+        - arn:aws:iam::244092297712:policy/stocker-data-dynamodb-policy
+        - arn:aws:iam::244092297712:policy/service-role/AWSLambdaBasicExecutionRole-b8cef0c4-1121-440e-9f9f-cde9ea2fc412
