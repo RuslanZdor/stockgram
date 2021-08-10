@@ -7,6 +7,6 @@ public class DAOModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(StockDAO.class).to(StockDAO.class);
+        bind(StockDAO.class).toInstance(new StockDAO());
     }
 }
