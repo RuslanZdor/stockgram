@@ -53,4 +53,47 @@ Resources:
       Path: /
       ManagedPolicyArns:
         - arn:aws:iam::244092297712:policy/stocker-data-dynamodb-policy
+        - arn:aws:iam::244092297712:policy/stocker-data-step-functions
         - arn:aws:iam::244092297712:policy/service-role/AWSLambdaBasicExecutionRole-b8cef0c4-1121-440e-9f9f-cde9ea2fc412
+  UpdateAllStocks:
+    Type: AWS::StepFunctions::StateMachine
+    Properties:
+      StateMachineName: Update-All-Stocks-Yahoo
+      DefinitionString:
+        !Sub
+          - |-
+            {
+              "StartAt": "Load stocks for update",
+              "States": {
+                "Load stocks for update": {
+                  "Type": "Task",
+                  "Resource": "${loadAllStocksArn}",
+                  "Next": "Download All stocks"
+                },
+                "Download All stocks": {
+                  "Type": "Map",
+                  "InputPath": "$.stocks",
+                  "MaxConcurrency": 0,
+                  "Iterator": {
+                    "StartAt": "Save Stock",
+                    "States": {
+                      "Save Stock": {
+                        "Type": "Task",
+                        "Resource": "${saveStock}",
+                        "End": true
+                      }
+                    }
+                  },
+                  "End": true
+                }
+              }
+            }
+          - {
+              loadAllStocksArn: !GetAtt [ LoadAllStockSymbols, Arn ],
+              saveStock: !GetAtt [ SaveStock, Arn ]
+            }
+      RoleArn:
+        Fn::GetAtt: StockerDataApplicationRole.Arn
+      Tags:
+        - Key: "Name"
+          Value: "Stocker"
