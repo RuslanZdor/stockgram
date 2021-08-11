@@ -20,13 +20,13 @@ Resources:
         - AWSXrayWriteOnlyAccess
         - AWSLambdaVPCAccessExecutionRole
       Tracing: Active
-  SaveStock:
+  SaveCompany:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: s3://gram-deploy/stocker-data-1.0.jar
-      Handler: com.stocker.data.controller.SaveStockHandler::handleRequest
+      Handler: com.stocker.data.controller.SaveCompanyHandler::handleRequest
       Runtime: java8
-      Description: Save stock object to dynamoDB
+      Description: Save company object to dynamoDB
       MemorySize: 512
       Timeout: 10
       Role:
@@ -90,7 +90,7 @@ Resources:
             }
           - {
               loadAllStocksArn: !GetAtt [ LoadAllStockSymbols, Arn ],
-              saveStock: !GetAtt [ SaveStock, Arn ]
+              saveStock: !GetAtt [ SaveCompany, Arn ]
             }
       RoleArn: arn:aws:iam::244092297712:role/service-role/StepFunctions-Update-All-Stocks-Yahoo-role-1e15a242
       Tags:

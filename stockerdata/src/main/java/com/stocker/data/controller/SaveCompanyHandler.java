@@ -4,35 +4,35 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.stocker.data.dao.CompanyDAO;
 import com.stocker.data.module.DAOModule;
-import com.stocker.yahoo.data.Stock;
-import com.stocker.data.dao.StockDAO;
+import com.stocker.yahoo.data.Company;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * Save stock information to datastore
  */
 @Slf4j
-public class SaveStockHandler implements RequestHandler<Stock, String> {
+public class SaveCompanyHandler implements RequestHandler<Company, String> {
 
-    private final StockDAO stockDAO;
+    private final CompanyDAO companyDAO;
 
-    public SaveStockHandler() {
+    public SaveCompanyHandler() {
         this(Guice.createInjector(new DAOModule()));
     }
-    public SaveStockHandler(Injector injector) {
-        stockDAO = injector.getInstance(StockDAO.class);
+    public SaveCompanyHandler(Injector injector) {
+        companyDAO = injector.getInstance(CompanyDAO.class);
     }
 
     /**
      * Save stock information to datastore
-     * @param stock object to save
+     * @param company object to save
      * @param context AWS context
      * @return status of save operation
      */
     @Override
-    public String handleRequest(Stock stock, Context context) {
-        stockDAO.save(stock);
+    public String handleRequest(Company company, Context context) {
+        companyDAO.save(company);
         return "SUCCESS";
     }
 

@@ -1,4 +1,4 @@
-package com.stocker.data.dynamo;
+package com.stocker.dynamo;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;

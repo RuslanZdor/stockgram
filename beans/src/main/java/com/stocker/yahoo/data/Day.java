@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Day implements Comparable<Day>{
 
-    @DynamoDBAttribute(attributeName="id")
+    @DynamoDBAttribute(attributeName="symbol")
     private int id;
     @DynamoDBAttribute(attributeName="date")
     private LocalDate date;
