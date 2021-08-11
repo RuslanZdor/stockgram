@@ -92,8 +92,7 @@ Resources:
               loadAllStocksArn: !GetAtt [ LoadAllStockSymbols, Arn ],
               saveStock: !GetAtt [ SaveStock, Arn ]
             }
-      RoleArn:
-        Fn::GetAtt: StockerDataApplicationRole.Arn
+      RoleArn: arn:aws:iam::244092297712:role/service-role/StepFunctions-Update-All-Stocks-Yahoo-role-1e15a242
       Tags:
         - Key: "Name"
           Value: "Stocker"
