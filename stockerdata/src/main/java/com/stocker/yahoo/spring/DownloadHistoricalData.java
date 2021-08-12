@@ -54,8 +54,8 @@ public class DownloadHistoricalData {
             Calendar year =  Calendar.getInstance();
             year.add(Calendar.YEAR, -25);
             Company company = new Company();
-            setCompanyStats(company, companyData.getStats(false));
-            setDividendHistory(company, companyData.getDividendHistory(year));
+//            setCompanyStats(company, companyData.getStats(false));
+//            setDividendHistory(company, companyData.getDividendHistory(year));
 
             histQuotes.stream()
                     .filter(data -> data.getDate() != null)
