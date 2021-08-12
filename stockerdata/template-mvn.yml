@@ -1,19 +1,12 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 Description: An AWS Lambda application that calls the Lambda API.
-Parameters:
-  buildBucketName:
-    Type: String
-  buildObjectKey:
-    Type: String
 Resources:
   LoadAllStockSymbols:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: load-all-stock-symbols
-      Code:
-        S3Bucket: !Ref buildBucketName
-        S3Key: !Ref buildObjectKey
+      CodeUri: s3://gram-deploy/stocker-data-1.0.jar
       Handler: com.stocker.data.controller.ScheduleStocksRequestHandler::handleRequest
       Runtime: java8
       Description: Get list of all available symbols
@@ -32,9 +25,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: save-company-information
-      Code:
-        S3Bucket: !Ref buildBucketName
-        S3Key: !Ref buildObjectKey
+      CodeUri: s3://gram-deploy/stocker-data-1.0.jar
       Handler: com.stocker.data.controller.SaveCompanyHandler::handleRequest
       Runtime: java8
       Description: Save company object to dynamoDB
@@ -53,9 +44,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: yahoo-stock-parser
-      Code:
-        S3Bucket: !Ref buildBucketName
-        S3Key: !Ref buildObjectKey
+      CodeUri: s3://gram-deploy/stocker-data-1.0.jar
       Handler: com.stocker.yahoo.parser.YahooParserHandler::handleRequest
       Runtime: java8
       Description: Get stock history data from Yahoo API

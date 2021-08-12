@@ -11,12 +11,11 @@ phases:
     commands:
       - mvn test
       - mvn package
-      - aws s3 cp stockerdata/target/stocker-data-1.0.jar s3://gram-deploy/stocker-data-1.0.jar
+      - aws cloudformation package --template stockerdata/template-mvn.yml --s3-bucket $S3_BUCKET --output-template template-export.yml
   post_build:
     commands:
       - echo Build completed on `date`
 artifacts:
   files:
-    - stockerdata/buildspec.yml
-    - stockerdata/template-mvn.yml
+    - stemplate-export.yml
   discard-paths: yes
