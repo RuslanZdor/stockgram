@@ -5,9 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 @Data
 @Slf4j
 @NoArgsConstructor
@@ -48,7 +45,7 @@ public class CompanyStats {
     @DynamoDBAttribute(attributeName="short_ratio")
     private double shortRatio;
     @DynamoDBAttribute(attributeName="earnings_announcement")
-    private LocalDate earningsAnnouncement;
+    private long earningsAnnouncement;
     @DynamoDBAttribute(attributeName="last_price")
     private double lastPrice;
     @DynamoDBAttribute(attributeName="last_day_open_price")
@@ -56,6 +53,6 @@ public class CompanyStats {
     @DynamoDBAttribute(attributeName="last_day_close_price")
     private double lastDayClosePrice;
     @DynamoDBAttribute(attributeName="last_update")
-    private LocalDateTime lastUpdate;
+    private long lastUpdate;
 
 }

@@ -15,8 +15,6 @@ import yahoofinance.histquotes2.HistoricalDividend;
 import yahoofinance.quotes.stock.StockStats;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.List;
 
@@ -107,7 +105,7 @@ public class DownloadHistoricalData {
         companyStats.setOneYearTargetPrice(stats.getOneYearTargetPrice() == null ? 0 : stats.getOneYearTargetPrice().doubleValue());
         companyStats.setShortRatio(stats.getShortRatio() == null ? 0 : stats.getShortRatio().doubleValue());
         if (stats.getEarningsAnnouncement() != null) {
-            companyStats.setEarningsAnnouncement(LocalDateTime.ofInstant(stats.getEarningsAnnouncement().toInstant(), ZoneId.systemDefault()).toLocalDate());
+            companyStats.setEarningsAnnouncement(stats.getEarningsAnnouncement().getTimeInMillis());
         }
         company.setCompanyStats(companyStats);
     }
