@@ -96,7 +96,7 @@ Resources:
                   "InputPath": "$.stocks",
                   "MaxConcurrency": 0,
                   "Iterator": {
-                    "StartAt": "Save Stock",
+                    "StartAt": "Yahoo Parser",
                     "States": {
                       "Yahoo Parser": {
                         "Type": "Task",
