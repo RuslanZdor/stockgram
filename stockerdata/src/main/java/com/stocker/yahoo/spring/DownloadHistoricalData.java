@@ -15,11 +15,8 @@ import yahoofinance.histquotes2.HistoricalDividend;
 import yahoofinance.quotes.stock.StockStats;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.List;
 
@@ -35,8 +32,7 @@ public class DownloadHistoricalData {
 
     public Company download(com.stocker.yahoo.data.Stock stock, Day lastDay) throws NoDayException {
         Calendar lastDayCalendar =  Calendar.getInstance();
-        lastDayCalendar.setTimeInMillis(lastDay.getDate()
-                .minus(1, ChronoUnit.DAYS).atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli());
+        lastDayCalendar.setTimeInMillis(lastDay.getDate());
         return download(stock, lastDayCalendar);
     }
 
@@ -67,24 +63,23 @@ public class DownloadHistoricalData {
                     .filter(data -> data.getDate() != null)
                     .filter(data -> data.getClose() != null)
                     .forEach(data -> {
-                        Day day = new Day(data.getDate().getTime().toInstant()
-                                .atZone(ZoneId.systemDefault())
-                                .toLocalDate());
+                        Day day = new Day(data.getDate().getTimeInMillis());
+                        day.setSymbol(stock.getSymbol());
                         day.setPrice(data.getClose().doubleValue());
                         day.setMinPrice(data.getLow().doubleValue());
                         day.setMaxPrice(data.getHigh().doubleValue());
                         day.setOpenPrice(data.getOpen().doubleValue());
                         day.setClosePrice(data.getClose().doubleValue());
                         day.setVolume(data.getVolume());
-                        day.setLastUpdate(LocalDateTime.now());
-                        company.getDays().removeIf(day1 -> day1.getDate().equals(day.getDate()));
+                        day.setLastUpdate(System.currentTimeMillis());
+                        company.getDays().removeIf(day1 -> day1.getDate() == day.getDate());
                         company.getDays().add(day);
                     });
 
             company.getCompanyStats().setLastDayOpenPrice(company.getDays().last().getOpenPrice());
             company.getCompanyStats().setLastDayClosePrice(company.getDays().last().getClosePrice());
             company.getCompanyStats().setLastPrice(company.getDays().last().getPrice());
-            company.getCompanyStats().setLastUpdate(company.getDays().last().getLastUpdate());
+//            company.getCompanyStats().setLastUpdate(company.getDays().last().getLastUpdate());
 
             return company;
         } catch (IOException ex) {
@@ -119,11 +114,6 @@ public class DownloadHistoricalData {
 
     private void setDividendHistory(Company company, List<HistoricalDividend> stats) {
         company.getDividends().clear();
-        stats.forEach(data -> {
-            LocalDate date = data.getDate().getTime().toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
-            company.getDividends().add(new Dividend(date, data.getAdjDividend().doubleValue()));
-        });
+        stats.forEach(data -> company.getDividends().add(new Dividend(data.getDate().getTimeInMillis(), data.getAdjDividend().doubleValue())));
     }
 }

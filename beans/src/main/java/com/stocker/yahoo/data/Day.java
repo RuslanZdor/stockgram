@@ -1,11 +1,11 @@
 package com.stocker.yahoo.data;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  * daily information
@@ -13,14 +13,15 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
+@DynamoDBTable(tableName="StockDailyValues")
 public class Day implements Comparable<Day>{
 
-    @DynamoDBAttribute(attributeName="symbol")
-    private int id;
-    @DynamoDBAttribute(attributeName="date")
-    private LocalDate date;
+    @DynamoDBHashKey(attributeName="symbol")
+    private String symbol;
+    @DynamoDBRangeKey(attributeName="date")
+    private long date;
     @DynamoDBAttribute(attributeName="last_update")
-    private LocalDateTime lastUpdate;
+    private long lastUpdate;
     @DynamoDBAttribute(attributeName="volume")
     private long volume;
     @DynamoDBAttribute(attributeName="price")
@@ -134,7 +135,7 @@ public class Day implements Comparable<Day>{
     @DynamoDBAttribute(attributeName="isNextRise")
     private boolean isNextRise = false;
 
-    public Day(LocalDate date) {
+    public Day(long date) {
         this.date = date;
     }
 
@@ -147,7 +148,7 @@ public class Day implements Comparable<Day>{
     public boolean equals(Object obj) {
         if (obj instanceof Day) {
             Day compareDay = (Day) obj;
-            return date != null && compareDay.getDate() != null && date.equals(compareDay.getDate());
+            return date == compareDay.getDate();
         }
         throw new ClassCastException("Object to compare can be only Day type");
     }
@@ -157,6 +158,6 @@ public class Day implements Comparable<Day>{
         if(getDate() == d2.getDate()){
             return 0;
         }
-        return getDate().compareTo(d2.getDate());
+        return Long.compare(getDate(), d2.getDate());
     }
 }

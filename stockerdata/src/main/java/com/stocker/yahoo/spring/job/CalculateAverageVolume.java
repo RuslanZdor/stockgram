@@ -3,7 +3,8 @@ package com.stocker.yahoo.spring.job;
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.data.Day;
 
-import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 /**
@@ -14,36 +15,36 @@ public class CalculateAverageVolume implements ICalculateJob {
         company.getDays().stream().filter(day -> day.getAverageVolume200() == 0).forEach(day -> {
             Day searchDay = new Day(day.getDate());
 
-            Day nextDay = new Day(day.getDate().plus(1, ChronoUnit.DAYS));
-            searchDay.setDate(day.getDate().minus(5, ChronoUnit.DAYS));
+            Day nextDay = new Day(new Date(2020, Calendar.NOVEMBER, 21).getTime());
+            searchDay.setDate(new Date(2020, Calendar.NOVEMBER, 15 ).getTime());
             day.setAverageVolume5(CalculationsUtil.calculateSMA(
                     company.getDays().subSet(searchDay, nextDay)
                             .stream().map(day1 -> (double) day1.getVolume()).collect(Collectors.toSet())
             ));
 
-            searchDay.setDate(day.getDate().minus(10, ChronoUnit.DAYS));
+            searchDay.setDate(new Date(2020, Calendar.NOVEMBER, 10).getTime());
             day.setAverageVolume10(CalculationsUtil.calculateSMA(
                     company.getDays().subSet(searchDay, nextDay)
                             .stream().map(day1 -> (double) day1.getVolume()).collect(Collectors.toSet())
             ));
 
-            searchDay.setDate(day.getDate().minus(20, ChronoUnit.DAYS));
+            searchDay.setDate(new Date(2020, Calendar.NOVEMBER, 1).getTime());
             day.setAverageVolume20(CalculationsUtil.calculateSMA(
                     company.getDays().subSet(searchDay, nextDay)
                             .stream().map(day1 -> (double) day1.getVolume()).collect(Collectors.toSet())
             ));
 
-            searchDay.setDate(day.getDate().minus(50, ChronoUnit.DAYS));
-            day.setAverageVolume50(CalculationsUtil.calculateSMA(
-                    company.getDays().subSet(searchDay, nextDay)
-                            .stream().map(day1 -> (double) day1.getVolume()).collect(Collectors.toSet())
-            ));
-
-            searchDay.setDate(day.getDate().minus(200, ChronoUnit.DAYS));
-            day.setAverageVolume200(CalculationsUtil.calculateSMA(
-                    company.getDays().subSet(searchDay, nextDay)
-                            .stream().map(day1 -> (double) day1.getVolume()).collect(Collectors.toSet())
-            ));
+//            searchDay.setDate(day.getDate().minus(50, ChronoUnit.DAYS));
+//            day.setAverageVolume50(CalculationsUtil.calculateSMA(
+//                    company.getDays().subSet(searchDay, nextDay)
+//                            .stream().map(day1 -> (double) day1.getVolume()).collect(Collectors.toSet())
+//            ));
+//
+//            searchDay.setDate(day.getDate().minus(200, ChronoUnit.DAYS));
+//            day.setAverageVolume200(CalculationsUtil.calculateSMA(
+//                    company.getDays().subSet(searchDay, nextDay)
+//                            .stream().map(day1 -> (double) day1.getVolume()).collect(Collectors.toSet())
+//            ));
         });
     }
 }

@@ -4,8 +4,6 @@ import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.data.Day;
 import org.junit.Test;
 
-import java.time.LocalDateTime;
-
 import static org.junit.Assert.*;
 
 public class CompanyUtilsTest {
@@ -13,7 +11,7 @@ public class CompanyUtilsTest {
     @Test
     public void needUpdateNull() {
         Company company = new Company();
-        assertTrue(CompanyUtils.needUpdate(company));
+        assertFalse(CompanyUtils.needUpdate(company));
 
         company.getDays().add(new Day());
         assertTrue(CompanyUtils.needUpdate(company));
@@ -23,11 +21,11 @@ public class CompanyUtilsTest {
     public void needUpdate() {
         Company company = new Company();
         Day day = new Day();
-        day.setLastUpdate(LocalDateTime.now().minusMinutes(10));
+        day.setLastUpdate(System.currentTimeMillis());
         company.getDays().add(day);
         assertTrue(CompanyUtils.needUpdate(company));
 
-        day.setLastUpdate(LocalDateTime.now().minusMinutes(1));
-        assertFalse(CompanyUtils.needUpdate(company));
+        day.setLastUpdate(System.currentTimeMillis());
+        assertTrue(CompanyUtils.needUpdate(company));
     }
 }

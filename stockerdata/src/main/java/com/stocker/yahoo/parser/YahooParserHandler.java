@@ -2,10 +2,9 @@ package com.stocker.yahoo.parser;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.stocker.data.dao.StockDAO;
-import com.stocker.data.module.DAOModule;
+import com.stocker.data.dao.DayDAO;
+import com.stocker.data.module.DIFactory;
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.data.Day;
 import com.stocker.yahoo.data.Stock;
@@ -21,20 +20,21 @@ import java.util.Optional;
  */
 @Slf4j
 @AllArgsConstructor
-class YahooParserController implements RequestHandler<Stock, Company> {
+public class YahooParserHandler implements RequestHandler<Stock, Company> {
 
-    private final StockDAO stockDAO;
+    private final DayDAO dayDAO;
+    private final DownloadHistoricalData downloadHistoricalData;
 
-    public YahooParserController() {
-        this(Guice.createInjector(new DAOModule()));
+    public YahooParserHandler() {
+        this(DIFactory.init());
     }
 
-    public YahooParserController(Injector injector) {
-        stockDAO = injector.getInstance(StockDAO.class);
+    public YahooParserHandler(Injector injector) {
+        downloadHistoricalData = injector.getInstance(DownloadHistoricalData.class);
+        dayDAO = injector.getInstance(DayDAO.class);
     }
 
 
-    private DownloadHistoricalData downloadHistoricalData;
 //    @GetMapping("/manager/reloadStocks")
 //    public void reloadStocks() {
 //        companyRepository.findAll().subscribe(company -> {
@@ -63,7 +63,7 @@ class YahooParserController implements RequestHandler<Stock, Company> {
         log.info(String.format("Update all data for company %s", stock.getSymbol()));
         Company company = new Company();
         try {
-            Optional<Day> day = stockDAO.findLastStockDay(stock);
+            Optional<Day> day = dayDAO.findLastStockDay(stock);
             if (day.isPresent()) {
                 company = downloadHistoricalData.download(stock, day.get());
             } else {

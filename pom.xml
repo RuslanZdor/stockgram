@@ -35,7 +35,7 @@
 <!--        <module>stockerclients</module>-->
 <!--        <module>telegram-service</module>-->
 <!--        <module>eureka-server</module>-->
-        <module>stocker-yahoo-parser</module>
+<!--        <module>stocker-yahoo-parser</module>-->
 <!--        <module>chart</module>-->
 <!--        <module>weka-service</module>-->
 <!--        <module>strategic-service</module>&ndash;&gt;-->

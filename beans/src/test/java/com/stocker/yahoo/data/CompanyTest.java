@@ -3,36 +3,37 @@ package com.stocker.yahoo.data;
 import org.junit.Test;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.NoSuchElementException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class CompanyTest {
 
     @Test
     public void getExistsDay() {
         Company company = new Company();
-        company.getDays().add(new Day(LocalDate.now()));
-        company.getDays().add(new Day(LocalDate.now().minus(1, ChronoUnit.DAYS)));
+        company.getDays().add(new Day(new Date(2020, Calendar.NOVEMBER, 20).getTime()));
+        company.getDays().add(new Day(new Date(2020, Calendar.NOVEMBER, 19).getTime()));
 
-        assertEquals("If day is exist in list - it should be returned", new Day(LocalDate.now()), company.getDay(new Day(LocalDate.now())));
+        assertEquals("If day is exist in list - it should be returned", new Day(new Date(2020, Calendar.NOVEMBER, 20).getTime()), company.getDay(new Day(new Date(2020, Calendar.NOVEMBER, 20).getTime())));
     }
 
     @Test
     public void getNotExistsDay() {
         Company company = new Company();
-        company.getDays().add(new Day(LocalDate.now()));
-        company.getDays().add(new Day(LocalDate.now().minus(1, ChronoUnit.DAYS)));
+        company.getDays().add(new Day(new Date(2020, Calendar.NOVEMBER, 20).getTime()));
+        company.getDays().add(new Day(new Date(2020, Calendar.NOVEMBER, 19).getTime()));
 
-        assertEquals("If day is not exist - it should return first day from list", new Day(LocalDate.now().minus(1, ChronoUnit.DAYS)),
-                company.getDay(new Day(LocalDate.now().plus(1, ChronoUnit.DAYS))));
+        assertEquals("If day is not exist - it should return first day from list", new Day(new Date(2020, Calendar.NOVEMBER, 19).getTime()),
+                company.getDay(new Day(new Date(2020, Calendar.NOVEMBER, 21).getTime())));
     }
 
     @Test(expected = NoSuchElementException.class)
     public void getEmptyDayList() {
         Company company = new Company();
-        company.getDay(new Day(LocalDate.now()));
+        company.getDay(new Day(LocalDate.now().toEpochDay()));
     }
 
     @Test
@@ -44,10 +45,10 @@ public class CompanyTest {
     @Test
     public void getMaxDayVolume() {
         Company company = new Company();
-        Day day = new Day(LocalDate.now());
+        Day day = new Day(new Date(2020, Calendar.NOVEMBER, 20).getTime());
         day.setVolume(100);
         company.getDays().add(day);
-        day = new Day(LocalDate.now().minus(1, ChronoUnit.DAYS));
+        day = new Day(new Date(2020, Calendar.NOVEMBER, 21).getTime());
         day.setVolume(200);
         company.getDays().add(day);
 

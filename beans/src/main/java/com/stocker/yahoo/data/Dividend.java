@@ -5,14 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Dividend implements Comparable<Dividend> {
     @DynamoDBAttribute(attributeName="date")
-    private LocalDate date;
+    private long date;
     @DynamoDBAttribute(attributeName="value")
     private double value;
 
@@ -25,7 +23,7 @@ public class Dividend implements Comparable<Dividend> {
     public boolean equals(Object obj) {
         if (obj instanceof Day) {
             Day compareDay = (Day) obj;
-            return date != null && compareDay.getDate() != null && date.equals(compareDay.getDate());
+            return date == compareDay.getDate();
         }
         throw new ClassCastException("Object to compare can be only Day type");
     }
@@ -35,6 +33,6 @@ public class Dividend implements Comparable<Dividend> {
         if(getDate() == d2.getDate()){
             return 0;
         }
-        return getDate().compareTo(d2.getDate());
+        return Long.compare(getDate(), d2.getDate());
     }
 }

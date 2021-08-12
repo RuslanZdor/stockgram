@@ -5,6 +5,7 @@ Resources:
   LoadAllStockSymbols:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: load-all-stock-symbols
       CodeUri: s3://gram-deploy/stocker-data-1.0.jar
       Handler: com.stocker.data.controller.ScheduleStocksRequestHandler::handleRequest
       Runtime: java8
@@ -23,10 +24,30 @@ Resources:
   SaveCompany:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: save-company-information
       CodeUri: s3://gram-deploy/stocker-data-1.0.jar
       Handler: com.stocker.data.controller.SaveCompanyHandler::handleRequest
       Runtime: java8
       Description: Save company object to dynamoDB
+      MemorySize: 512
+      Timeout: 10
+      Role:
+        Fn::GetAtt: StockerDataApplicationRole.Arn
+      # Function's execution role
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+      Tracing: Active
+  YahooParser:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: yahoo-stock-parser
+      CodeUri: s3://gram-deploy/stocker-data-1.0.jar
+      Handler: com.stocker.yahoo.parser.YahooParserHandler::handleRequest
+      Runtime: java8
+      Description: Get stock history data from Yahoo API
       MemorySize: 512
       Timeout: 10
       Role:
