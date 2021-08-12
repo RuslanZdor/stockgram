@@ -49,7 +49,7 @@ Resources:
       Runtime: java8
       Description: Get stock history data from Yahoo API
       MemorySize: 512
-      Timeout: 10
+      Timeout: 60
       Role:
         Fn::GetAtt: StockerDataApplicationRole.Arn
       # Function's execution role
