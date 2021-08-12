@@ -74,9 +74,9 @@ public class DownloadHistoricalData {
                         company.getDays().add(day);
                     });
 
-            company.getCompanyStats().setLastDayOpenPrice(company.getDays().last().getOpenPrice());
-            company.getCompanyStats().setLastDayClosePrice(company.getDays().last().getClosePrice());
-            company.getCompanyStats().setLastPrice(company.getDays().last().getPrice());
+//            company.getCompanyStats().setLastDayOpenPrice(company.getDays().last().getOpenPrice());
+//            company.getCompanyStats().setLastDayClosePrice(company.getDays().last().getClosePrice());
+//            company.getCompanyStats().setLastPrice(company.getDays().last().getPrice());
 //            company.getCompanyStats().setLastUpdate(company.getDays().last().getLastUpdate());
 
             return company;
