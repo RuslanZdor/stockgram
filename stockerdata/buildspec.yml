@@ -17,5 +17,5 @@ phases:
       - echo Build completed on `date`
 artifacts:
   files:
-    - stemplate-export.yml
+    - template-export.yml
   discard-paths: yes
