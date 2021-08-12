@@ -6,7 +6,9 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: load-all-stock-symbols
-      CodeUri: s3://gram-deploy/stocker-data-1.0.jar
+      Code:
+        S3Bucket: !Ref buildBucketName
+        S3Key: !Ref buildObjectKey
       Handler: com.stocker.data.controller.ScheduleStocksRequestHandler::handleRequest
       Runtime: java8
       Description: Get list of all available symbols
@@ -25,7 +27,9 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: save-company-information
-      CodeUri: s3://gram-deploy/stocker-data-1.0.jar
+      Code:
+        S3Bucket: !Ref buildBucketName
+        S3Key: !Ref buildObjectKey
       Handler: com.stocker.data.controller.SaveCompanyHandler::handleRequest
       Runtime: java8
       Description: Save company object to dynamoDB
@@ -44,7 +48,9 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: yahoo-stock-parser
-      CodeUri: s3://gram-deploy/stocker-data-1.0.jar
+      Code:
+        S3Bucket: !Ref buildBucketName
+        S3Key: !Ref buildObjectKey
       Handler: com.stocker.yahoo.parser.YahooParserHandler::handleRequest
       Runtime: java8
       Description: Get stock history data from Yahoo API
