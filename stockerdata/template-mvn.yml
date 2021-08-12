@@ -98,6 +98,11 @@ Resources:
                   "Iterator": {
                     "StartAt": "Save Stock",
                     "States": {
+                      "Yahoo Parser": {
+                        "Type": "Task",
+                        "Resource": "${yahooParser}",
+                        "Next": "Save Stock"
+                      },
                       "Save Stock": {
                         "Type": "Task",
                         "Resource": "${saveStock}",
@@ -111,7 +116,8 @@ Resources:
             }
           - {
               loadAllStocksArn: !GetAtt [ LoadAllStockSymbols, Arn ],
-              saveStock: !GetAtt [ SaveCompany, Arn ]
+              saveStock: !GetAtt [ SaveCompany, Arn ],
+              yahooParser: !GetAtt [ YahooParser, Arn ]
             }
       RoleArn: arn:aws:iam::244092297712:role/service-role/StepFunctions-Update-All-Stocks-Yahoo-role-1e15a242
       Tags:
