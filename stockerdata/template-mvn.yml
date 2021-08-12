@@ -80,6 +80,12 @@ Resources:
     Type: AWS::StepFunctions::StateMachine
     Properties:
       StateMachineName: Update-All-Stocks-Yahoo
+      LoggingConfiguration:
+        Destinations:
+          - CloudWatchLogsLogGroup:
+              LogGroupArn: arn:aws:logs:us-west-2:244092297712:log-group:stocker-data-yahoo-parser-pipeline:*
+        IncludeExecutionData: True
+        Level: ALL
       DefinitionString:
         !Sub
           - |-
