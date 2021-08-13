@@ -24,14 +24,31 @@ public class DayDAO {
     }
 
     public Optional<Day> findLastStockDay(Stock stock) {
+        return findLastStockDay(stock.getSymbol());
+    }
+
+    public Optional<Day> findLastStockDay(String stock) {
         Map<String, AttributeValue> eav = new HashMap<>();
-        eav.put(":symbol", new AttributeValue().withS(stock.getSymbol()));
+        eav.put(":symbol", new AttributeValue().withS(stock));
 
         DynamoDBQueryExpression<Day> queryExpression = new DynamoDBQueryExpression<Day>()
-                .withKeyConditionExpression("symbol = :symbol").withExpressionAttributeValues(eav)
+                .withKeyConditionExpression("symbol = :symbol")
+                .withExpressionAttributeValues(eav)
                 .withLimit(1);
 
         List<Day> latestReplies = mapper.query(Day.class, queryExpression);
         return latestReplies.stream().findFirst();
+    }
+
+    public List<Day> findLastYearData(String symbol) {
+        Map<String, AttributeValue> eav = new HashMap<>();
+        eav.put(":symbol", new AttributeValue().withS(symbol));
+
+        DynamoDBQueryExpression<Day> queryExpression = new DynamoDBQueryExpression<Day>()
+                .withKeyConditionExpression("symbol = :symbol")
+                .withExpressionAttributeValues(eav)
+                .withLimit(300);
+
+        return mapper.query(Day.class, queryExpression);
     }
 }

@@ -20,6 +20,8 @@ public class Day implements Comparable<Day>{
     private String symbol;
     @DynamoDBRangeKey(attributeName="date")
     private long date;
+    @DynamoDBAttribute(attributeName="is_finished")
+    private boolean isFinished;
     @DynamoDBAttribute(attributeName="last_update")
     private long lastUpdate;
     @DynamoDBAttribute(attributeName="volume")
