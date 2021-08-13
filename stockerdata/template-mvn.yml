@@ -6,7 +6,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: load-all-stock-symbols
-      CodeUri: s3://gram-deploy/stocker-data-1.0.jar
+      CodeUri:
       Handler: com.stocker.data.controller.ScheduleStocksRequestHandler::handleRequest
       Runtime: java8
       Description: Get list of all available symbols
@@ -25,7 +25,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: save-company-information
-      CodeUri: s3://gram-deploy/stocker-data-1.0.jar
+      CodeUri:
       Handler: com.stocker.data.controller.SaveCompanyHandler::handleRequest
       Runtime: java8
       Description: Save company object to dynamoDB
@@ -44,10 +44,48 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: yahoo-stock-parser
-      CodeUri: s3://gram-deploy/stocker-data-1.0.jar
+      CodeUri:
       Handler: com.stocker.yahoo.parser.YahooParserHandler::handleRequest
       Runtime: java8
       Description: Get stock history data from Yahoo API
+      MemorySize: 512
+      Timeout: 60
+      Role:
+        Fn::GetAtt: StockerDataApplicationRole.Arn
+      # Function's execution role
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+      Tracing: Active
+  LoadDailyStockFields:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: load-daily-stock-fields
+      CodeUri:
+      Handler: com.stocker.data.controller.LoadDailyStockFieldsHandler::handleRequest
+      Runtime: java8
+      Description: Load daily stock information from dynamodb
+      MemorySize: 512
+      Timeout: 60
+      Role:
+        Fn::GetAtt: StockerDataApplicationRole.Arn
+      # Function's execution role
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+      Tracing: Active
+  UpdateDailyFields:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: update-daily-stock-fields
+      CodeUri:
+      Handler: com.stocker.data.controller.UpdateDailyStockFieldsHandler::handleRequest
+      Runtime: java8
+      Description: Update daily stock information from dynamodb
       MemorySize: 512
       Timeout: 60
       Role:
@@ -125,6 +163,65 @@ Resources:
               saveStock: !GetAtt [ SaveCompany, Arn ],
               yahooParser: !GetAtt [ YahooParser, Arn ]
             }
+      RoleArn: arn:aws:iam::244092297712:role/service-role/StepFunctions-Update-All-Stocks-Yahoo-role-1e15a242
+      Tags:
+        - Key: "Name"
+          Value: "Stocker"
+  UpdateDailyFieldsForAllStocks:
+    Type: AWS::StepFunctions::StateMachine
+    Properties:
+      StateMachineName: Update-All-Daily-Fields-For-Stocks
+      LoggingConfiguration:
+        Destinations:
+          - CloudWatchLogsLogGroup:
+              LogGroupArn: arn:aws:logs:us-west-2:244092297712:log-group:stocker-data-yahoo-parser-pipeline:*
+        IncludeExecutionData: True
+        Level: ALL
+      DefinitionString:
+        !Sub
+        - |-
+          {
+            "StartAt": "Load stocks for update",
+            "States": {
+              "Load stocks for update": {
+                "Type": "Task",
+                "Resource": "${loadAllStocksArn}",
+                "Next": "Update daily field for stock"
+              },
+              "Update daily field for stock": {
+                "Type": "Map",
+                "InputPath": "$.stocks",
+                "MaxConcurrency": 0,
+                "Iterator": {
+                  "StartAt": "Load daily fields for stock",
+                  "States": {
+                    "Load daily fields for stock": {
+                      "Type": "Task",
+                      "Resource": "${loadDailyStockFields}",
+                      "Next": "Update daily fields"
+                    },
+                    "Update daily fields": {
+                      "Type": "Task",
+                      "Resource": "${updateDailyFields}",
+                      "Next": "Save Stock"
+                    },
+                    "Save Stock": {
+                      "Type": "Task",
+                      "Resource": "${saveStock}",
+                      "End": true
+                    }
+                  }
+                },
+                "End": true
+              }
+            }
+          }
+        - {
+          loadAllStocksArn: !GetAtt [ LoadAllStockSymbols, Arn ],
+          saveStock: !GetAtt [ SaveCompany, Arn ],
+          loadDailyStockFields: !GetAtt [ LoadDailyStockFields, Arn ],
+          updateDailyFields: !GetAtt [ UpdateDailyFields, Arn ]
+        }
       RoleArn: arn:aws:iam::244092297712:role/service-role/StepFunctions-Update-All-Stocks-Yahoo-role-1e15a242
       Tags:
         - Key: "Name"

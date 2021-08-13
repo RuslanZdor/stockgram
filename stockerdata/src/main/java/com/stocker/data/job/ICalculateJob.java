@@ -1,4 +1,4 @@
-package com.stocker.yahoo.spring.job;
+package com.stocker.data.job;
 
 import com.stocker.yahoo.data.Company;
 

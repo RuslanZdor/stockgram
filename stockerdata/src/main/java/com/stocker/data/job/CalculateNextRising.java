@@ -1,4 +1,4 @@
-package com.stocker.yahoo.spring.job;
+package com.stocker.data.job;
 
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.data.Day;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Slf4j
-public class CalculateRising implements ICalculateJob {
+public class CalculateNextRising implements ICalculateJob {
 
     public void calculate(Company company) {
         Objects.requireNonNull(company, "Company cannot be null");
@@ -19,7 +19,7 @@ public class CalculateRising implements ICalculateJob {
             List<Day> tail = new ArrayList<>(company.getDays().headSet(day));
             Collections.reverse(tail);
             if (!tail.isEmpty()) {
-                day.setRising(day.getPrice() > tail.get(0).getPrice());
+                tail.get(0).setNextRise(day.getPrice() > tail.get(0).getPrice());
             }
         });
     }

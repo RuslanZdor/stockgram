@@ -5,7 +5,6 @@ import com.stocker.yahoo.data.CompanyStats;
 import com.stocker.yahoo.data.Day;
 import com.stocker.yahoo.data.Dividend;
 import com.stocker.yahoo.exception.NoDayException;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
@@ -14,12 +13,13 @@ import yahoofinance.histquotes.Interval;
 import yahoofinance.histquotes2.HistoricalDividend;
 import yahoofinance.quotes.stock.StockStats;
 
+import javax.inject.Singleton;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
 @Slf4j
-@RequiredArgsConstructor
+@Singleton
 public class DownloadHistoricalData {
 
     public Company download(com.stocker.yahoo.data.Stock stock) throws NoDayException {

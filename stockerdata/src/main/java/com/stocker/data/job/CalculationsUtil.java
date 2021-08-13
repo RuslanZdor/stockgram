@@ -1,10 +1,12 @@
-package com.stocker.yahoo.spring.job;
+package com.stocker.data.job;
 
 import lombok.extern.slf4j.Slf4j;
 
+import javax.inject.Singleton;
 import java.util.Set;
 
 @Slf4j
+@Singleton
 class CalculationsUtil {
 
     private CalculationsUtil() {
