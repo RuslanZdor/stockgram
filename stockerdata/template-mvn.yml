@@ -8,7 +8,7 @@ Resources:
       FunctionName: load-all-stock-symbols
       CodeUri: target/stocker-data-1.0.jar
       Handler: com.stocker.data.controller.ScheduleStocksRequestHandler::handleRequest
-      Runtime: java8
+      Runtime: java11
       Description: Get list of all available company symbols
       MemorySize: 512
       Timeout: 60
@@ -27,7 +27,7 @@ Resources:
       FunctionName: save-company-information
       CodeUri: target/stocker-data-1.0.jar
       Handler: com.stocker.data.controller.SaveCompanyHandler::handleRequest
-      Runtime: java8
+      Runtime: java11
       Description: Save company object to dynamoDB
       MemorySize: 512
       Timeout: 60
@@ -46,7 +46,7 @@ Resources:
       FunctionName: yahoo-stock-parser
       CodeUri: target/stocker-data-1.0.jar
       Handler: com.stocker.yahoo.parser.YahooParserHandler::handleRequest
-      Runtime: java8
+      Runtime: java11
       Description: Get stock history data from Yahoo API
       MemorySize: 512
       Timeout: 60
@@ -65,7 +65,7 @@ Resources:
       FunctionName: load-daily-stock-fields
       CodeUri: target/stocker-data-1.0.jar
       Handler: com.stocker.data.controller.LoadDailyStockFieldsHandler::handleRequest
-      Runtime: java8
+      Runtime: java11
       Description: Load daily stock information from dynamodb
       MemorySize: 512
       Timeout: 60
@@ -84,7 +84,7 @@ Resources:
       FunctionName: update-daily-stock-fields
       CodeUri: target/stocker-data-1.0.jar
       Handler: com.stocker.data.controller.UpdateDailyStockFieldsHandler::handleRequest
-      Runtime: java8
+      Runtime: java11
       Description: Update daily stock information from dynamodb
       MemorySize: 512
       Timeout: 60

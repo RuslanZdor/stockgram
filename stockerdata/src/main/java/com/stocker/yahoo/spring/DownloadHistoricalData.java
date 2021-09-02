@@ -23,12 +23,14 @@ import java.util.List;
 public class DownloadHistoricalData {
 
     public Company download(com.stocker.yahoo.data.Stock stock) throws NoDayException {
+        log.info(String.format("Load last year data for %s", stock.getSymbol()));
         Calendar yearAgo =  Calendar.getInstance();
         yearAgo.add(Calendar.YEAR, -1);
         return download(stock, yearAgo);
     }
 
     public Company download(com.stocker.yahoo.data.Stock stock, Day lastDay) throws NoDayException {
+        log.info(String.format("Load data for %s starting from %s", stock.getSymbol(), lastDay.getDate()));
         Calendar lastDayCalendar =  Calendar.getInstance();
         lastDayCalendar.setTimeInMillis(lastDay.getDate());
         return download(stock, lastDayCalendar);
