@@ -9,7 +9,7 @@ Resources:
       CodeUri:
       Handler: com.stocker.data.controller.ScheduleStocksRequestHandler::handleRequest
       Runtime: java8
-      Description: Get list of all available symbols
+      Description: Get list of all available company symbols
       MemorySize: 512
       Timeout: 60
       Role:
