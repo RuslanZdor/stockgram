@@ -20,7 +20,7 @@ import java.util.Optional;
  */
 @Slf4j
 @AllArgsConstructor
-public class YahooParserHandler implements RequestHandler<Stock, Company> {
+public class YahooParserHandler implements RequestHandler<Stock, String> {
 
     private final DayDAO dayDAO;
     private final DownloadHistoricalData downloadHistoricalData;
@@ -59,9 +59,9 @@ public class YahooParserHandler implements RequestHandler<Stock, Company> {
 //    }
 //
 
-    public Company handleRequest(Stock stock, Context context) {
+    public String handleRequest(Stock stock, Context context) {
         log.info(String.format("Update all data for company %s", stock.getSymbol()));
-        Company company = new Company();
+        Company company;
         try {
             Optional<Day> day = dayDAO.findLastStockDay(stock);
             if (day.isPresent()) {
@@ -69,6 +69,7 @@ public class YahooParserHandler implements RequestHandler<Stock, Company> {
             } else {
                 company = downloadHistoricalData.download(stock);
             }
+            company.getDays().forEach(dayDAO::save);
 //            allUpdates(company);
 //            companyRepository.save(company).subscribe(comp -> {
 //                log.info(String.format("id %s", comp.getId()));
@@ -77,7 +78,7 @@ public class YahooParserHandler implements RequestHandler<Stock, Company> {
         } catch (NoDayException e) {
             log.error("Company hasn't historical information", e);
         }
-        return company;
+        return "SUCCESS";
     }
 
     private void allUpdates(Company company) {
