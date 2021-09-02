@@ -11,4 +11,11 @@ import java.util.List;
 @Data
 public class StockList {
     private List<Stock> stocks;
+
+    public String toString() {
+        if (stocks == null) {
+            return "null";
+        }
+        return stocks.toString();
+    }
 }

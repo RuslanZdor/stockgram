@@ -34,6 +34,7 @@ public class ScheduleStocksRequestHandler implements RequestHandler<Object, Stoc
     public StockList handleRequest(Object request, Context context) {
         StockList stocks = new StockList();
         stocks.setStocks(stockDAO.getAllStocks());
+        log.info(String.format("Found stocks for update %s", stocks));
         return stocks;
     }
 

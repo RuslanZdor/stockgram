@@ -83,7 +83,7 @@ Resources:
     Properties:
       FunctionName: update-daily-stock-fields
       CodeUri: target/stocker-data-1.0.jar
-      Handler: com.stocker.data.controller.UpdateDailyStockFieldsHandler::handleRequest
+      Handler: com.stocker.data.controller.UpdateDailyFieldsHandler::handleRequest
       Runtime: java11
       Description: Update daily stock information from dynamodb
       MemorySize: 512
