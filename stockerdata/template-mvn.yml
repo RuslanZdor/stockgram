@@ -6,7 +6,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: load-all-stock-symbols
-      CodeUri:
+      CodeUri: target/stocker-data-1.0.jar
       Handler: com.stocker.data.controller.ScheduleStocksRequestHandler::handleRequest
       Runtime: java8
       Description: Get list of all available company symbols
@@ -25,7 +25,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: save-company-information
-      CodeUri:
+      CodeUri: target/stocker-data-1.0.jar
       Handler: com.stocker.data.controller.SaveCompanyHandler::handleRequest
       Runtime: java8
       Description: Save company object to dynamoDB
@@ -44,7 +44,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: yahoo-stock-parser
-      CodeUri:
+      CodeUri: target/stocker-data-1.0.jar
       Handler: com.stocker.yahoo.parser.YahooParserHandler::handleRequest
       Runtime: java8
       Description: Get stock history data from Yahoo API
@@ -63,7 +63,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: load-daily-stock-fields
-      CodeUri:
+      CodeUri: target/stocker-data-1.0.jar
       Handler: com.stocker.data.controller.LoadDailyStockFieldsHandler::handleRequest
       Runtime: java8
       Description: Load daily stock information from dynamodb
@@ -82,7 +82,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: update-daily-stock-fields
-      CodeUri:
+      CodeUri: target/stocker-data-1.0.jar
       Handler: com.stocker.data.controller.UpdateDailyStockFieldsHandler::handleRequest
       Runtime: java8
       Description: Update daily stock information from dynamodb
