@@ -13,6 +13,7 @@ public class Stock {
 
     private String symbol;
     private String name;
+    private String sector;
 
 
     @DynamoDBHashKey(attributeName="symbol")
@@ -31,5 +32,14 @@ public class Stock {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @DynamoDBAttribute(attributeName="sector")
+    public String getSector() {
+        return sector;
+    }
+
+    public void setSector(String sector) {
+        this.sector = name;
     }
 }
