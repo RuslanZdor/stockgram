@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  */
 public class CalculateAverageVolume implements ICalculateJob {
     public void calculate(Company company) {
-        company.getDays().stream().filter(day -> day.getAverageVolume200() == 0).forEach(day -> {
+        company.getDays().stream().filter(day -> !day.isFinished()).filter(day -> day.getAverageVolume200() == 0).forEach(day -> {
             Day searchDay = new Day(day.getDate());
 
             Day nextDay = new Day(new Date(2020, Calendar.NOVEMBER, 21).getTime());

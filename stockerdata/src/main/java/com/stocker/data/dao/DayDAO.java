@@ -46,8 +46,7 @@ public class DayDAO {
 
         DynamoDBQueryExpression<Day> queryExpression = new DynamoDBQueryExpression<Day>()
                 .withKeyConditionExpression("symbol = :symbol")
-                .withExpressionAttributeValues(eav)
-                .withLimit(300);
+                .withExpressionAttributeValues(eav);
 
         return mapper.query(Day.class, queryExpression);
     }

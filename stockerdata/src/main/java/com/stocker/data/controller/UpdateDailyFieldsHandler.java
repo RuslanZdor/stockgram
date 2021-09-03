@@ -36,7 +36,10 @@ public class UpdateDailyFieldsHandler implements RequestHandler<Stock, String> {
         Company company = new Company();
         company.setDays(new TreeSet<>(dayDAO.findLastYearData(stock.getSymbol())));
         allUpdates(company);
-        company.getDays().forEach(dayDAO::save);
+        company.getDays().forEach(day -> {
+            day.setFinished(true);
+            dayDAO.save(day);
+        });
         return "SUCCESS";
     }
 

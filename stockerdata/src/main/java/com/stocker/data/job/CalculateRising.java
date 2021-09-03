@@ -15,7 +15,7 @@ public class CalculateRising implements ICalculateJob {
     public void calculate(Company company) {
         Objects.requireNonNull(company, "Company cannot be null");
 
-        company.getDays().forEach(day -> {
+        company.getDays().stream().filter(day -> !day.isFinished()).forEach(day -> {
             List<Day> tail = new ArrayList<>(company.getDays().headSet(day));
             Collections.reverse(tail);
             if (!tail.isEmpty()) {
