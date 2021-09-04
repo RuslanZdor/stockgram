@@ -5,7 +5,6 @@ import org.junit.Test;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.NoSuchElementException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -14,23 +13,26 @@ public class CompanyTest {
     @Test
     public void getExistsDay() {
         Company company = new Company();
-        company.getDays().add(new Day(new Date(2020, Calendar.NOVEMBER, 20).getTime()));
         company.getDays().add(new Day(new Date(2020, Calendar.NOVEMBER, 19).getTime()));
+        company.getDays().add(new Day(new Date(2020, Calendar.NOVEMBER, 20).getTime()));
 
-        assertEquals("If day is exist in list - it should be returned", new Day(new Date(2020, Calendar.NOVEMBER, 20).getTime()), company.getDay(new Day(new Date(2020, Calendar.NOVEMBER, 20).getTime())));
+        assertEquals("If day is exist in list - it should be returned",
+                new Day(new Date(2020, Calendar.NOVEMBER, 20).getTime()),
+                company.getDay(new Day(new Date(2020, Calendar.NOVEMBER, 20).getTime())));
     }
 
     @Test
     public void getNotExistsDay() {
         Company company = new Company();
-        company.getDays().add(new Day(new Date(2020, Calendar.NOVEMBER, 20).getTime()));
         company.getDays().add(new Day(new Date(2020, Calendar.NOVEMBER, 19).getTime()));
+        company.getDays().add(new Day(new Date(2020, Calendar.NOVEMBER, 20).getTime()));
 
-        assertEquals("If day is not exist - it should return first day from list", new Day(new Date(2020, Calendar.NOVEMBER, 19).getTime()),
+        assertEquals("If day is not exist - it should return first day from list",
+                new Day(new Date(2020, Calendar.NOVEMBER, 19).getTime()),
                 company.getDay(new Day(new Date(2020, Calendar.NOVEMBER, 21).getTime())));
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test(expected = IndexOutOfBoundsException.class)
     public void getEmptyDayList() {
         Company company = new Company();
         company.getDay(new Day(LocalDate.now().toEpochDay()));

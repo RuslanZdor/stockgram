@@ -38,7 +38,7 @@
 <!--        <module>stocker-yahoo-parser</module>-->
 <!--        <module>chart</module>-->
 <!--        <module>weka-service</module>-->
-<!--        <module>strategic-service</module>&ndash;&gt;-->
+<!--        <module>strategic-service</module>-->
     </modules>
 
     <dependencies>

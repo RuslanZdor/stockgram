@@ -11,8 +11,6 @@ import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.data.Stock;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.TreeSet;
-
 /**
  * Update all daily fields for company object
  */
@@ -34,7 +32,7 @@ public class UpdateDailyFieldsHandler implements RequestHandler<Stock, String> {
     public String handleRequest(Stock stock, Context context) {
         log.info(String.format("Update daily fields for company %s", stock.getSymbol()));
         Company company = new Company();
-        company.setDays(new TreeSet<>(dayDAO.findLastYearData(stock.getSymbol())));
+        company.setDays(dayDAO.findLastYearData(stock.getSymbol()));
         allUpdates(company);
         company.getDays().forEach(day -> {
             day.setFinished(true);

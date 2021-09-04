@@ -8,8 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.NavigableSet;
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -32,9 +32,9 @@ public class Company {
     private CompanyStats companyStats;
 
     @DynamoDBAttribute(attributeName="days")
-    private NavigableSet<Day> days = new TreeSet<>();
+    private List<Day> days = new ArrayList<>();
     @DynamoDBAttribute(attributeName="dividends")
-    private NavigableSet<Dividend> dividends = new TreeSet<>();
+    private List<Dividend> dividends = new ArrayList<>();
 
     /**
      * return day with the same date as in parameter
@@ -44,7 +44,8 @@ public class Company {
      * @return founded or created day
      */
     public Day getDay(Day day) {
-        return days.stream().filter(fDay -> fDay.getDate() == day.getDate()).findFirst().orElse(getDays().first());
+        return days.stream().filter(fDay -> fDay.getDate() == day.getDate())
+                .findFirst().orElse(days.get(0));
     }
 
     /**
