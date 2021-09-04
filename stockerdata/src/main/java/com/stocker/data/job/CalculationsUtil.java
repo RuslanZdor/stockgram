@@ -20,13 +20,14 @@ class CalculationsUtil {
      * Calculate Simple Movement Average for List of Days
      * @param days for calculation
      */
-    public static void calculateSMA(List<Day> days, int size, UpdateDay update) {
+    public static void calculateSMA(List<Day> days, int size, GetDoubleValue getter, UpdateDay update) {
         if (size > 0) {
             Queue<Double> currentQueue = new LinkedList<>();
             double results = 0;
             for (Day day : days) {
-                results += day.getPrice();
-                currentQueue.add(day.getPrice());
+                double value = getter.get(day);
+                results += value;
+                currentQueue.add(value);
                 if (currentQueue.size() > size) {
                     results -= currentQueue.poll();
                 }
@@ -39,6 +40,10 @@ class CalculationsUtil {
 
     public interface UpdateDay {
         void set(Day day, double value);
+    }
+
+    public interface GetDoubleValue {
+        double get(Day day);
     }
 
     /**

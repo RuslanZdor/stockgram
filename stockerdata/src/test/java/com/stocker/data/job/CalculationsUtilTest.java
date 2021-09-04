@@ -22,7 +22,7 @@ public class CalculationsUtilTest {
             days.add(day);
         }
 
-        CalculationsUtil.calculateSMA(days, 5, Day::setSMA5);
+        CalculationsUtil.calculateSMA(days, 5, Day::getPrice, Day::setSMA5);
         assertEquals(2, days.get(4).getSMA5(), 0.1);
     }
 
