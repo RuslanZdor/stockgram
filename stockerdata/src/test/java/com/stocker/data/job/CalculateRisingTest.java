@@ -8,11 +8,11 @@ import org.junit.Test;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+import static org.junit.Assert.assertTrue;
+
 public class CalculateRisingTest {
 
     private CalculateRising calculateRising;
-
-    private Company company;
 
     @Before
     public void init() {
@@ -21,7 +21,7 @@ public class CalculateRisingTest {
 
     @Test
     public void calculateRising() {
-        company = new Company();
+        Company company = new Company();
         for (int i = 1; i <= 2; i++) {
             Day day = new Day(LocalDate.now().plus(i, ChronoUnit.DAYS).toEpochDay());
             day.setPrice(i);
@@ -29,6 +29,6 @@ public class CalculateRisingTest {
         }
 
         calculateRising.calculate(company);
-//        assertTrue(company.getDays().last().isRising());
+        assertTrue(company.getDays().get(1).isRising());
     }
 }
