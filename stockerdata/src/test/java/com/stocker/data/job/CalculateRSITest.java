@@ -8,6 +8,8 @@ import org.junit.Test;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+import static org.junit.Assert.assertTrue;
+
 public class CalculateRSITest {
 
     private CalculateRSI rsi;
@@ -32,7 +34,7 @@ public class CalculateRSITest {
         company.getDays().add(day);
 
         rsi.calculate(company);
-//        assertTrue(company.getDays().last().getRSI200() > 0.5);
+        assertTrue(company.getDays().get(30).getRSI200() > 0.5);
     }
 
     @Test
@@ -45,6 +47,6 @@ public class CalculateRSITest {
         }
 
         rsi.calculate(company);
-//        assertTrue(company.getDays().last().getRSI200() < 0.5);
+        assertTrue(company.getDays().get(30).getRSI200() < 0.5);
     }
 }

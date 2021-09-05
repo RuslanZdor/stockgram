@@ -38,12 +38,42 @@ class CalculationsUtil {
         }
     }
 
+    /**
+     * Calculate Simple Movement Average for List of Days
+     * @param days for calculation
+     */
+    public static void calculateRSIMovement(List<Day> days, int size, GetRSIValue calculation, UpdateDay update) {
+        if (size > 0) {
+            Queue<Double> currentQueue = new LinkedList<>();
+            double results = 0.0;
+            double prevDayPrice = 0.0;
+            for (Day day : days) {
+                double value = day.getPrice();
+                if (prevDayPrice != 0.0) {
+                    results += calculation.get(day, prevDayPrice);
+                    currentQueue.add(value);
+                    if (currentQueue.size() > size) {
+                        results -= currentQueue.poll();
+                    }
+                    if (!day.isFinished()) {
+                        update.set(day, results / Math.min(size, currentQueue.size()));
+                    }
+                }
+                prevDayPrice = value;
+            }
+        }
+    }
+
     public interface UpdateDay {
         void set(Day day, double value);
     }
 
     public interface GetDoubleValue {
         double get(Day day);
+    }
+
+    public interface GetRSIValue {
+        double get(Day day, double prevValue);
     }
 
     /**
@@ -70,7 +100,6 @@ class CalculationsUtil {
                 prevDayValue = results;
             }
         }
-
     }
 
 }

@@ -6,9 +6,6 @@ import org.junit.Test;
 @Slf4j
 public class CalculateRSIIT {
 
-//    @Autowired
-//    private CompanyRepository companyRepository;
-
     private CalculateRSI calculateRSI;
 
     @Test
