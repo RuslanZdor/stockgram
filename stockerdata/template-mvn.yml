@@ -202,11 +202,11 @@ Resources:
                       "Type": "Task",
                       "Resource": "${yahooParser}",
                       "Next": "Update daily field for stock"
-                    },{
-                    "Update daily field for stock": {
-                      "Type": "Task",
-                      "Resource": "${updateDailyFields}",
-                      "End": true
+                    },
+                      "Update daily field for stock": {
+                        "Type": "Task",
+                        "Resource": "${updateDailyFields}",
+                        "End": true
                     }
                   }
                 },
