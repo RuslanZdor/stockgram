@@ -191,4 +191,4 @@ Resources:
           AttributeName: "name"
           KeyType: "RANGE"
       BillingMode: PAY_PER_REQUEST
-      TableName: "Stock"
+      TableName: "Stock1"
