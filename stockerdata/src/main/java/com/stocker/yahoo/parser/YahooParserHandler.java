@@ -20,7 +20,7 @@ import java.util.Optional;
  */
 @Slf4j
 @AllArgsConstructor
-public class YahooParserHandler implements RequestHandler<Stock, String> {
+public class YahooParserHandler implements RequestHandler<Stock, Stock> {
 
     private final DayDAO dayDAO;
     private final DownloadHistoricalData downloadHistoricalData;
@@ -34,32 +34,7 @@ public class YahooParserHandler implements RequestHandler<Stock, String> {
         dayDAO = injector.getInstance(DayDAO.class);
     }
 
-
-//    @GetMapping("/manager/reloadStocks")
-//    public void reloadStocks() {
-//        companyRepository.findAll().subscribe(company -> {
-//            try {
-//                downloadHistoricalData.download(company);
-//                allUpdates(company);
-//                companyRepository.save(company).block();
-//            } catch (NoDayException e) {
-//                log.error("no historical data", e);
-//                log.info(String.format("removing company %s", company.getSymbol()));
-//            }
-//        });
-//    }
-//
-////    @GetMapping("/manager/refreshStocks")
-//    public void refreshStocks() {
-//        companyRepository.findAll().subscribe(company -> {
-//            log.info(String.format("Update company %s", company.getSymbol()));
-//            allUpdates(company);
-//            companyRepository.save(company).block();
-//        });
-//    }
-//
-
-    public String handleRequest(Stock stock, Context context) {
+    public Stock handleRequest(Stock stock, Context context) {
         log.info(String.format("Update all data for company %s", stock.getSymbol()));
         Company company;
         try {
@@ -70,19 +45,9 @@ public class YahooParserHandler implements RequestHandler<Stock, String> {
                 company = downloadHistoricalData.download(stock);
             }
             company.getDays().forEach(dayDAO::save);
-//            allUpdates(company);
-//            companyRepository.save(company).subscribe(comp -> {
-//                log.info(String.format("id %s", comp.getId()));
-//                log.info(String.format("Saved new value %s", comp.getDays().size()));
-//            });
         } catch (NoDayException e) {
             log.error("Company hasn't historical information", e);
         }
-        return "SUCCESS";
-    }
-
-    private void allUpdates(Company company) {
-        log.info(String.format("Calculate new values for %s", company.getName()));
-//        calculateAllFields.calculate(company);
+        return stock;
     }
 }

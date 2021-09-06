@@ -170,6 +170,67 @@ Resources:
       Tags:
         - Key: "Name"
           Value: "Stocker"
+  UpdateAllStocksWithCalculation:
+    Type: AWS::StepFunctions::StateMachine
+    Properties:
+      StateMachineName: Daily-Download-and-update-all-stocks
+      LoggingConfiguration:
+        Destinations:
+          - CloudWatchLogsLogGroup:
+              LogGroupArn: arn:aws:logs:us-west-2:244092297712:log-group:stocker-data-yahoo-parser-pipeline:*
+        IncludeExecutionData: True
+        Level: ALL
+      DefinitionString:
+        !Sub
+        - |-
+          {
+            "StartAt": "Load stocks for update",
+            "States": {
+              "Load stocks for update": {
+                "Type": "Task",
+                "Resource": "${loadAllStocksArn}",
+                "Next": "Download stocks data"
+              },
+              "Download stocks data": {
+                "Type": "Map",
+                "InputPath": "$.stocks",
+                "MaxConcurrency": 0,
+                "Iterator": {
+                  "StartAt": "Yahoo Parser",
+                  "States": {
+                    "Yahoo Parser": {
+                      "Type": "Task",
+                      "Resource": "${yahooParser}",
+                      "Next": "Update daily field for stock"
+                    }
+                  }
+                },
+                "End": true
+              },
+              "Update daily field for stock": {
+                "Type": "Map",
+                "InputPath": "$.stocks",
+                "MaxConcurrency": 0,
+                "Iterator": {
+                  "StartAt": "Update daily fields",
+                  "States": {
+                    "Update daily fields": {
+                      "Type": "Task",
+                      "Resource": "${updateDailyFields}",
+                      "End": true
+                    }
+                  }
+                }
+            }
+          }
+        - {
+          loadAllStocksArn: !GetAtt [ LoadAllStockSymbols, Arn ],
+          yahooParser: !GetAtt [ YahooParser, Arn ]
+        }
+      RoleArn: arn:aws:iam::244092297712:role/service-role/StepFunctions-Update-All-Stocks-Yahoo-role-1e15a242
+      Tags:
+        - Key: "Name"
+          Value: "Stocker"
   StockDynamoDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
