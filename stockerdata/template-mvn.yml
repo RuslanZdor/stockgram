@@ -202,26 +202,16 @@ Resources:
                       "Type": "Task",
                       "Resource": "${yahooParser}",
                       "Next": "Update daily field for stock"
-                    }
-                  }
-                },
-                "End": true
-              },
-              "Update daily field for stock": {
-                "Type": "Map",
-                "InputPath": "$.stocks",
-                "MaxConcurrency": 0,
-                "Iterator": {
-                  "StartAt": "Update daily fields",
-                  "States": {
-                    "Update daily fields": {
+                    },{
+                    "Update daily field for stock": {
                       "Type": "Task",
                       "Resource": "${updateDailyFields}",
                       "End": true
                     }
                   }
-                }
-            }
+                },
+                "End": true
+              }
           }
         - {
           loadAllStocksArn: !GetAtt [ LoadAllStockSymbols, Arn ],
