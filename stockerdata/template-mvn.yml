@@ -170,3 +170,25 @@ Resources:
       Tags:
         - Key: "Name"
           Value: "Stocker"
+  StockDynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        -
+          AttributeName: "symbol"
+          AttributeType: "S"
+        -
+          AttributeName: "name"
+          AttributeType: "S"
+        -
+          AttributeName: "sector"
+          AttributeType: "S"
+      KeySchema:
+        -
+          AttributeName: "symbol"
+          KeyType: "HASH"
+        -
+          AttributeName: "name"
+          KeyType: "RANGE"
+      BillingMode: PAY_PER_REQUEST
+      TableName: "Stock"
