@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@DynamoDBTable(tableName="StockDailyValues")
+@DynamoDBTable(tableName="stock_daily_values")
 public class Day implements Comparable<Day>{
 
     @DynamoDBHashKey(attributeName="symbol")

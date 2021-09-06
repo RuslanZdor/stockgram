@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@DynamoDBTable(tableName="Stock")
+@DynamoDBTable(tableName="stock")
 public class Stock {
 
     private String symbol;
