@@ -180,9 +180,6 @@ Resources:
         -
           AttributeName: "name"
           AttributeType: "S"
-        -
-          AttributeName: "sector"
-          AttributeType: "S"
       KeySchema:
         -
           AttributeName: "symbol"
@@ -191,4 +188,4 @@ Resources:
           AttributeName: "name"
           KeyType: "RANGE"
       BillingMode: PAY_PER_REQUEST
-      TableName: "Stock1"
+      TableName: "Stock"
