@@ -225,7 +225,8 @@ Resources:
           }
         - {
           loadAllStocksArn: !GetAtt [ LoadAllStockSymbols, Arn ],
-          yahooParser: !GetAtt [ YahooParser, Arn ]
+          yahooParser: !GetAtt [ YahooParser, Arn ],
+          updateDailyFields: !GetAtt [ UpdateDailyFields, Arn ]
         }
       RoleArn: arn:aws:iam::244092297712:role/service-role/StepFunctions-Update-All-Stocks-Yahoo-role-1e15a242
       Tags:
