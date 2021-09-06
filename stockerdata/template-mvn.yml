@@ -212,6 +212,7 @@ Resources:
                 },
                 "End": true
               }
+            }
           }
         - {
           loadAllStocksArn: !GetAtt [ LoadAllStockSymbols, Arn ],
