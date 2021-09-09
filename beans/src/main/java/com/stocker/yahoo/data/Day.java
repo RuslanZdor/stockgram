@@ -40,105 +40,93 @@ public class Day implements Comparable<Day>{
     private double openPrice;
     @DynamoDBAttribute(attributeName="close_price")
     private double closePrice;
-    @DynamoDBAttribute(attributeName="EMA5")
+    @DynamoDBAttribute(attributeName="ema_5")
     private double EMA5;
-    @DynamoDBAttribute(attributeName="EMA10")
+    @DynamoDBAttribute(attributeName="ema_10")
     private double EMA10;
-    @DynamoDBAttribute(attributeName="EMA20")
+    @DynamoDBAttribute(attributeName="ema_20")
     private double EMA20;
-    @DynamoDBAttribute(attributeName="EMA50")
+    @DynamoDBAttribute(attributeName="ema_50")
     private double EMA50;
-    @DynamoDBAttribute(attributeName="EMA200")
+    @DynamoDBAttribute(attributeName="ema_200")
     private double EMA200;
-    @DynamoDBAttribute(attributeName="SMA5")
+    @DynamoDBAttribute(attributeName="sma_5")
     private double SMA5;
-    @DynamoDBAttribute(attributeName="SMA10")
+    @DynamoDBAttribute(attributeName="sma_10")
     private double SMA10;
-    @DynamoDBAttribute(attributeName="SMA20")
+    @DynamoDBAttribute(attributeName="sma_20")
     private double SMA20;
-    @DynamoDBAttribute(attributeName="SMA50")
+    @DynamoDBAttribute(attributeName="sma_50")
     private double SMA50;
-    @DynamoDBAttribute(attributeName="SMA200")
+    @DynamoDBAttribute(attributeName="sma_200")
     private double SMA200;
-    @DynamoDBAttribute(attributeName="RSI5")
+    @DynamoDBAttribute(attributeName="rsi_5")
     private double RSI5;
-    @DynamoDBAttribute(attributeName="RSI10")
+    @DynamoDBAttribute(attributeName="rsi_10")
     private double RSI10;
-    @DynamoDBAttribute(attributeName="RSI20")
+    @DynamoDBAttribute(attributeName="rsi_20")
     private double RSI20;
-    @DynamoDBAttribute(attributeName="RSI50")
+    @DynamoDBAttribute(attributeName="rsi_50")
     private double RSI50;
-    @DynamoDBAttribute(attributeName="RSI200")
+    @DynamoDBAttribute(attributeName="rsi_200")
     private double RSI200;
-    @DynamoDBAttribute(attributeName="RSIGain5")
+    @DynamoDBAttribute(attributeName="rsi_gain_5")
     private double RSIGain5;
-    @DynamoDBAttribute(attributeName="RSIGain10")
+    @DynamoDBAttribute(attributeName="rsi_gain_10")
     private double RSIGain10;
-    @DynamoDBAttribute(attributeName="RSIGain20")
+    @DynamoDBAttribute(attributeName="rsi_gain_20")
     private double RSIGain20;
-    @DynamoDBAttribute(attributeName="RSIGain50")
+    @DynamoDBAttribute(attributeName="rsi_gain_50")
     private double RSIGain50;
-    @DynamoDBAttribute(attributeName="RSIGain200")
+    @DynamoDBAttribute(attributeName="rsi_gain_200")
     private double RSIGain200;
-    @DynamoDBAttribute(attributeName="RSILoss5")
+    @DynamoDBAttribute(attributeName="rsi_loss_5")
     private double RSILoss5;
-    @DynamoDBAttribute(attributeName="RSILoss10")
+    @DynamoDBAttribute(attributeName="rsi_loss_10")
     private double RSILoss10;
-    @DynamoDBAttribute(attributeName="RSILoss20")
+    @DynamoDBAttribute(attributeName="rsi_loss_20")
     private double RSILoss20;
-    @DynamoDBAttribute(attributeName="RSILoss50")
+    @DynamoDBAttribute(attributeName="rsi_loss_50")
     private double RSILoss50;
-    @DynamoDBAttribute(attributeName="RSILoss200")
+    @DynamoDBAttribute(attributeName="rsi_loss_200")
     private double RSILoss200;
-    @DynamoDBAttribute(attributeName="averageVolume5")
+    @DynamoDBAttribute(attributeName="average_volume_5")
     private double averageVolume5;
-    @DynamoDBAttribute(attributeName="averageVolume10")
+    @DynamoDBAttribute(attributeName="average_volume_10")
     private double averageVolume10;
-    @DynamoDBAttribute(attributeName="averageVolume20")
+    @DynamoDBAttribute(attributeName="average_volume_20")
     private double averageVolume20;
-    @DynamoDBAttribute(attributeName="averageVolume50")
+    @DynamoDBAttribute(attributeName="average_volume_50")
     private double averageVolume50;
-    @DynamoDBAttribute(attributeName="averageVolume200")
+    @DynamoDBAttribute(attributeName="average_volume_200")
     private double averageVolume200;
-    @DynamoDBAttribute(attributeName="VOL5")
+    @DynamoDBAttribute(attributeName="vol_5")
     private double VOL5;
-    @DynamoDBAttribute(attributeName="VOL10")
+    @DynamoDBAttribute(attributeName="vol_10")
     private double VOL10;
-    @DynamoDBAttribute(attributeName="VOL20")
+    @DynamoDBAttribute(attributeName="vol_20")
     private double VOL20;
-    @DynamoDBAttribute(attributeName="VOL50")
+    @DynamoDBAttribute(attributeName="vol_50")
     private double VOL50;
-    @DynamoDBAttribute(attributeName="VOL200")
+    @DynamoDBAttribute(attributeName="vol_200")
     private double VOL200;
-    @DynamoDBAttribute(attributeName="moneyVolume")
-    private double moneyVolume;
-    @DynamoDBAttribute(attributeName="MVSMA5")
-    private double MVSMA5;
-    @DynamoDBAttribute(attributeName="MVSMA10")
-    private double MVSMA10;
-    @DynamoDBAttribute(attributeName="MVSMA20")
-    private double MVSMA20;
-    @DynamoDBAttribute(attributeName="MVSMA50")
-    private double MVSMA50;
-    @DynamoDBAttribute(attributeName="MVSMA200")
-    private double MVSMA200;
-    @DynamoDBAttribute(attributeName="thrustDirection")
+    @DynamoDBAttribute(attributeName="thrust_direction")
     private int thrustDirection;
-    @DynamoDBAttribute(attributeName="thrustFiveEMA")
+    @DynamoDBAttribute(attributeName="thrust_five_ema")
     private double thrustFiveEMA;
-    @DynamoDBAttribute(attributeName="thrustThirtyEMA")
+    @DynamoDBAttribute(attributeName="thrust_thirty_ema")
     private double thrustThirtyEMA;
-    @DynamoDBAttribute(attributeName="MACDLine")
+    @DynamoDBAttribute(attributeName="macd_line")
     private double MACDLine;
-    @DynamoDBAttribute(attributeName="MACDSignal")
+    @DynamoDBAttribute(attributeName="macd_signal")
     private double MACDSignal;
     @DynamoDBAttribute(attributeName="resistance")
     private double resistance;
     @DynamoDBAttribute(attributeName="support")
     private double support;
-    @DynamoDBAttribute(attributeName="isRising")
+    @DynamoDBAttribute(attributeName="is_rising")
     private boolean isRising = false;
-    @DynamoDBAttribute(attributeName="isNextRise")
+    @DynamoDBAttribute(attributeName="is_next_rise")
     private boolean isNextRise = false;
 
     public Day(long date) {
