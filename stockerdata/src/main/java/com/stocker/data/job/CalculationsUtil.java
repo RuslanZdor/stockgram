@@ -50,8 +50,9 @@ class CalculationsUtil {
             for (Day day : days) {
                 double value = day.getPrice();
                 if (prevDayPrice != 0.0) {
-                    results += calculation.get(day, prevDayPrice);
-                    currentQueue.add(value);
+                    double dailyValue = calculation.get(day, prevDayPrice);
+                    results += dailyValue;
+                    currentQueue.add(dailyValue);
                     if (currentQueue.size() > size) {
                         results -= currentQueue.poll();
                     }
