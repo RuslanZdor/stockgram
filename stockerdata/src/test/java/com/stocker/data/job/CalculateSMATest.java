@@ -1,5 +1,6 @@
 package com.stocker.data.job;
 
+import com.stocker.data.job.stock.CalculateSMA;
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.data.Day;
 import org.junit.Before;

@@ -110,12 +110,6 @@ public class Day implements Comparable<Day>{
     private double VOL50;
     @DynamoDBAttribute(attributeName="vol_200")
     private double VOL200;
-    @DynamoDBAttribute(attributeName="thrust_direction")
-    private int thrustDirection;
-    @DynamoDBAttribute(attributeName="thrust_five_ema")
-    private double thrustFiveEMA;
-    @DynamoDBAttribute(attributeName="thrust_thirty_ema")
-    private double thrustThirtyEMA;
     @DynamoDBAttribute(attributeName="macd_line")
     private double MACDLine;
     @DynamoDBAttribute(attributeName="macd_signal")

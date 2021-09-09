@@ -10,7 +10,7 @@ import java.util.Queue;
 
 @Slf4j
 @Singleton
-class CalculationsUtil {
+public class CalculationsUtil {
 
     private CalculationsUtil() {
 
@@ -81,7 +81,7 @@ class CalculationsUtil {
      * Calculate Exp. Movement Average for List of Days
      * @param days for calculation
      */
-    static void calculateEMA(List<Day> days, int size, UpdateDay update) {
+    public static void calculateEMA(List<Day> days, int size, UpdateDay update) {
         if (size > 0) {
             double prevDayValue = 0.0;
             double results;

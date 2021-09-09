@@ -1,5 +1,7 @@
-package com.stocker.data.job;
+package com.stocker.data.job.stock;
 
+import com.stocker.data.job.CalculationsUtil;
+import com.stocker.data.job.ICalculateJob;
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.data.Day;
 import lombok.extern.slf4j.Slf4j;

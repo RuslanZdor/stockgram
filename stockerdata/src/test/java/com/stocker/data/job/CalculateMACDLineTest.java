@@ -1,5 +1,7 @@
 package com.stocker.data.job;
 
+import com.stocker.data.job.stock.CalculateEMA;
+import com.stocker.data.job.stock.CalculateMACDLine;
 import com.stocker.yahoo.data.Company;
 import com.stocker.yahoo.data.Day;
 import org.junit.Test;

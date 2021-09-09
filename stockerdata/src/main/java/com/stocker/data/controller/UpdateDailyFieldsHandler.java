@@ -4,7 +4,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.inject.Injector;
 import com.stocker.data.dao.DayDAO;
-import com.stocker.data.job.CalculateAllFields;
+import com.stocker.data.job.stock.CalculateAllFields;
 import com.stocker.data.job.ICalculateJob;
 import com.stocker.data.module.DIFactory;
 import com.stocker.yahoo.data.Company;

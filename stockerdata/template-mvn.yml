@@ -223,6 +223,25 @@ Resources:
       Tags:
         - Key: "Name"
           Value: "Stocker"
+  UpdateDailyMarketFields:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: update-daily-market-fields
+      CodeUri: target/stocker-data-1.0.jar
+      Handler: com.stocker.data.controller.UpdateDailyMarketsHandler::handleRequest
+      Runtime: java8
+      Description: Update daily market information from dynamodb
+      MemorySize: 512
+      Timeout: 600
+      Role:
+        Fn::GetAtt: StockerDataApplicationRole.Arn
+      # Function's execution role
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+      Tracing: Active
   StockDynamoDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -255,3 +274,22 @@ Resources:
           KeyType: "RANGE"
       BillingMode: PAY_PER_REQUEST
       TableName: "stock_daily_values"
+  MarketDailyValuesDynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        -
+          AttributeName: "symbol"
+          AttributeType: "S"
+        -
+          AttributeName: "date"
+          AttributeType: "N"
+      KeySchema:
+        -
+          AttributeName: "symbol"
+          KeyType: "HASH"
+        -
+          AttributeName: "date"
+          KeyType: "RANGE"
+      BillingMode: PAY_PER_REQUEST
+      TableName: "market_daily_values"

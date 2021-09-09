@@ -1,5 +1,6 @@
 package com.stocker.data.job;
 
+import com.stocker.data.job.stock.CalculateRSI;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 

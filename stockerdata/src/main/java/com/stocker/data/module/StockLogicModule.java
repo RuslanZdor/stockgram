@@ -3,6 +3,7 @@ package com.stocker.data.module;
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 import com.stocker.data.job.*;
+import com.stocker.data.job.stock.*;
 import com.stocker.yahoo.spring.DownloadHistoricalData;
 
 public class StockLogicModule extends AbstractModule {
