@@ -29,6 +29,6 @@ public class ScheduleStocksRequestHandlerTest {
     public void handleRequestVerifyStockList() {
         List<Stock> datasetList = Arrays.asList(new Stock(), new Stock());
         Mockito.when(stockDAO.getAllStocks()).thenReturn(datasetList);
-        assertEquals(datasetList.size(), handler.handleRequest(null, null).getStocks().size());
+        assertEquals(datasetList.size(), handler.handleRequest(null, null).size());
     }
 }

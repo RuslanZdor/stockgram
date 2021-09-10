@@ -126,7 +126,7 @@ Resources:
                 },
                 "Download All stocks": {
                   "Type": "Map",
-                  "InputPath": "$.stocks",
+                  "InputPath": "$",
                   "MaxConcurrency": 0,
                   "Iterator": {
                     "StartAt": "Yahoo Parser",
@@ -174,7 +174,7 @@ Resources:
               },
               "Update daily field for stock": {
                 "Type": "Map",
-                "InputPath": "$.stocks",
+                "InputPath": "$",
                 "MaxConcurrency": 0,
                 "Iterator": {
                   "StartAt": "Update daily fields",
@@ -253,7 +253,7 @@ Resources:
               },
               "Download stocks data": {
                 "Type": "Map",
-                "InputPath": "$.stocks",
+                "InputPath": "$",
                 "MaxConcurrency": 0,
                 "Iterator": {
                   "StartAt": "Yahoo Parser",
