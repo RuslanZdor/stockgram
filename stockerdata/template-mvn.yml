@@ -23,6 +23,26 @@ Resources:
         - AWSXrayWriteOnlyAccess
         - AWSLambdaVPCAccessExecutionRole
       Tracing: Active
+  # Load all markets from Stock table
+  LoadAllMarkets:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: load-all-stock-symbols
+      CodeUri: target/stocker-data-1.0.jar
+      Handler: com.stocker.data.controller.ScheduleMarketsRequestHandler::handleRequest
+      Runtime: java8
+      Description: Get list of all available markets
+      MemorySize: 512
+      Timeout: 60
+      Role:
+        Fn::GetAtt: StockerDataApplicationRole.Arn
+      # Function's execution role
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+      Tracing: Active
   # Download stock data from Yahoo
   YahooParser:
     Type: AWS::Serverless::Function
@@ -213,17 +233,34 @@ Resources:
         !Sub
         - |-
           {
-            "StartAt": "Update daily market fields",
+            "StartAt": "Load markets for update",
             "States": {
-              "Update daily market fields": {
+              "Load stocks for update": {
                 "Type": "Task",
-                "Resource": "${updateDailyMarketFields}",
+                "Resource": "${loadAllMarketsArn}",
+                "Next": "Update daily markets"
+              },
+              "Update daily markets": {
+                "Type": "Map",
+                "InputPath": "$",
+                "MaxConcurrency": 0,
+                "Iterator": {
+                  "StartAt": "Update daily market fields",
+                  "States": {
+                    "Update daily fields": {
+                      "Type": "Task",
+                      "Resource": "${updateDailyMarketFields}",
+                      "End": true
+                    }
+                  }
+                },
                 "End": true
               }
             }
           }
         - {
-          updateDailyMarketFields: !GetAtt [ UpdateDailyMarketFields, Arn ]
+          updateDailyMarketFields: !GetAtt [ UpdateDailyMarketFields, Arn ],
+          loadAllMarketsArn: !GetAtt [ LoadAllMarkets, Arn ]
         }
       RoleArn: arn:aws:iam::244092297712:role/service-role/StepFunctions-Update-All-Stocks-Yahoo-role-1e15a242
       Tags:
