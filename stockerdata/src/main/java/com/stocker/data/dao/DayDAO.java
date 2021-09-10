@@ -33,6 +33,8 @@ public class DayDAO {
                 .withExpressionAttributeValues(eav)
                 .withLimit(1);
 
+        queryExpression.setScanIndexForward(false);
+
         List<Day> latestReplies = mapper.query(Day.class, queryExpression);
         return latestReplies.stream().findFirst();
     }

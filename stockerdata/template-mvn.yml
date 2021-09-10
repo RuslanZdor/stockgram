@@ -2,6 +2,8 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 Description: An AWS Lambda application that calls the Lambda API.
 Resources:
+  # Lambda Functions
+  # Load all stocks from Stock table
   LoadAllStockSymbols:
     Type: AWS::Serverless::Function
     Properties:
@@ -21,6 +23,7 @@ Resources:
         - AWSXrayWriteOnlyAccess
         - AWSLambdaVPCAccessExecutionRole
       Tracing: Active
+  # Download stock data from Yahoo
   YahooParser:
     Type: AWS::Serverless::Function
     Properties:
@@ -40,6 +43,7 @@ Resources:
         - AWSXrayWriteOnlyAccess
         - AWSLambdaVPCAccessExecutionRole
       Tracing: Active
+  # Update daily fields for specific stock
   UpdateDailyFields:
     Type: AWS::Serverless::Function
     Properties:
@@ -59,6 +63,27 @@ Resources:
         - AWSXrayWriteOnlyAccess
         - AWSLambdaVPCAccessExecutionRole
       Tracing: Active
+  # Update market daily fields
+  UpdateDailyMarketFields:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: update-daily-market-fields
+      CodeUri: target/stocker-data-1.0.jar
+      Handler: com.stocker.data.controller.UpdateDailyMarketsHandler::handleRequest
+      Runtime: java8
+      Description: Update daily market  information from dynamodb
+      MemorySize: 512
+      Timeout: 600
+      Role:
+        Fn::GetAtt: StockerDataApplicationRole.Arn
+      # Function's execution role
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+      Tracing: Active
+  # Roles
   StockerDataApplicationRole:
     Type: 'AWS::IAM::Role'
     Properties:
@@ -76,6 +101,8 @@ Resources:
         - arn:aws:iam::244092297712:policy/stocker-data-dynamodb-policy
         - arn:aws:iam::244092297712:policy/stocker-data-step-functions
         - arn:aws:iam::244092297712:policy/service-role/AWSLambdaBasicExecutionRole-b8cef0c4-1121-440e-9f9f-cde9ea2fc412
+  # Step Functions
+  # Download new daily information for all stocks
   UpdateAllStocks:
     Type: AWS::StepFunctions::StateMachine
     Properties:
@@ -123,6 +150,7 @@ Resources:
       Tags:
         - Key: "Name"
           Value: "Stocker"
+  # Update daily information for all stocks
   UpdateDailyFieldsForAllStocks:
     Type: AWS::StepFunctions::StateMachine
     Properties:
@@ -170,6 +198,38 @@ Resources:
       Tags:
         - Key: "Name"
           Value: "Stocker"
+  # Update daily information for all stocks
+  UpdateDailyMarkets:
+    Type: AWS::StepFunctions::StateMachine
+    Properties:
+      StateMachineName: Update-All-Daily-Markets
+      LoggingConfiguration:
+        Destinations:
+          - CloudWatchLogsLogGroup:
+              LogGroupArn: arn:aws:logs:us-west-2:244092297712:log-group:stocker-data-yahoo-parser-pipeline:*
+        IncludeExecutionData: True
+        Level: ALL
+      DefinitionString:
+        !Sub
+        - |-
+          {
+            "StartAt": "Update daily market fields",
+            "States": {
+              "Load stocks for update": {
+                "Type": "Task",
+                "Resource": "${updateDailyMarketFields}",
+                "End": true
+              }
+            }
+          }
+        - {
+          updateDailyMarketFields: !GetAtt [ UpdateDailyMarketFields, Arn ]
+        }
+      RoleArn: arn:aws:iam::244092297712:role/service-role/StepFunctions-Update-All-Stocks-Yahoo-role-1e15a242
+      Tags:
+        - Key: "Name"
+          Value: "Stocker"
+  # Download and update daily information for all stocks
   UpdateAllStocksWithCalculation:
     Type: AWS::StepFunctions::StateMachine
     Properties:
@@ -223,25 +283,8 @@ Resources:
       Tags:
         - Key: "Name"
           Value: "Stocker"
-  UpdateDailyMarketFields:
-    Type: AWS::Serverless::Function
-    Properties:
-      FunctionName: update-daily-market-fields
-      CodeUri: target/stocker-data-1.0.jar
-      Handler: com.stocker.data.controller.UpdateDailyMarketsHandler::handleRequest
-      Runtime: java8
-      Description: Update daily market  information from dynamodb
-      MemorySize: 512
-      Timeout: 600
-      Role:
-        Fn::GetAtt: StockerDataApplicationRole.Arn
-      # Function's execution role
-      Policies:
-        - AWSLambdaBasicExecutionRole
-        - AWSLambdaReadOnlyAccess
-        - AWSXrayWriteOnlyAccess
-        - AWSLambdaVPCAccessExecutionRole
-      Tracing: Active
+  # DynamoDB tables
+  # Table contain all symbols and companies names
   StockDynamoDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -255,6 +298,7 @@ Resources:
           KeyType: "HASH"
       BillingMode: PAY_PER_REQUEST
       TableName: "stock"
+  # Table contain stock daily fields
   StockDailyValuesDynamoDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -274,6 +318,7 @@ Resources:
           KeyType: "RANGE"
       BillingMode: PAY_PER_REQUEST
       TableName: "stock_daily_values"
+  # Table contain market daily fields
   MarketDailyValuesDynamoDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
