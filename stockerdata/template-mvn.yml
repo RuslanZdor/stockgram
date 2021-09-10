@@ -230,7 +230,7 @@ Resources:
       CodeUri: target/stocker-data-1.0.jar
       Handler: com.stocker.data.controller.UpdateDailyMarketsHandler::handleRequest
       Runtime: java8
-      Description: Update daily market information from dynamodb
+      Description: Update daily market  information from dynamodb
       MemorySize: 512
       Timeout: 600
       Role:
