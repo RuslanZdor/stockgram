@@ -44,7 +44,7 @@ public class Company {
      * @return founded or created day
      */
     public Day getDay(Day day) {
-        return days.stream().filter(fDay -> fDay.getDate() == day.getDate())
+        return days.stream().filter(fDay -> fDay.getDateTimestamp() == day.getDateTimestamp())
                 .findFirst().orElse(days.get(0));
     }
 

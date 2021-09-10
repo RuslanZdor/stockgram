@@ -7,10 +7,7 @@ import com.stocker.dynamo.DynamoClientFactory;
 import com.stocker.yahoo.data.Day;
 import com.stocker.yahoo.data.Stock;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * DAO pattern for Stocks table
@@ -30,9 +27,11 @@ public class DayDAO {
     public Optional<Day> findLastStockDay(String stock) {
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":symbol", new AttributeValue().withS(stock));
+        eav.put(":date", new AttributeValue().withS("1277769600000"));
 
         DynamoDBQueryExpression<Day> queryExpression = new DynamoDBQueryExpression<Day>()
                 .withKeyConditionExpression("symbol = :symbol")
+                .withKeyConditionExpression("date = :date")
                 .withExpressionAttributeValues(eav)
                 .withLimit(1);
 

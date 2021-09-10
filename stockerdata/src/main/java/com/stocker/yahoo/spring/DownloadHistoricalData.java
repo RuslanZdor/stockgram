@@ -30,9 +30,9 @@ public class DownloadHistoricalData {
     }
 
     public Company download(com.stocker.yahoo.data.Stock stock, Day lastDay) throws NoDayException {
-        log.info(String.format("Load data for %s starting from %s", stock.getSymbol(), lastDay.getDate()));
+        log.info(String.format("Load data for %s starting from %s", stock.getSymbol(), lastDay.getDateTimestamp()));
         Calendar lastDayCalendar =  Calendar.getInstance();
-        lastDayCalendar.setTimeInMillis(lastDay.getDate());
+        lastDayCalendar.setTimeInMillis(lastDay.getDateTimestamp());
         return download(stock, lastDayCalendar);
     }
 
@@ -72,7 +72,7 @@ public class DownloadHistoricalData {
                         day.setClosePrice(data.getClose().doubleValue());
                         day.setVolume(data.getVolume());
                         day.setLastUpdate(System.currentTimeMillis());
-                        company.getDays().removeIf(day1 -> day1.getDate() == day.getDate());
+                        company.getDays().removeIf(day1 -> day1.getDateTimestamp() == day.getDateTimestamp());
                         company.getDays().add(day);
                     });
 

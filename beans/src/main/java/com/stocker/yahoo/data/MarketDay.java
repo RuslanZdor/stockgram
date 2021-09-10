@@ -22,8 +22,8 @@ public class MarketDay implements Comparable<MarketDay>{
 
     @DynamoDBHashKey(attributeName="symbol")
     private String symbol;
-    @DynamoDBRangeKey(attributeName="date")
-    private long date;
+    @DynamoDBRangeKey(attributeName="date_timestamp")
+    private long dateTimestamp;
     @DynamoDBAttribute(attributeName="is_finished")
     private boolean isFinished;
     @DynamoDBAttribute(attributeName="last_update")
@@ -35,8 +35,8 @@ public class MarketDay implements Comparable<MarketDay>{
     @DynamoDBAttribute(attributeName="thrust_thirty_ema")
     private double thrustThirtyEMA;
 
-    public MarketDay(long date) {
-        this.date = date;
+    public MarketDay(long dateTimestamp) {
+        this.dateTimestamp = dateTimestamp;
     }
 
     /**
@@ -48,16 +48,16 @@ public class MarketDay implements Comparable<MarketDay>{
     public boolean equals(Object obj) {
         if (obj instanceof MarketDay) {
             MarketDay compareDay = (MarketDay) obj;
-            return date == compareDay.getDate();
+            return dateTimestamp == compareDay.getDateTimestamp();
         }
         throw new ClassCastException("Object to compare can be only Day type");
     }
 
     @Override
     public int compareTo(MarketDay d2) {
-        if(getDate() == d2.getDate()){
+        if(getDateTimestamp() == d2.getDateTimestamp()){
             return 0;
         }
-        return Long.compare(getDate(), d2.getDate());
+        return Long.compare(getDateTimestamp(), d2.getDateTimestamp());
     }
 }

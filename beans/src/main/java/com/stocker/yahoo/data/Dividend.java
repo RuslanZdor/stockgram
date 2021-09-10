@@ -23,7 +23,7 @@ public class Dividend implements Comparable<Dividend> {
     public boolean equals(Object obj) {
         if (obj instanceof Day) {
             Day compareDay = (Day) obj;
-            return date == compareDay.getDate();
+            return date == compareDay.getDateTimestamp();
         }
         throw new ClassCastException("Object to compare can be only Day type");
     }

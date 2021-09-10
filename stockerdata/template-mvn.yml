@@ -263,7 +263,7 @@ Resources:
           AttributeName: "symbol"
           AttributeType: "S"
         -
-          AttributeName: "date"
+          AttributeName: "date_timestamp"
           AttributeType: "N"
       KeySchema:
         -
@@ -282,7 +282,7 @@ Resources:
           AttributeName: "symbol"
           AttributeType: "S"
         -
-          AttributeName: "date"
+          AttributeName: "date_timestamp"
           AttributeType: "N"
       KeySchema:
         -

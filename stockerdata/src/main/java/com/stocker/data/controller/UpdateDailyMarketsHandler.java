@@ -10,6 +10,7 @@ import com.stocker.data.job.market.CalculateAllMarketFields;
 import com.stocker.data.module.DIFactory;
 import com.stocker.yahoo.data.Day;
 import com.stocker.yahoo.data.Market;
+import com.stocker.yahoo.data.MarketDay;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -38,9 +39,14 @@ public class UpdateDailyMarketsHandler implements RequestHandler<Market, String>
     public String handleRequest(Market market, Context context) {
         log.info(String.format("Update daily market fields for company %s", market.getSymbol()));
         List<Day> lastDays = new ArrayList<>();
-        market.setDays(marketDayDAO.findAllData(market.getSymbol()));
+        market.setDays(new ArrayList<>(marketDayDAO.findAllData(market.getSymbol())));
         market.getStocks()
                 .forEach(stock -> lastDays.add(dayDAO.findLastStockDay(stock).orElse(new Day())));
+        market.getDays().add(MarketDay.builder()
+                .symbol(market.getSymbol())
+                .lastUpdate(System.currentTimeMillis())
+                .dateTimestamp(lastDays.get(0).getDateTimestamp())
+                .build());
         calculateAllFields.calculate(market, lastDays);
         market.getDays().stream()
                 .filter(day -> !day.isFinished())

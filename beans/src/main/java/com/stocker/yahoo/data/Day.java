@@ -22,8 +22,8 @@ public class Day implements Comparable<Day>{
 
     @DynamoDBHashKey(attributeName="symbol")
     private String symbol;
-    @DynamoDBRangeKey(attributeName="date")
-    private long date;
+    @DynamoDBRangeKey(attributeName="date_timestamp")
+    private long dateTimestamp;
     @DynamoDBAttribute(attributeName="is_finished")
     private boolean isFinished;
     @DynamoDBAttribute(attributeName="last_update")
@@ -123,8 +123,8 @@ public class Day implements Comparable<Day>{
     @DynamoDBAttribute(attributeName="is_next_rise")
     private boolean isNextRise = false;
 
-    public Day(long date) {
-        this.date = date;
+    public Day(long dateTimestamp) {
+        this.dateTimestamp = dateTimestamp;
     }
 
     /**
@@ -136,16 +136,16 @@ public class Day implements Comparable<Day>{
     public boolean equals(Object obj) {
         if (obj instanceof Day) {
             Day compareDay = (Day) obj;
-            return date == compareDay.getDate();
+            return dateTimestamp == compareDay.getDateTimestamp();
         }
         throw new ClassCastException("Object to compare can be only Day type");
     }
 
     @Override
     public int compareTo(Day d2) {
-        if(getDate() == d2.getDate()){
+        if(getDateTimestamp() == d2.getDateTimestamp()){
             return 0;
         }
-        return Long.compare(getDate(), d2.getDate());
+        return Long.compare(getDateTimestamp(), d2.getDateTimestamp());
     }
 }
