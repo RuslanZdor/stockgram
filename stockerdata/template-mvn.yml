@@ -215,7 +215,7 @@ Resources:
           {
             "StartAt": "Update daily market fields",
             "States": {
-              "Load stocks for update": {
+              "Update daily market fields": {
                 "Type": "Task",
                 "Resource": "${updateDailyMarketFields}",
                 "End": true
