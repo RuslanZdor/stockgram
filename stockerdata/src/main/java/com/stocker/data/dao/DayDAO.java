@@ -27,11 +27,9 @@ public class DayDAO {
     public Optional<Day> findLastStockDay(String stock) {
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":symbol", new AttributeValue().withS(stock));
-        eav.put(":date_timestamp", new AttributeValue().withS("1277769600000"));
 
         DynamoDBQueryExpression<Day> queryExpression = new DynamoDBQueryExpression<Day>()
                 .withKeyConditionExpression("symbol = :symbol")
-                .withKeyConditionExpression("date_timestamp = :date_timestamp")
                 .withExpressionAttributeValues(eav)
                 .withLimit(1);
 
