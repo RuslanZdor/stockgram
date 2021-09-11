@@ -27,7 +27,7 @@ Resources:
   LoadAllMarkets:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: load-all-stock-symbols
+      FunctionName: load-all-markets
       CodeUri: target/stocker-data-1.0.jar
       Handler: com.stocker.data.controller.ScheduleMarketsRequestHandler::handleRequest
       Runtime: java8
