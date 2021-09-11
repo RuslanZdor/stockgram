@@ -247,7 +247,7 @@ Resources:
                 "Iterator": {
                   "StartAt": "Update daily market fields",
                   "States": {
-                    "Update daily fields": {
+                    "Update daily market fields": {
                       "Type": "Task",
                       "Resource": "${updateDailyMarketFields}",
                       "End": true
