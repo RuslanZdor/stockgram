@@ -235,7 +235,7 @@ Resources:
           {
             "StartAt": "Load markets for update",
             "States": {
-              "Load stocks for update": {
+              "Load markets for update": {
                 "Type": "Task",
                 "Resource": "${loadAllMarketsArn}",
                 "Next": "Update daily markets"
