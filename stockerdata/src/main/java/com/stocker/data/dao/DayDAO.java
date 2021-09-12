@@ -46,10 +46,10 @@ public class DayDAO {
     public Optional<Day> findStockDay(String stock, long timestamp) {
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":symbol", new AttributeValue().withS(stock));
-        eav.put(":timestamp", new AttributeValue().withN(Long.toString(timestamp)));
+        eav.put(":date_timestamp", new AttributeValue().withN(Long.toString(timestamp)));
 
         DynamoDBQueryExpression<Day> queryExpression = new DynamoDBQueryExpression<Day>()
-                .withKeyConditionExpression("symbol = :symbol and date = :timestamp")
+                .withKeyConditionExpression("symbol = :symbol and date_timestamp = :date_timestamp")
                 .withExpressionAttributeValues(eav)
                 .withLimit(1);
 
