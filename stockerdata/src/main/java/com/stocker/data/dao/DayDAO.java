@@ -49,7 +49,7 @@ public class DayDAO {
         eav.put(":date", new AttributeValue().withN(Long.toString(timestamp)));
 
         DynamoDBQueryExpression<Day> queryExpression = new DynamoDBQueryExpression<Day>()
-                .withKeyConditionExpression("symbol = :symbol and date = : date")
+                .withKeyConditionExpression("symbol = :symbol and date = :date")
                 .withExpressionAttributeValues(eav)
                 .withLimit(1);
 
