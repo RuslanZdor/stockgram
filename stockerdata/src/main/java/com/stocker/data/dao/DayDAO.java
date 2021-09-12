@@ -24,6 +24,10 @@ public class DayDAO {
         return findLastStockDay(stock.getSymbol());
     }
 
+    public Optional<Day> findStockDay(Stock stock, long timestamp) {
+        return findStockDay(stock.getSymbol(), timestamp);
+    }
+
     public Optional<Day> findLastStockDay(String stock) {
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":symbol", new AttributeValue().withS(stock));
@@ -34,6 +38,20 @@ public class DayDAO {
                 .withLimit(1);
 
         queryExpression.setScanIndexForward(false);
+
+        List<Day> latestReplies = mapper.query(Day.class, queryExpression);
+        return latestReplies.stream().findFirst();
+    }
+
+    public Optional<Day> findStockDay(String stock, long timestamp) {
+        Map<String, AttributeValue> eav = new HashMap<>();
+        eav.put(":symbol", new AttributeValue().withS(stock));
+        eav.put(":date", new AttributeValue().withN(Long.toString(timestamp)));
+
+        DynamoDBQueryExpression<Day> queryExpression = new DynamoDBQueryExpression<Day>()
+                .withKeyConditionExpression("symbol = :symbol and date = : date")
+                .withExpressionAttributeValues(eav)
+                .withLimit(1);
 
         List<Day> latestReplies = mapper.query(Day.class, queryExpression);
         return latestReplies.stream().findFirst();

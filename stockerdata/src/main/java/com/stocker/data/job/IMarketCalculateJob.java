@@ -1,7 +1,7 @@
 package com.stocker.data.job;
 
 import com.stocker.yahoo.data.Day;
-import com.stocker.yahoo.data.Market;
+import com.stocker.yahoo.data.market.Market;
 
 import java.util.List;
 

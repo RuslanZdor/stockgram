@@ -6,9 +6,14 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.stocker.data.dao.StockDAO;
 import com.stocker.data.module.DAOModule;
-import com.stocker.yahoo.data.Market;
+import com.stocker.yahoo.data.Stock;
+import com.stocker.yahoo.data.market.Market;
+import com.stocker.yahoo.data.market.MarketUpdate;
 import lombok.extern.slf4j.Slf4j;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +21,7 @@ import java.util.List;
  * Lambda function to load all available stock symbols and pass them to next step
  */
 @Slf4j
-public class ScheduleMarketsRequestHandler implements RequestHandler<Object, List<Market>> {
+public class ScheduleMarketsRequestHandler implements RequestHandler<Object, List<MarketUpdate>> {
 
     private final StockDAO stockDAO;
 
@@ -34,13 +39,21 @@ public class ScheduleMarketsRequestHandler implements RequestHandler<Object, Lis
      * @return list of all stocks
      */
     @Override
-    public List<Market> handleRequest(Object request, Context context) {
-        List<Market> markets = new ArrayList<>();
-        markets.add(Market.builder()
-                        .symbol("ALL")
-                        .name("All Stocks")
-                        .stocks(stockDAO.getAllStocks())
-                        .build());
+    public List<MarketUpdate> handleRequest(Object request, Context context) {
+        List<MarketUpdate> markets = new ArrayList<>();
+        List<Stock> allStocks = stockDAO.getAllStocks();
+        for (int index = 0; index < 100; index++) {
+            LocalDateTime now = LocalDateTime.now();
+            now = now.minusDays(index).with(LocalTime.MIN);
+            markets.add(MarketUpdate.builder()
+                    .market(Market.builder()
+                            .symbol("ALL")
+                            .name("All Stocks")
+                            .stocks(allStocks)
+                            .build())
+                    .timestamp(Timestamp.valueOf(now).getTime())
+                    .build());
+        }
         return markets;
     }
 

@@ -1,8 +1,8 @@
 package com.stocker.data.job.market;
 
 import com.stocker.yahoo.data.Day;
-import com.stocker.yahoo.data.Market;
-import com.stocker.yahoo.data.MarketDay;
+import com.stocker.yahoo.data.market.Market;
+import com.stocker.yahoo.data.market.MarketDay;
 import org.junit.Before;
 import org.junit.Test;
 

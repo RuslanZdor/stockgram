@@ -4,7 +4,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.stocker.dynamo.DynamoClientFactory;
-import com.stocker.yahoo.data.MarketDay;
+import com.stocker.yahoo.data.market.MarketDay;
 import com.stocker.yahoo.data.Stock;
 
 import java.util.HashMap;

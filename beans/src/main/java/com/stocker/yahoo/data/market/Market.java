@@ -1,5 +1,6 @@
-package com.stocker.yahoo.data;
+package com.stocker.yahoo.data.market;
 
+import com.stocker.yahoo.data.Stock;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

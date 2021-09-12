@@ -1,4 +1,4 @@
-package com.stocker.yahoo.data;
+package com.stocker.yahoo.data.market;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
