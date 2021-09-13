@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Lambda function to load all available stock symbols and pass them to next step
+ * Lambda function to load all available markets and pass them to next step
  */
 @Slf4j
 public class ScheduleMarketsRequestHandler implements RequestHandler<Object, List<MarketUpdate>> {
@@ -42,7 +42,7 @@ public class ScheduleMarketsRequestHandler implements RequestHandler<Object, Lis
     public List<MarketUpdate> handleRequest(Object request, Context context) {
         List<MarketUpdate> markets = new ArrayList<>();
         List<Stock> allStocks = stockDAO.getAllStocks();
-        for (int index = 0; index < 100; index++) {
+        for (int index = 0; index < 500; index++) {
             LocalDateTime now = LocalDateTime.now();
             now = now.minusDays(index).with(LocalTime.MIN);
             markets.add(MarketUpdate.builder()

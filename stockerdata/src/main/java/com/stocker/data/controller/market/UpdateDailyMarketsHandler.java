@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Update all daily fields for company object
+ * Update all daily fields for market object
  */
 @Slf4j
 public class UpdateDailyMarketsHandler implements RequestHandler<MarketUpdate, String> {
