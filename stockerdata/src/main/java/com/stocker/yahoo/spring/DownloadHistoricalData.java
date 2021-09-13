@@ -25,7 +25,7 @@ public class DownloadHistoricalData {
     public Company download(com.stocker.yahoo.data.Stock stock) throws NoDayException {
         log.info(String.format("Load last year data for %s", stock.getSymbol()));
         Calendar yearAgo =  Calendar.getInstance();
-        yearAgo.add(Calendar.YEAR, -1);
+        yearAgo.add(Calendar.YEAR, -3);
         return download(stock, yearAgo);
     }
 

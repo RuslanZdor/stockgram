@@ -30,10 +30,10 @@ public class MarketDay implements Comparable<MarketDay>{
     private long lastUpdate;
     @DynamoDBAttribute(attributeName="thrust_direction")
     private double thrustDirection;
-    @DynamoDBAttribute(attributeName="thrust_five_ema")
-    private double thrustFiveEMA;
-    @DynamoDBAttribute(attributeName="thrust_thirty_ema")
-    private double thrustThirtyEMA;
+    @DynamoDBAttribute(attributeName="thrust_10_sma")
+    private double thrustTenSMA;
+    @DynamoDBAttribute(attributeName="thrust_30_sma")
+    private double thrustThirtySMA;
 
     public MarketDay(long dateTimestamp) {
         this.dateTimestamp = dateTimestamp;

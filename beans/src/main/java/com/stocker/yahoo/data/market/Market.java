@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -16,6 +17,6 @@ public class Market {
 
     private String symbol;
     private String name;
-    private List<Stock> stocks;
-    private List<MarketDay> days;
+    private List<Stock> stocks = new ArrayList<>();
+    private List<MarketDay> days = new ArrayList<>();
 }

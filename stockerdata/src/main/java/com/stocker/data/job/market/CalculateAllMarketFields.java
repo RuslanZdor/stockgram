@@ -11,14 +11,18 @@ import java.util.List;
 public class CalculateAllMarketFields implements IMarketCalculateJob {
 
     private final IMarketCalculateJob calculateBreadthThrust;
+    private final IMarketCalculateJob calculateBreadthThrustSMA;
 
     @Inject
-    public CalculateAllMarketFields(@Named("breadthThrust") IMarketCalculateJob calculateBreadthThrust) {
+    public CalculateAllMarketFields(@Named("breadthThrust") IMarketCalculateJob calculateBreadthThrust,
+                                    @Named("breadthThrustSMA") IMarketCalculateJob calculateBreadthThrustSMA) {
         this.calculateBreadthThrust = calculateBreadthThrust;
+        this.calculateBreadthThrustSMA = calculateBreadthThrustSMA;
     }
 
     @Override
     public void calculate(Market market, List<Day> days) {
         calculateBreadthThrust.calculate(market, days);
+        calculateBreadthThrustSMA.calculate(market, days);
     }
 }

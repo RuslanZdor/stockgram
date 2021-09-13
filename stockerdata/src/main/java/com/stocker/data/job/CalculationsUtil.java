@@ -1,6 +1,7 @@
 package com.stocker.data.job;
 
 import com.stocker.yahoo.data.Day;
+import com.stocker.yahoo.data.market.MarketDay;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Singleton;
@@ -20,7 +21,7 @@ public class CalculationsUtil {
      * Calculate Simple Movement Average for List of Days
      * @param days for calculation
      */
-    public static void calculateSMA(List<Day> days, int size, GetDoubleValue getter, UpdateDay update) {
+    public static void calculateSMA(List<Day> days, int size, GetDoubleValue<Day> getter, UpdateDay<Day> update) {
         if (size > 0) {
             Queue<Double> currentQueue = new LinkedList<>();
             double results = 0;
@@ -38,11 +39,35 @@ public class CalculationsUtil {
         }
     }
 
+    public static void calculateMarketSMA(List<MarketDay> days,
+                                          int size,
+                                          GetDoubleValue<MarketDay> getter,
+                                          UpdateDay<MarketDay> update) {
+        if (size > 0) {
+            Queue<Double> currentQueue = new LinkedList<>();
+            double results = 0;
+            for (MarketDay day : days) {
+                double value = getter.get(day);
+                results += value;
+                currentQueue.add(value);
+                if (currentQueue.size() > size) {
+                    results -= currentQueue.poll();
+                }
+                if (!day.isFinished()) {
+                    update.set(day, results / Math.min(size, currentQueue.size()));
+                }
+            }
+        }
+    }
+
     /**
      * Calculate Simple Movement Average for List of Days
      * @param days for calculation
      */
-    public static void calculateRSIMovement(List<Day> days, int size, GetRSIValue calculation, UpdateDay update) {
+    public static void calculateRSIMovement(List<Day> days,
+                                            int size,
+                                            GetRSIValue<Day> calculation,
+                                            UpdateDay<Day> update) {
         if (size > 0) {
             Queue<Double> currentQueue = new LinkedList<>();
             double results = 0.0;
@@ -65,23 +90,23 @@ public class CalculationsUtil {
         }
     }
 
-    public interface UpdateDay {
-        void set(Day day, double value);
+    public interface UpdateDay<T> {
+        void set(T day, double value);
     }
 
-    public interface GetDoubleValue {
-        double get(Day day);
+    public interface GetDoubleValue<T> {
+        double get(T day);
     }
 
-    public interface GetRSIValue {
-        double get(Day day, double prevValue);
+    public interface GetRSIValue<T> {
+        double get(T day, double prevValue);
     }
 
     /**
      * Calculate Exp. Movement Average for List of Days
      * @param days for calculation
      */
-    public static void calculateEMA(List<Day> days, int size, UpdateDay update) {
+    public static void calculateEMA(List<Day> days, int size, UpdateDay<Day> update) {
         if (size > 0) {
             double prevDayValue = 0.0;
             double results;
