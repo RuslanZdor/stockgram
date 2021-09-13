@@ -1,4 +1,4 @@
-package com.stocker.yahoo.parser;
+package com.stocker.data.controller.stock;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;

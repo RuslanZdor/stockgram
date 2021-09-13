@@ -9,7 +9,7 @@ Resources:
     Properties:
       FunctionName: load-all-stock-symbols
       CodeUri: target/stocker-data-1.0.jar
-      Handler: com.stocker.data.controller.ScheduleStocksRequestHandler::handleRequest
+      Handler: com.stocker.data.controller.stock.ScheduleStocksRequestHandler::handleRequest
       Runtime: java8
       Description: Get list of all available company symbols
       MemorySize: 512
@@ -29,7 +29,7 @@ Resources:
     Properties:
       FunctionName: load-all-markets
       CodeUri: target/stocker-data-1.0.jar
-      Handler: com.stocker.data.controller.ScheduleMarketsRequestHandler::handleRequest
+      Handler: com.stocker.data.controller.market.ScheduleMarketsRequestHandler::handleRequest
       Runtime: java8
       Description: Get list of all available markets
       MemorySize: 512
@@ -49,7 +49,7 @@ Resources:
     Properties:
       FunctionName: yahoo-stock-parser
       CodeUri: target/stocker-data-1.0.jar
-      Handler: com.stocker.yahoo.parser.YahooParserHandler::handleRequest
+      Handler: com.stocker.data.controller.stock.YahooParserHandler::handleRequest
       Runtime: java8
       Description: Get stock history data from Yahoo API
       MemorySize: 512
@@ -69,7 +69,7 @@ Resources:
     Properties:
       FunctionName: update-daily-stock-fields
       CodeUri: target/stocker-data-1.0.jar
-      Handler: com.stocker.data.controller.UpdateDailyFieldsHandler::handleRequest
+      Handler: com.stocker.data.controller.stock.UpdateDailyFieldsHandler::handleRequest
       Runtime: java8
       Description: Update daily stock information from dynamodb
       MemorySize: 512
@@ -89,7 +89,7 @@ Resources:
     Properties:
       FunctionName: update-daily-market-fields
       CodeUri: target/stocker-data-1.0.jar
-      Handler: com.stocker.data.controller.UpdateDailyMarketsHandler::handleRequest
+      Handler: com.stocker.data.controller.market.UpdateDailyMarketsHandler::handleRequest
       Runtime: java8
       Description: Update daily market  information from dynamodb
       MemorySize: 512

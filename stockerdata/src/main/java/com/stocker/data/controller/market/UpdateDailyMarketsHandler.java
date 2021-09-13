@@ -1,4 +1,4 @@
-package com.stocker.data.controller;
+package com.stocker.data.controller.market;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;

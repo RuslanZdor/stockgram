@@ -1,6 +1,7 @@
 package com.stocker.data.controller;
 
 import com.google.inject.Injector;
+import com.stocker.data.controller.stock.ScheduleStocksRequestHandler;
 import com.stocker.yahoo.data.Stock;
 import com.stocker.data.dao.StockDAO;
 import org.junit.Before;
