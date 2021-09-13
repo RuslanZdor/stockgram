@@ -4,7 +4,6 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.stocker.data.dao.StockDAO;
 import com.stocker.data.module.DAOModule;
 import com.stocker.yahoo.data.market.Market;
 import com.stocker.yahoo.data.market.MarketUpdate;
@@ -22,13 +21,10 @@ import java.util.List;
 @Slf4j
 public class ScheduleMarketsRequestHandler implements RequestHandler<Object, List<MarketUpdate>> {
 
-    private final StockDAO stockDAO;
-
     public ScheduleMarketsRequestHandler() {
         this(Guice.createInjector(new DAOModule()));
     }
     public ScheduleMarketsRequestHandler(Injector injector) {
-        stockDAO = injector.getInstance(StockDAO.class);
     }
 
     /**
@@ -40,7 +36,7 @@ public class ScheduleMarketsRequestHandler implements RequestHandler<Object, Lis
     @Override
     public List<MarketUpdate> handleRequest(Object request, Context context) {
         List<MarketUpdate> markets = new ArrayList<>();
-        for (int index = 0; index < 500; index++) {
+        for (int index = 0; index < 1000; index++) {
             LocalDateTime now = LocalDateTime.now();
             now = now.minusDays(index).with(LocalTime.MIN);
             markets.add(MarketUpdate.builder()
