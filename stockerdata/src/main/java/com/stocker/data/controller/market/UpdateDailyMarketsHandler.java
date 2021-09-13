@@ -5,6 +5,7 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.inject.Injector;
 import com.stocker.data.dao.DayDAO;
 import com.stocker.data.dao.MarketDayDAO;
+import com.stocker.data.dao.StockDAO;
 import com.stocker.data.job.IMarketCalculateJob;
 import com.stocker.data.job.market.CalculateAllMarketFields;
 import com.stocker.data.module.DIFactory;
@@ -26,6 +27,7 @@ public class UpdateDailyMarketsHandler implements RequestHandler<MarketUpdate, S
     private final IMarketCalculateJob calculateAllFields;
     private final MarketDayDAO marketDayDAO;
     private final DayDAO dayDAO;
+    private final StockDAO stockDAO;
 
     public UpdateDailyMarketsHandler() {
         this(DIFactory.init());
@@ -35,6 +37,7 @@ public class UpdateDailyMarketsHandler implements RequestHandler<MarketUpdate, S
         calculateAllFields = injector.getInstance(CalculateAllMarketFields.class);
         marketDayDAO = injector.getInstance(MarketDayDAO.class);
         dayDAO = injector.getInstance(DayDAO.class);
+        stockDAO = injector.getInstance(StockDAO.class);
     }
 
     public String handleRequest(MarketUpdate marketUpdate, Context context) {
@@ -42,6 +45,7 @@ public class UpdateDailyMarketsHandler implements RequestHandler<MarketUpdate, S
         log.info(String.format("Update daily market fields for company %s", market.getSymbol()));
         List<Day> lastDays = new ArrayList<>();
         market.setDays(new ArrayList<>(marketDayDAO.findAllData(market.getSymbol())));
+        market.setStocks(stockDAO.getAllStocks());
         market.getStocks()
                 .forEach(stock -> dayDAO.findStockDay(stock, marketUpdate.getTimestamp()).ifPresent(lastDays::add));
         if (!lastDays.isEmpty()) {

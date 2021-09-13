@@ -6,7 +6,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.stocker.data.dao.StockDAO;
 import com.stocker.data.module.DAOModule;
-import com.stocker.yahoo.data.Stock;
 import com.stocker.yahoo.data.market.Market;
 import com.stocker.yahoo.data.market.MarketUpdate;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +40,6 @@ public class ScheduleMarketsRequestHandler implements RequestHandler<Object, Lis
     @Override
     public List<MarketUpdate> handleRequest(Object request, Context context) {
         List<MarketUpdate> markets = new ArrayList<>();
-        List<Stock> allStocks = stockDAO.getAllStocks();
         for (int index = 0; index < 500; index++) {
             LocalDateTime now = LocalDateTime.now();
             now = now.minusDays(index).with(LocalTime.MIN);
@@ -49,7 +47,6 @@ public class ScheduleMarketsRequestHandler implements RequestHandler<Object, Lis
                     .market(Market.builder()
                             .symbol("ALL")
                             .name("All Stocks")
-                            .stocks(allStocks)
                             .build())
                     .timestamp(Timestamp.valueOf(now).getTime())
                     .build());
