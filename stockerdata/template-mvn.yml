@@ -4,7 +4,7 @@ Description: An AWS Lambda application that calls the Lambda API.
 Resources:
   # Lambda Functions
   # Load all stocks from Stock table
-  LoadAllStockSymbols:
+  LoadAllStockSymbolsLambda:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: load-all-stock-symbols
@@ -24,7 +24,7 @@ Resources:
         - AWSLambdaVPCAccessExecutionRole
       Tracing: Active
   # Load all markets from Stock table
-  LoadAllMarkets:
+  LoadAllMarketsLambda:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: load-all-markets
@@ -44,7 +44,7 @@ Resources:
         - AWSLambdaVPCAccessExecutionRole
       Tracing: Active
   # Download stock data from Yahoo
-  YahooParser:
+  YahooParserLambda:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: yahoo-stock-parser
@@ -64,7 +64,7 @@ Resources:
         - AWSLambdaVPCAccessExecutionRole
       Tracing: Active
   # Update daily fields for specific stock
-  UpdateDailyFields:
+  UpdateDailyFieldsLambda:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: update-daily-stock-fields
@@ -84,7 +84,7 @@ Resources:
         - AWSLambdaVPCAccessExecutionRole
       Tracing: Active
   # Update market daily fields
-  UpdateDailyMarketFields:
+  UpdateDailyMarketFieldsLambda:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: update-daily-market-fields
@@ -104,7 +104,7 @@ Resources:
         - AWSLambdaVPCAccessExecutionRole
       Tracing: Active
   # Update market fields
-  UpdateMarketFields:
+  UpdateMarketFieldsLambda:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: update-market-fields
@@ -143,7 +143,7 @@ Resources:
         - arn:aws:iam::244092297712:policy/service-role/AWSLambdaBasicExecutionRole-b8cef0c4-1121-440e-9f9f-cde9ea2fc412
   # Step Functions
   # Download new daily information for all stocks
-  UpdateAllStocks:
+  UpdateAllStocksStepFunction:
     Type: AWS::StepFunctions::StateMachine
     Properties:
       StateMachineName: Update-All-Stocks-Yahoo
@@ -183,15 +183,15 @@ Resources:
               }
             }
           - {
-              loadAllStocksArn: !GetAtt [ LoadAllStockSymbols, Arn ],
-              yahooParser: !GetAtt [ YahooParser, Arn ]
+              loadAllStocksArn: !GetAtt [ LoadAllStockSymbolsLambda, Arn ],
+              yahooParser: !GetAtt [ YahooParserLambda, Arn ]
             }
       RoleArn: arn:aws:iam::244092297712:role/service-role/StepFunctions-Update-All-Stocks-Yahoo-role-1e15a242
       Tags:
         - Key: "Name"
           Value: "Stocker"
   # Update daily information for all stocks
-  UpdateDailyFieldsForAllStocks:
+  UpdateDailyFieldsForAllStocksStepFunction:
     Type: AWS::StepFunctions::StateMachine
     Properties:
       StateMachineName: Update-All-Daily-Fields-For-Stocks
@@ -231,15 +231,15 @@ Resources:
             }
           }
         - {
-          loadAllStocksArn: !GetAtt [ LoadAllStockSymbols, Arn ],
-          updateDailyFields: !GetAtt [ UpdateDailyFields, Arn ]
+          loadAllStocksArn: !GetAtt [ LoadAllStockSymbolsLambda, Arn ],
+          updateDailyFields: !GetAtt [ UpdateDailyFieldsLambda, Arn ]
         }
       RoleArn: arn:aws:iam::244092297712:role/service-role/StepFunctions-Update-All-Stocks-Yahoo-role-1e15a242
       Tags:
         - Key: "Name"
           Value: "Stocker"
   # Update daily information for all stocks
-  UpdateDailyMarkets:
+  UpdateDailyMarketsStepFunction:
     Type: AWS::StepFunctions::StateMachine
     Properties:
       StateMachineName: Update-All-Daily-Markets
@@ -279,16 +279,16 @@ Resources:
             }
           }
         - {
-          updateDailyMarketFields: !GetAtt [ UpdateDailyMarketFields, Arn ],
-          updateMarketFields: !GetAtt [ UpdateMarketFields, Arn ],
-          loadAllMarketsArn: !GetAtt [ LoadAllMarkets, Arn ]
+          updateDailyMarketFields: !GetAtt [ UpdateDailyMarketFieldsLambda, Arn ],
+          updateMarketFields: !GetAtt [ UpdateMarketFieldsLambda, Arn ],
+          loadAllMarketsArn: !GetAtt [ LoadAllMarketsLambda, Arn ]
         }
       RoleArn: arn:aws:iam::244092297712:role/service-role/StepFunctions-Update-All-Stocks-Yahoo-role-1e15a242
       Tags:
         - Key: "Name"
           Value: "Stocker"
   # Update daily information for all stocks
-  UpdateSummaryMarkets:
+  UpdateSummaryMarketsStepFunction:
     Type: AWS::StepFunctions::StateMachine
     Properties:
       StateMachineName: Update-All-Summary-Markets
@@ -328,15 +328,15 @@ Resources:
             }
           }
         - {
-          updateMarketFields: !GetAtt [ UpdateMarketFields, Arn ],
-          loadAllMarketsArn: !GetAtt [ LoadAllMarkets, Arn ]
+          updateMarketFields: !GetAtt [ UpdateMarketFieldsLambda, Arn ],
+          loadAllMarketsArn: !GetAtt [ LoadAllMarketsLambda, Arn ]
         }
       RoleArn: arn:aws:iam::244092297712:role/service-role/StepFunctions-Update-All-Stocks-Yahoo-role-1e15a242
       Tags:
         - Key: "Name"
           Value: "Stocker"
   # Download and update daily information for all stocks
-  UpdateAllStocksWithCalculation:
+  UpdateAllStocksWithCalculationStepFunction:
     Type: AWS::StepFunctions::StateMachine
     Properties:
       StateMachineName: Daily-Download-and-update-all-stocks
@@ -381,9 +381,52 @@ Resources:
             }
           }
         - {
-          loadAllStocksArn: !GetAtt [ LoadAllStockSymbols, Arn ],
-          yahooParser: !GetAtt [ YahooParser, Arn ],
-          updateDailyFields: !GetAtt [ UpdateDailyFields, Arn ]
+          loadAllStocksArn: !GetAtt [ LoadAllStockSymbolsLambda, Arn ],
+          yahooParser: !GetAtt [ YahooParserLambda, Arn ],
+          updateDailyFields: !GetAtt [ UpdateDailyFieldsLambda, Arn ]
+        }
+      RoleArn: arn:aws:iam::244092297712:role/service-role/StepFunctions-Update-All-Stocks-Yahoo-role-1e15a242
+      Tags:
+        - Key: "Name"
+          Value: "Stocker"
+  # Download and update daily information for all stocks
+  UpdateDailyAndSummaryMarketFieldsStepFunction:
+    Type: AWS::StepFunctions::StateMachine
+    Properties:
+      StateMachineName: Update-daily-and-summary-market-fields
+      LoggingConfiguration:
+        Destinations:
+          - CloudWatchLogsLogGroup:
+              LogGroupArn: arn:aws:logs:us-west-2:244092297712:log-group:stocker-data-yahoo-parser-pipeline:*
+        IncludeExecutionData: True
+        Level: ALL
+      DefinitionString:
+        !Sub
+        - |-
+          {
+            "StartAt": "Update daily market fields",
+            "States": {
+              "Update daily market fields": {
+                "Type": "Task",
+                "Resource": "arn:aws:states:::states:startExecution",
+                "Parameters": {
+                  "StateMachineArn": "${dailyFieldsUpdate}"
+                },
+                "Next": "Update summary market fields"
+              },
+              "Update summary market fields": {
+                "Type": "Task",
+                "Resource": "arn:aws:states:::states:startExecution",
+                "Parameters": {
+                  "StateMachineArn": "${summaryFieldsUpdate}"
+                },
+                "End": true
+              }
+            }
+          }
+        - {
+          dailyFieldsUpdate: !GetAtt [ UpdateDailyMarketsStepFunction, Arn ],
+          summaryFieldsUpdate: !GetAtt [ UpdateSummaryMarketsStepFunction, Arn ]
         }
       RoleArn: arn:aws:iam::244092297712:role/service-role/StepFunctions-Update-All-Stocks-Yahoo-role-1e15a242
       Tags:
