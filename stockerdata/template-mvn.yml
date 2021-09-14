@@ -287,6 +287,54 @@ Resources:
       Tags:
         - Key: "Name"
           Value: "Stocker"
+  # Update daily information for all stocks
+  UpdateSummaryMarkets:
+    Type: AWS::StepFunctions::StateMachine
+    Properties:
+      StateMachineName: Update-All-Summary-Markets
+      LoggingConfiguration:
+        Destinations:
+          - CloudWatchLogsLogGroup:
+              LogGroupArn: arn:aws:logs:us-west-2:244092297712:log-group:stocker-data-yahoo-parser-pipeline:*
+        IncludeExecutionData: True
+        Level: ALL
+      DefinitionString:
+        !Sub
+        - |-
+          {
+            "StartAt": "Load markets for update",
+            "States": {
+              "Load markets for update": {
+                "Type": "Task",
+                "Resource": "${loadAllMarketsArn}",
+                "Next": "Update summary markets"
+              },
+              "Update summary markets": {
+                "Type": "Map",
+                "InputPath": "$",
+                "MaxConcurrency": 0,
+                "Iterator": {
+                  "StartAt": "Update summary market fields",
+                  "States": {
+                    "Update summary market fields": {
+                      "Type": "Task",
+                      "Resource": "${updateMarketFields}",
+                      "End": true
+                    }
+                  }
+                },
+                "End": true
+              }
+            }
+          }
+        - {
+          updateMarketFields: !GetAtt [ UpdateMarketFields, Arn ],
+          loadAllMarketsArn: !GetAtt [ LoadAllMarkets, Arn ]
+        }
+      RoleArn: arn:aws:iam::244092297712:role/service-role/StepFunctions-Update-All-Stocks-Yahoo-role-1e15a242
+      Tags:
+        - Key: "Name"
+          Value: "Stocker"
   # Download and update daily information for all stocks
   UpdateAllStocksWithCalculation:
     Type: AWS::StepFunctions::StateMachine
