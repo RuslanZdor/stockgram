@@ -45,8 +45,7 @@ public class UpdateMarketsHandler implements RequestHandler<MarketUpdate, String
         List<Day> lastDays = new ArrayList<>();
         market.setDays(new ArrayList<>(marketDayDAO.findAllData(market.getSymbol())));
         calculateAllFields.calculate(market, lastDays);
-        market.getDays().stream()
-                .filter(day -> !day.isFinished())
+        market.getDays()
                 .forEach(day -> {
                     day.setFinished(false);
                     marketDayDAO.save(day);
