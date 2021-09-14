@@ -57,10 +57,7 @@ public class UpdateDailyMarketsHandler implements RequestHandler<MarketUpdate, S
             calculateAllFields.calculate(market, lastDays);
             market.getDays().stream()
                     .filter(day -> !day.isFinished())
-                    .forEach(day -> {
-                        day.setFinished(true);
-                        marketDayDAO.save(day);
-                    });
+                    .forEach(marketDayDAO::save);
         }
         return "SUCCESS";
     }

@@ -48,7 +48,7 @@ public class UpdateMarketsHandler implements RequestHandler<MarketUpdate, String
         market.getDays().stream()
                 .filter(day -> !day.isFinished())
                 .forEach(day -> {
-                    day.setFinished(true);
+                    day.setFinished(false);
                     marketDayDAO.save(day);
                 });
         return "SUCCESS";

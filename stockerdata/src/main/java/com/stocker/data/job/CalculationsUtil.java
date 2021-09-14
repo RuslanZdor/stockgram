@@ -32,9 +32,7 @@ public class CalculationsUtil {
                 if (currentQueue.size() > size) {
                     results -= currentQueue.poll();
                 }
-                if (!day.isFinished()) {
-                    update.set(day, results / Math.min(size, currentQueue.size()));
-                }
+                update.set(day, results / Math.min(size, currentQueue.size()));
             }
         }
     }
@@ -53,9 +51,7 @@ public class CalculationsUtil {
                 if (currentQueue.size() > size) {
                     results -= currentQueue.poll();
                 }
-                if (!day.isFinished()) {
-                    update.set(day, results / Math.min(size, currentQueue.size()));
-                }
+                update.set(day, results / Math.min(size, currentQueue.size()));
             }
         }
     }
