@@ -107,7 +107,7 @@ Resources:
   UpdateMarketFields:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: update-daily-market-fields
+      FunctionName: update-market-fields
       CodeUri: target/stocker-data-1.0.jar
       Handler: com.stocker.data.controller.market.UpdateMarketsHandler::handleRequest
       Runtime: java8
