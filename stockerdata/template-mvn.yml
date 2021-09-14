@@ -274,13 +274,8 @@ Resources:
                     }
                   }
                 },
-                "Next": "Update markets"
+                "End": true
               }
-            },
-            "Update markets": {
-              "Type": "Task",
-              "Resource": "${updateMarketFields}",
-              "End": true
             }
           }
         - {
