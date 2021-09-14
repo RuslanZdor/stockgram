@@ -103,6 +103,26 @@ Resources:
         - AWSXrayWriteOnlyAccess
         - AWSLambdaVPCAccessExecutionRole
       Tracing: Active
+  # Update market fields
+  UpdateMarketFields:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: update-daily-market-fields
+      CodeUri: target/stocker-data-1.0.jar
+      Handler: com.stocker.data.controller.market.UpdateMarketsHandler::handleRequest
+      Runtime: java8
+      Description: Update market information from dynamodb
+      MemorySize: 512
+      Timeout: 600
+      Role:
+        Fn::GetAtt: StockerDataApplicationRole.Arn
+      # Function's execution role
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+      Tracing: Active
   # Roles
   StockerDataApplicationRole:
     Type: 'AWS::IAM::Role'
@@ -254,12 +274,18 @@ Resources:
                     }
                   }
                 },
-                "End": true
+                "Next": "Update markets"
               }
+            },
+            "Update markets": {
+              "Type": "Task",
+              "Resource": "${updateMarketFields}",
+              "End": true
             }
           }
         - {
           updateDailyMarketFields: !GetAtt [ UpdateDailyMarketFields, Arn ],
+          updateMarketFields: !GetAtt [ UpdateMarketFields, Arn ],
           loadAllMarketsArn: !GetAtt [ LoadAllMarkets, Arn ]
         }
       RoleArn: arn:aws:iam::244092297712:role/service-role/StepFunctions-Update-All-Stocks-Yahoo-role-1e15a242

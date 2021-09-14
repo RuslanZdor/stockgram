@@ -7,7 +7,7 @@ import com.stocker.data.dao.DayDAO;
 import com.stocker.data.dao.MarketDayDAO;
 import com.stocker.data.dao.StockDAO;
 import com.stocker.data.job.IMarketCalculateJob;
-import com.stocker.data.job.market.CalculateAllMarketFields;
+import com.stocker.data.job.market.CalculateAllMarketDailyFields;
 import com.stocker.data.module.DIFactory;
 import com.stocker.yahoo.data.Day;
 import com.stocker.yahoo.data.market.Market;
@@ -34,7 +34,7 @@ public class UpdateDailyMarketsHandler implements RequestHandler<MarketUpdate, S
     }
 
     public UpdateDailyMarketsHandler(Injector injector) {
-        calculateAllFields = injector.getInstance(CalculateAllMarketFields.class);
+        calculateAllFields = injector.getInstance(CalculateAllMarketDailyFields.class);
         marketDayDAO = injector.getInstance(MarketDayDAO.class);
         dayDAO = injector.getInstance(DayDAO.class);
         stockDAO = injector.getInstance(StockDAO.class);
