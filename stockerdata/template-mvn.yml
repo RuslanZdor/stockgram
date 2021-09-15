@@ -507,3 +507,66 @@ Resources:
           KeyType: "RANGE"
       BillingMode: PAY_PER_REQUEST
       TableName: "market_daily_values"
+  #
+  #   API Gateway
+  #
+  StockerRestApi:
+    Type: 'AWS::ApiGateway::RestApi'
+    Properties:
+      Description: API Gateway for stocker data information
+      Name: Stocker-data-api
+      Tags:
+        - Key: "Name"
+          Value: "Stocker"
+  CloudWatchRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - apigateway.amazonaws.com
+            Action: 'sts:AssumeRole'
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs
+  Account:
+    Type: 'AWS::ApiGateway::Account'
+    Properties:
+      CloudWatchRoleArn:
+        Fn::GetAtt: CloudWatchRole.Arn
+  Deployment:
+    Type: 'AWS::ApiGateway::Deployment'
+    Properties:
+      RestApiId: !Ref StockerRestApi
+      Description: Stocker data deployment
+      StageName: Dev
+    DependsOn:
+      - MarketDailyDataMethod
+  MarketDailyData:
+    Type: 'AWS::ApiGateway::Resource'
+    Properties:
+      RestApiId: !Ref StockerRestApi
+      ParentId: !GetAtt
+        - StockerRestApi
+        - RootResourceId
+      PathPart: market
+  MarketDailyDataMethod:
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      RestApiId: !Ref StockerRestApi
+      ResourceId: !Ref MarketDailyData
+      HttpMethod: GET
+      AuthorizationType: NONE
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri:
+          !Sub
+          - |-
+            arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${loadMarketInformation}/invocations
+          - {
+            loadMarketInformation: !GetAtt [ LoadMarketInformationLambda, Arn ]
+          }
