@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * Load market day information based on market symbol
  */
 @Slf4j
-public class LoadMarketHandler implements RequestHandler<String, Market> {
+public class LoadMarketHandler implements RequestHandler<Market, Market> {
 
     private final MarketDayDAO marketDayDAO;
 
@@ -26,13 +26,13 @@ public class LoadMarketHandler implements RequestHandler<String, Market> {
         marketDayDAO = injector.getInstance(MarketDayDAO.class);
     }
 
-    public Market handleRequest(String marketSymbol, Context context) {
-        log.info(String.format("Load data for market %s", marketSymbol));
-        if (marketSymbol.isEmpty()) {
-            marketSymbol = "ALL";
+    public Market handleRequest(Market market, Context context) {
+        log.info(String.format("Load data for market %s", market));
+        if (market.getSymbol().isEmpty()) {
+            market.setSymbol("ALL");
         }
         return Market.builder()
-                .days(new ArrayList<>(marketDayDAO.findAllData(marketSymbol)))
+                .days(new ArrayList<>(marketDayDAO.findAllData(market.getSymbol())))
                 .build();
     }
 }
