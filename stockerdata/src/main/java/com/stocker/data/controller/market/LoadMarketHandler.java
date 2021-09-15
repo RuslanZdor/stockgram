@@ -2,20 +2,21 @@ package com.stocker.data.controller.market;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.google.inject.Injector;
 import com.stocker.data.dao.MarketDayDAO;
 import com.stocker.data.module.DIFactory;
-import com.stocker.yahoo.data.market.Market;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpStatus;
 
-import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Load market day information based on market symbol
  */
 @Slf4j
-public class LoadMarketHandler implements RequestHandler<Market, Market> {
+public class LoadMarketHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
     private final MarketDayDAO marketDayDAO;
 
@@ -27,13 +28,17 @@ public class LoadMarketHandler implements RequestHandler<Market, Market> {
         marketDayDAO = injector.getInstance(MarketDayDAO.class);
     }
 
-    public Market handleRequest(Market market, Context context) {
-        log.info(String.format("Load data for market %s", market));
-        if (StringUtils.isBlank(market.getSymbol())) {
-            market.setSymbol("ALL");
-        }
-        return Market.builder()
-                .days(new ArrayList<>(marketDayDAO.findAllData(market.getSymbol())))
-                .build();
+    public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent event, Context context) {
+        String symbol = event.getQueryStringParameters().getOrDefault("symbol", "ALL");
+        log.info(String.format("Load data for market %s", symbol));
+        return buildResponse(marketDayDAO.findAllData(symbol).toString());
+    }
+
+    private APIGatewayProxyResponseEvent buildResponse(String body) {
+        APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
+        response.setBody(body);
+        response.setStatusCode(HttpStatus.SC_OK);
+        response.setHeaders(Collections.singletonMap("timeStamp", String.valueOf(System.currentTimeMillis())));
+        return response;
     }
 }
