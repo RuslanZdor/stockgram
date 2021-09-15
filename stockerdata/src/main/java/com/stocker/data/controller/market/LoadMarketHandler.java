@@ -7,6 +7,7 @@ import com.stocker.data.dao.MarketDayDAO;
 import com.stocker.data.module.DIFactory;
 import com.stocker.yahoo.data.market.Market;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 
@@ -28,7 +29,7 @@ public class LoadMarketHandler implements RequestHandler<Market, Market> {
 
     public Market handleRequest(Market market, Context context) {
         log.info(String.format("Load data for market %s", market));
-        if (market.getSymbol().isEmpty()) {
+        if (StringUtils.isBlank(market.getSymbol())) {
             market.setSymbol("ALL");
         }
         return Market.builder()
