@@ -4,6 +4,8 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Injector;
 import com.stocker.data.dao.MarketDayDAO;
 import com.stocker.data.module.DIFactory;
@@ -29,14 +31,21 @@ public class LoadMarketHandler implements RequestHandler<APIGatewayProxyRequestE
     }
 
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent event, Context context) {
-        String symbol = event.getQueryStringParameters().getOrDefault("symbol", "ALL");
+        String symbol = "ALL";
+        if (event.getQueryStringParameters() != null && event.getQueryStringParameters().containsKey("symbol")) {
+            symbol = event.getQueryStringParameters().get("symbol");
+        }
         log.info(String.format("Load data for market %s", symbol));
-        return buildResponse(marketDayDAO.findAllData(symbol).toString());
+        return buildResponse(marketDayDAO.findAllData(symbol));
     }
 
-    private APIGatewayProxyResponseEvent buildResponse(String body) {
+    private APIGatewayProxyResponseEvent buildResponse(Object body) {
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
-        response.setBody(body);
+        try {
+            response.setBody(new ObjectMapper().writeValueAsString(body));
+        } catch (JsonProcessingException e) {
+            log.error("Cannot convert object to json", e);
+        }
         response.setStatusCode(HttpStatus.SC_OK);
         response.setHeaders(Collections.singletonMap("timeStamp", String.valueOf(System.currentTimeMillis())));
         return response;
