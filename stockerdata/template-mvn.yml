@@ -535,11 +535,13 @@ Resources:
   GatewayAPICallLambdaPermission:
     Type: AWS::Lambda::Permission
     Properties:
-      FunctionName: !GetAtt LoadMarketInformationLambda.Arn
+      FunctionName:
+        Fn::GetAtt: LoadMarketInformationLambda.Arn
       Action: lambda:InvokeFunction
       Principal: apigateway.amazonaws.com
-      SourceAccount: !Ref 'AWS::AccountId'
-      SourceArn: !GetAtt StockerRestApi.Arn
+      SourceAccount: !Ref "AWS::AccountId"
+      SourceArn:
+        Fn::GetAtt: StockerRestApi.Arn
   Account:
     Type: 'AWS::ApiGateway::Account'
     Properties:
