@@ -123,6 +123,26 @@ Resources:
         - AWSXrayWriteOnlyAccess
         - AWSLambdaVPCAccessExecutionRole
       Tracing: Active
+  # Update market fields
+  LoadMarketInformationLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: load-market-information
+      CodeUri: target/stocker-data-1.0.jar
+      Handler: com.stocker.data.controller.market.LoadMarketHandler::handleRequest
+      Runtime: java8
+      Description: Load market information from dynamodb
+      MemorySize: 512
+      Timeout: 600
+      Role:
+        Fn::GetAtt: StockerDataApplicationRole.Arn
+      # Function's execution role
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+      Tracing: Active
   # Roles
   StockerDataApplicationRole:
     Type: 'AWS::IAM::Role'
