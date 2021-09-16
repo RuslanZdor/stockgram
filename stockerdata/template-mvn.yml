@@ -541,7 +541,7 @@ Resources:
       Principal: apigateway.amazonaws.com
       SourceAccount: !Ref "AWS::AccountId"
       SourceArn:
-        Fn::GetAtt: StockerRestApi.Arn
+        !Join ["", ["arn:aws:execute-api:", !Ref "AWS::Region", ":", !Ref "AWS::AccountId", ":", !Ref "StockerRestApi", "/*"]
   Account:
     Type: 'AWS::ApiGateway::Account'
     Properties:
