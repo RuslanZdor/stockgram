@@ -580,3 +580,28 @@ Resources:
           - {
             loadMarketInformation: !GetAtt [ LoadMarketInformationLambda, Arn ]
           }
+  stockerDataDistribution:
+    Type: 'AWS::CloudFront::Distribution'
+    Properties:
+      DistributionConfig:
+        Origins:
+          - DomainName: mr9nv4ub0a.execute-api.us-west-2.amazonaws.com
+            Id: stocker-data-origin
+            CustomOriginConfig:
+              HTTPPort: '80'
+              HTTPSPort: '443'
+              OriginProtocolPolicy: https-only
+        Enabled: 'true'
+        Comment: Cloud Front cache for data API response
+        DefaultCacheBehavior:
+          TargetOriginId: stocker-data-origin
+          SmoothStreaming: 'false'
+          DefaultTTL: 300
+          ForwardedValues:
+            QueryString: 'false'
+            Cookies:
+              Forward: all
+          ViewerProtocolPolicy: allow-all
+        PriceClass: PriceClass_100
+        ViewerCertificate:
+          CloudFrontDefaultCertificate: 'true'
