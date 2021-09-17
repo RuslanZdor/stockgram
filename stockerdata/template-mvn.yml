@@ -452,6 +452,69 @@ Resources:
       Tags:
         - Key: "Name"
           Value: "Stocker"
+  UpdateDailyStocksAndMarketsStepFunction:
+    Type: AWS::StepFunctions::StateMachine
+    Properties:
+      StateMachineName: Update-daily-stocks-and-markets
+      LoggingConfiguration:
+        Destinations:
+          - CloudWatchLogsLogGroup:
+              LogGroupArn: arn:aws:logs:us-west-2:244092297712:log-group:stocker-data-yahoo-parser-pipeline:*
+        IncludeExecutionData: True
+        Level: ALL
+      DefinitionString:
+        !Sub
+        - |-
+          {
+            "StartAt": "Update daily stocks information",
+            "States": {
+              "Update daily stocks information": {
+                "Type": "Task",
+                "Resource": "arn:aws:states:::states:startExecution",
+                "Parameters": {
+                  "StateMachineArn": "${dailyStocksFieldsUpdate}",
+                  "Input": {
+                    "StatePayload": "Hello from Step Functions!",
+                    "AWS_STEP_FUNCTIONS_STARTED_BY_EXECUTION_ID.$": "$$.Execution.Id"
+                  }
+                },
+                "Next": "Update daily market information"
+              },
+              "Update daily market information": {
+                "Type": "Task",
+                "Resource": "arn:aws:states:::states:startExecution",
+                "Parameters": {
+                  "StateMachineArn": "${UpdateDailyMarketsStepFunction}",
+                  "Input": {
+                    "StatePayload": "Hello from Step Functions!",
+                    "AWS_STEP_FUNCTIONS_STARTED_BY_EXECUTION_ID.$": "$$.Execution.Id"
+                  }
+                },
+                "Next": "Update market summary information"
+              },
+              "Update market summary information": {
+                "Type": "Task",
+                "Resource": "arn:aws:states:::states:startExecution",
+                "Parameters": {
+                  "StateMachineArn": "${UpdateSummaryMarketsStepFunction}",
+                  "Input": {
+                    "StatePayload": "Hello from Step Functions!",
+                    "AWS_STEP_FUNCTIONS_STARTED_BY_EXECUTION_ID.$": "$$.Execution.Id"
+                  }
+                },
+                "End": true
+              }
+            }
+          }
+        - {
+          dailyStocksFieldsUpdate: !GetAtt [ UpdateDailyFieldsForAllStocksStepFunction, Arn ],
+          dailyFieldsUpdate: !GetAtt [ UpdateDailyMarketsStepFunction, Arn ],
+          summaryFieldsUpdate: !GetAtt [ UpdateSummaryMarketsStepFunction, Arn ]
+        }
+      RoleArn: arn:aws:iam::244092297712:role/service-role/StepFunctions-Update-All-Stocks-Yahoo-role-1e15a242
+      Tags:
+        - Key: "Name"
+          Value: "Stocker"
   # DynamoDB tables
   # Table contain all symbols and companies names
   StockDynamoDBTable:
