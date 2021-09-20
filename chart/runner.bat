@@ -1,1 +1,0 @@
-mvn clean package spring-boot:repackage && java -jar target/stocker-graph-1.0.war

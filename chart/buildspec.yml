@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto8
+    commands:
+      - echo Build started on `date`
+      - export CODEARTIFACT_TOKEN=`aws codeartifact get-authorization-token --domain ruslanzdor --domain-owner 244092297712 --query authorizationToken --output text`
+  build:
+    commands:
+      - mvn test
+      - mvn package
+      - aws cloudformation package --template chart/template-mvn.yml --s3-bucket gram-deploy --output-template template-export.yml
+  post_build:
+    commands:
+      - echo Build completed on `date`
+artifacts:
+  files:
+    - template-export.yml
+  discard-paths: yes
