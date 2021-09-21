@@ -17,6 +17,6 @@ phases:
       - echo Build completed on `date`
 artifacts:
   files:
-    - 'template-export.yml'
-    - 'chart/src/main/webapp/WEB-INF'
+    - template-export.yml
+    - chart/src/main/webapp/*
     discard-paths: yes
