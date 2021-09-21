@@ -90,7 +90,7 @@
     var chartLine = new ApexCharts(document.querySelector("#chart-line"), optionsLine);
     chartLine.render();
 
-    var url = 'https://b0x9ee55r0.execute-api.us-west-2.amazonaws.com/Dev/market';
+    var url = 'https://b0x9ee55r0.execute-api.us-west-2.amazonaws.com/qa/market';
 
     $.getJSON(url, function(response) {
         chart.updateSeries([{

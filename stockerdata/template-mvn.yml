@@ -507,7 +507,7 @@ Resources:
             }
           }
         - {
-          dailyStocksFieldsUpdate: !GetAtt [ UpdateDailyFieldsForAllStocksStepFunction, Arn ],
+          dailyStocksFieldsUpdate: !GetAtt [ UpdateAllStocksWithCalculationStepFunction, Arn ],
           dailyFieldsUpdate: !GetAtt [ UpdateDailyMarketsStepFunction, Arn ],
           summaryFieldsUpdate: !GetAtt [ UpdateSummaryMarketsStepFunction, Arn ]
         }
