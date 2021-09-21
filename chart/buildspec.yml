@@ -18,4 +18,5 @@ phases:
 artifacts:
   files:
     - template-export.yml
-  discard-paths: yes
+    - chart/src/main/webapp/WEB-INF
+    discard-paths: yes
