@@ -12,7 +12,6 @@ phases:
       - mvn test
       - mvn package
       - aws cloudformation package --template chart/template-mvn.yml --s3-bucket gram-deploy --output-template template-export.yml
-      - mv
   post_build:
     commands:
       - echo Build completed on `date`
