@@ -19,6 +19,7 @@ artifacts:
   files:
     - template-export.yml
   secondary-artifacts:
-    artifact1:
+    webapp:
       files:
-        - chart/src/main/webapp/index.html
+        - '**/*'
+      base-directory: 'chart/src/main/webapp'
