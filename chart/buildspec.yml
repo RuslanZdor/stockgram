@@ -12,10 +12,15 @@ phases:
       - mvn test
       - mvn package
       - aws cloudformation package --template chart/template-mvn.yml --s3-bucket gram-deploy --output-template template-export.yml
+      - mv
   post_build:
     commands:
       - echo Build completed on `date`
 artifacts:
   files:
     - template-export.yml
-    - chart/src/main/webapp/**/*
+    secondary-artifacts:
+      artifact1:
+        files:
+          - '**/*'
+        base-directory: 'chart/src/main/webapp'
