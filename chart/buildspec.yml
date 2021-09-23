@@ -19,8 +19,8 @@ phases:
 artifacts:
   files:
     - template-export.yml
-    secondary-artifacts:
-      artifact1:
-        files:
-          - '**/*'
-        base-directory: 'chart/src/main/webapp'
+  secondary-artifacts:
+    artifact1:
+      files:
+        - '**/*'
+      base-directory: 'chart/src/main/webapp'
