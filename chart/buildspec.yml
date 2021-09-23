@@ -17,8 +17,11 @@ phases:
       - echo Build completed on `date`
 artifacts:
   files:
-    - template-export.yml
+    - "**/*"
   secondary-artifacts:
+    BuildArtifact:
+    files:
+      - template-export.yml
     webapp:
       files:
         - '**/*'
