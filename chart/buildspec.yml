@@ -20,8 +20,8 @@ artifacts:
     - "**/*"
   secondary-artifacts:
     BuildArtifact:
-    files:
-      - template-export.yml
+      files:
+        - template-export.yml
     webapp:
       files:
         - '**/*'
