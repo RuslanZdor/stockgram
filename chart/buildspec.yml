@@ -21,5 +21,4 @@ artifacts:
   secondary-artifacts:
     artifact1:
       files:
-        - '**/*'
-      base-directory: 'chart/src/main/webapp'
+        - chart/src/main/webapp/index.html
