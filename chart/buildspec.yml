@@ -24,7 +24,5 @@ artifacts:
         - template-export.yml
     webapp:
       files:
-        - index.html
-        - image/*
-        - scripts/*
+        - "**/*"
       base-directory: 'chart/src/main/webapp'
