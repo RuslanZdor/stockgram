@@ -26,5 +26,5 @@ artifacts:
       files:
         - index.html
         - image/*
-        - WEB-INF/scripts/*
+        - scripts/*
       base-directory: 'chart/src/main/webapp'
