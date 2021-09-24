@@ -586,7 +586,7 @@ Resources:
         - {
           loadMarketInformation: !GetAtt [ LoadMarketInformationLambda, Arn ]
         }
-      Cors:
+      CorsConfiguration:
         AllowMethods: "'GET'"
         AllowHeaders: "''"
         AllowOrigin: "'*'"
