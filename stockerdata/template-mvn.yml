@@ -578,7 +578,7 @@ Resources:
     Properties:
       Name: stocker-chart-data
       Description: Loading stocker data for charts
-      ProtocolType: HTTPS
+      ProtocolType: HTTP
       Target:
         !Sub
         - |-
