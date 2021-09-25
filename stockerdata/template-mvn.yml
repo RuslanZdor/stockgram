@@ -587,8 +587,8 @@ Resources:
           loadMarketInformation: !GetAtt [ LoadMarketInformationLambda, Arn ]
         }
       CorsConfiguration:
-        AllowMethods: "'GET'"
-        AllowHeaders: "''"
-        AllowOrigins: "'*'"
-        MaxAge: "'300'"
+        AllowMethods: ["GET"]
+        AllowHeaders: []
+        AllowOrigins: ["*"]
+        MaxAge: 300
         AllowCredentials: false
