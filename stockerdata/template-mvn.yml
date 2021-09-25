@@ -589,6 +589,6 @@ Resources:
       CorsConfiguration:
         AllowMethods: "'GET'"
         AllowHeaders: "''"
-        AllowOrigin: "'*'"
+        AllowOrigins: "'*'"
         MaxAge: "'300'"
         AllowCredentials: false
