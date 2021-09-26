@@ -579,6 +579,13 @@ Resources:
       Name: stocker-chart-data
       Description: Loading stocker data for charts
       ProtocolType: HTTP
+      Target:
+        !Sub
+        - |-
+          arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${loadMarketInformation}/invocations
+        - {
+          loadMarketInformation: !GetAtt [ LoadMarketInformationLambda, Arn ]
+        }
       CorsConfiguration:
         AllowMethods: ["GET"]
         AllowHeaders: []
@@ -594,33 +601,33 @@ Resources:
         - /
         - - integrations
           - !Ref StockerChartMarketDataIntegration
-  StockerChartMarketDataIntegration:
-    Type: 'AWS::ApiGatewayV2::Integration'
-    Properties:
-      ApiId: !Ref StockerChartHttpApi
-      Description: Lambda Integration
-      IntegrationType: AWS_PROXY
-      IntegrationUri: !Join
-        - ''
-        - - 'arn:'
-          - !Ref 'AWS::Partition'
-          - ':apigateway:'
-          - !Ref 'AWS::Region'
-          - ':lambda:path/2015-03-31/functions/'
-          - !GetAtt LoadMarketInformationLambda.Arn
-          - /invocations
-      IntegrationMethod: POST
-      PayloadFormatVersion: '2.0'
-  StockerChartStage:
-    Type: 'AWS::ApiGatewayV2::Stage'
-    Properties:
-      StageName: $default
-      Description: default Stage
-      AutoDeploy: true
-      ApiId: !Ref StockerChartHttpApi
-      DefaultRouteSettings:
-        DetailedMetricsEnabled: true
-        LoggingLevel: INFO
-        DataTraceEnabled: false
-        ThrottlingBurstLimit: 10
-        ThrottlingRateLimit: 10
+#  StockerChartMarketDataIntegration:
+#    Type: 'AWS::ApiGatewayV2::Integration'
+#    Properties:
+#      ApiId: !Ref StockerChartHttpApi
+#      Description: Lambda Integration
+#      IntegrationType: AWS_PROXY
+#      IntegrationUri: !Join
+#        - ''
+#        - - 'arn:'
+#          - !Ref 'AWS::Partition'
+#          - ':apigateway:'
+#          - !Ref 'AWS::Region'
+#          - ':lambda:path/2015-03-31/functions/'
+#          - !GetAtt LoadMarketInformationLambda.Arn
+#          - /invocations
+#      IntegrationMethod: POST
+#      PayloadFormatVersion: '2.0'
+#  StockerChartStage:
+#    Type: 'AWS::ApiGatewayV2::Stage'
+#    Properties:
+#      StageName: $default
+#      Description: default Stage
+#      AutoDeploy: true
+#      ApiId: !Ref StockerChartHttpApi
+#      DefaultRouteSettings:
+#        DetailedMetricsEnabled: true
+#        LoggingLevel: INFO
+#        DataTraceEnabled: false
+#        ThrottlingBurstLimit: 10
+#        ThrottlingRateLimit: 10
