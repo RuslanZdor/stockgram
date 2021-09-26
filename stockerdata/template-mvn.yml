@@ -579,6 +579,13 @@ Resources:
       Name: stocker-chart-data
       Description: Loading stocker data for charts
       ProtocolType: HTTP
+      Target:
+        !Sub
+        - |-
+          arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${loadMarketInformation}/invocations
+        - {
+          loadMarketInformation: !GetAtt [ LoadMarketInformationLambda, Arn ]
+        }
       CorsConfiguration:
         AllowMethods: ["GET"]
         AllowHeaders: []
