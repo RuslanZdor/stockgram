@@ -592,15 +592,15 @@ Resources:
         AllowOrigins: ["*"]
         MaxAge: 300
         AllowCredentials: false
-  StockerChartMarketDataRoute:
-    Type: AWS::ApiGatewayV2::Route
-    Properties:
-      ApiId: !Ref StockerChartHttpApi
-      RouteKey: 'GET /market'
-      Target: !Join
-        - /
-        - - integrations
-          - !Ref StockerChartMarketDataIntegration
+#  StockerChartMarketDataRoute:
+#    Type: AWS::ApiGatewayV2::Route
+#    Properties:
+#      ApiId: !Ref StockerChartHttpApi
+#      RouteKey: 'GET /market'
+#      Target: !Join
+#        - /
+#        - - integrations
+#          - !Ref StockerChartMarketDataIntegration
 #  StockerChartMarketDataIntegration:
 #    Type: 'AWS::ApiGatewayV2::Integration'
 #    Properties:
