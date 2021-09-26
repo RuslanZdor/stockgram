@@ -588,7 +588,7 @@ Resources:
   StockerChartMarketDataRoute:
     Type: AWS::ApiGatewayV2::Route
     Properties:
-      ApiId: !Ref MyAPI
+      ApiId: !Ref StockerChartHttpApi
       RouteKey: 'GET /market'
       Target:
         !Sub
