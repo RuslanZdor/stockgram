@@ -579,6 +579,17 @@ Resources:
       Name: stocker-chart-data
       Description: Loading stocker data for charts
       ProtocolType: HTTP
+      CorsConfiguration:
+        AllowMethods: ["GET"]
+        AllowHeaders: []
+        AllowOrigins: ["*"]
+        MaxAge: 300
+        AllowCredentials: false
+  StockerChartMarketDataRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref MyAPI
+      RouteKey: 'GET /market'
       Target:
         !Sub
         - |-
@@ -586,9 +597,3 @@ Resources:
         - {
           loadMarketInformation: !GetAtt [ LoadMarketInformationLambda, Arn ]
         }
-      CorsConfiguration:
-        AllowMethods: ["GET"]
-        AllowHeaders: []
-        AllowOrigins: ["*"]
-        MaxAge: 300
-        AllowCredentials: false
