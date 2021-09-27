@@ -611,16 +611,16 @@ Resources:
           - /invocations
       IntegrationMethod: POST
       PayloadFormatVersion: '2.0'
-#  StockerChartStage:
-#    Type: 'AWS::ApiGatewayV2::Stage'
-#    Properties:
-#      StageName: $default
-#      Description: default Stage
-#      AutoDeploy: true
-#      ApiId: !Ref StockerChartHttpApi
-#      DefaultRouteSettings:
-#        DetailedMetricsEnabled: true
-#        LoggingLevel: INFO
-#        DataTraceEnabled: false
-#        ThrottlingBurstLimit: 10
-#        ThrottlingRateLimit: 10
+  StockerChartStage:
+    Type: 'AWS::ApiGatewayV2::Stage'
+    Properties:
+      StageName: $default
+      Description: default Stage
+      AutoDeploy: true
+      ApiId: !Ref StockerChartHttpApi
+      DefaultRouteSettings:
+        DetailedMetricsEnabled: true
+        LoggingLevel: INFO
+        DataTraceEnabled: false
+        ThrottlingBurstLimit: 10
+        ThrottlingRateLimit: 10
