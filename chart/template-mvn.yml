@@ -6,7 +6,7 @@ Resources:
     Type: 'AWS::S3::Bucket'
     Properties:
       AccessControl: PublicRead
-      BucketName: public-stocker-data-bucket
+      BucketName: stockmarket-charts.com
       MetricsConfigurations:
         - Id: StockerDataBucket
       WebsiteConfiguration:
@@ -17,7 +17,7 @@ Resources:
               HttpErrorCodeReturnedEquals: '404'
               KeyPrefixEquals: out1/
             RedirectRule:
-              HostName: public-stocker-data-bucket.s3-website-us-east-1.amazonaws.com
+              HostName: stockmarket-charts.com.s3-website-us-west-2.amazonaws.com
               ReplaceKeyPrefixWith: report-404/
     DeletionPolicy: Retain
   BucketPolicy:
