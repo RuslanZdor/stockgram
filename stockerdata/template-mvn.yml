@@ -619,8 +619,8 @@ Resources:
       AutoDeploy: true
       ApiId: !Ref StockerChartHttpApi
       DefaultRouteSettings:
-        DetailedMetricsEnabled: true
-        LoggingLevel: INFO
+        DetailedMetricsEnabled: false
+        LoggingLevel: OFF
         DataTraceEnabled: false
         ThrottlingBurstLimit: 10
         ThrottlingRateLimit: 10
