@@ -661,12 +661,12 @@ Resources:
             Action:
               - sts:AssumeRole
       Policies:
-        "PolicyName": "StepFunctionsInvoke"
-        "PolicyDocument":
-          "Version": "2012-10-17"
-          "Statement":
-            - "Effect": "Allow"
-              "Action":
-                - states:StartExecution
-              "Resource":
-                Fn::GetAtt: UpdateDailyStocksAndMarketsStepFunction.Arn
+        - "PolicyName": "StepFunctionsInvoke"
+          "PolicyDocument":
+            "Version": "2012-10-17"
+            "Statement":
+              - "Effect": "Allow"
+                "Action":
+                  - states:StartExecution
+                "Resource":
+                  Fn::GetAtt: UpdateDailyStocksAndMarketsStepFunction.Arn
