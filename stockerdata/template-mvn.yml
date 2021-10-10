@@ -631,6 +631,8 @@ Resources:
       FunctionName: !Ref LoadMarketInformationLambda
       Principal: "apigateway.amazonaws.com"
       SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:<api-id>/*/<method>/<resource>"
+
+
   ScheduledDailyStockAndMarketUpdateRule:
     Type: AWS::Events::Rule
     Properties:
@@ -643,13 +645,28 @@ Resources:
               - "UpdateDailyStocksAndMarketsStepFunction"
               - "Arn"
           Id: "UpdateDailyStocksAndMarketsStepFunctionV1"
-  PermissionForEventsToInvokeLambda:
-    Type: AWS::Lambda::Permission
+          RoleArn:
+            Fn::GetAtt:
+              - "DailyUpdateStocksAndMarketsRole"
+              - "Arn"
+  DailyUpdateStocksAndMarketsRole:
+    Type: AWS::IAM::Role
     Properties:
-      FunctionName: !Ref "UpdateDailyStocksAndMarketsStepFunction"
-      Action: "states:StartExecution"
-      Principal: "events.amazonaws.com"
-      SourceArn:
-        Fn::GetAtt:
-          - "ScheduledDailyStockAndMarketUpdateRule"
-          - "Arn"
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: !Sub "states.${AWS::Region}.amazonaws.com"
+            Action:
+              - sts:AssumeRole
+      Policies:
+        "PolicyName": "StepFunctionsInvoke"
+        "PolicyDocument":
+          "Version": "2012-10-17"
+          "Statement":
+            - "Effect": "Allow"
+              "Action":
+                - states:StartExecution
+              "Resource":
+                Fn::GetAtt: UpdateDailyStocksAndMarketsStepFunction.Arn
