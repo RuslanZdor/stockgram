@@ -29,7 +29,7 @@
   background-clip: padding-box; }
 
 .fr-view img.fr-shadow, .fr-view .fr-img-caption.fr-shadow img {
-  -webkit-box-shadow: 10px 10px 5px 0px #cccccc;
+  -webkit-box-shadow: 10px 10px 5px 0tpx #cccccc;
   -moz-box-shadow: 10px 10px 5px 0px #cccccc;
   box-shadow: 10px 10px 5px 0px #cccccc; }
 

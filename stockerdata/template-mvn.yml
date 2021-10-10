@@ -631,3 +631,25 @@ Resources:
       FunctionName: !Ref LoadMarketInformationLambda
       Principal: "apigateway.amazonaws.com"
       SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:<api-id>/*/<method>/<resource>"
+  ScheduledDailyStockAndMarketUpdateRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Description: "Daily update for stocks and markets"
+      ScheduleExpression: "cron(0 22 * * ? *)"
+      State: "ENABLED"
+      Targets:
+        - Arn:
+            Fn::GetAtt:
+              - "UpdateDailyStocksAndMarketsStepFunction"
+              - "Arn"
+          Id: "UpdateDailyStocksAndMarketsStepFunctionV1"
+  PermissionForEventsToInvokeLambda:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref "UpdateDailyStocksAndMarketsStepFunction"
+      Action: "states:StartExecution"
+      Principal: "events.amazonaws.com"
+      SourceArn:
+        Fn::GetAtt:
+          - "ScheduledDailyStockAndMarketUpdateRule"
+          - "Arn"
