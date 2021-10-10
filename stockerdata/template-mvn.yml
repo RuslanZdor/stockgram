@@ -630,9 +630,9 @@ Resources:
       Action: "lambda:InvokeFunction"
       FunctionName: !Ref LoadMarketInformationLambda
       Principal: "apigateway.amazonaws.com"
-      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:<api-id>/*/<method>/<resource>"
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:*/*/*/market"
 
-
+#  CloudWatch rule to generate daily events for update stocks and markets
   ScheduledDailyStockAndMarketUpdateRule:
     Type: AWS::Events::Rule
     Properties:
