@@ -33,7 +33,13 @@ public class SaveCompanyHandler implements RequestHandler<Company, String> {
      */
     @Override
     public String handleRequest(Company company, Context context) {
-        company.getDays().forEach(dayDAO::save);
+        company.getDays()
+                .stream()
+                .filter(day -> !day.isFinished())
+                .forEach(day -> {
+                    day.setFinished(true);
+                    dayDAO.save(day);
+                });
         return "SUCCESS";
     }
 
